@@ -21,6 +21,8 @@ public class BuiltinLogGUI : MonoBehaviour
     private string _colorWhite = "#ffffff";
     private string _colorBlue = "#66ccff";
     private string _colorYellow = "#ffcc66";
+    private string _colorRed = "#ff0000";
+    private string _colorGreen = "00aa00";
     #endregion
 
     #region 私有变量
@@ -56,6 +58,7 @@ public class BuiltinLogGUI : MonoBehaviour
             image = null,
             text = String.Format(_colorFormatStr, _colorBlue, _btnShowLogStr)
         };
+
     }
 
     private void OnGUI()
@@ -96,10 +99,13 @@ public class BuiltinLogGUI : MonoBehaviour
     /// <param name="id"></param>
     private void OnWindow(int id)
     {
-        GUI.Button(new Rect(20, 20, 20, 20), "Debug");
-        GUI.Button(new Rect(20, 20, 20, 20), "Log");
-        GUI.Button(new Rect(20, 20, 20, 20), "Warn");
-        GUI.Button(new Rect(20, 20, 20, 20), "Error");
+        int height = 80;
+        int inter = 5;
+        int bottom = 15;
+        GUI.Button(new Rect(20, bottom + (height + inter) * 1, height, height), "Debug");
+        GUI.Button(new Rect(20, bottom + (height + inter) * 2, bottom, height), "Log");
+        GUI.Button(new Rect(20, bottom + (height + inter) * 3, height, height), "Warn");
+        GUI.Button(new Rect(20, bottom + (height + inter) * 4, height, height), "Error");
 
     }
     #endregion
