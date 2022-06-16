@@ -16,7 +16,7 @@ public class BuiltinLogGUI : MonoBehaviour
     private static string _preTitle = "[GameLogEmial][Product:{0}][Time:{1}]";
 
     private string _colorFormatStr = "<color={0}>{1}</color>";
-    private string _btnShowLogStr = "ShowLog";
+    private string _togShowLogStr = "ShowLog";
 
     private string _colorWhite = "#ffffff";
     private string _colorBlue = "#66ccff";
@@ -56,7 +56,7 @@ public class BuiltinLogGUI : MonoBehaviour
         _toggleContent = new GUIContent()
         {
             image = null,
-            text = String.Format(_colorFormatStr, _colorBlue, _btnShowLogStr)
+            text = String.Format(_colorFormatStr, _colorBlue, _togShowLogStr)
         };
 
     }
@@ -66,12 +66,12 @@ public class BuiltinLogGUI : MonoBehaviour
         _isShowLogWindow = DrawToggle();
         if (_isShowLogWindow)
         {
-            _toggleContent.text = String.Format(_colorFormatStr, _colorYellow, _btnShowLogStr);
+            _toggleContent.text = String.Format(_colorFormatStr, _colorYellow, _togShowLogStr);
             DrawLogWindow();
         }
         else
         {
-            _toggleContent.text = String.Format(_colorFormatStr, _colorBlue, _btnShowLogStr);
+            _toggleContent.text = String.Format(_colorFormatStr, _colorBlue, _togShowLogStr);
         }
     }
 
@@ -90,7 +90,7 @@ public class BuiltinLogGUI : MonoBehaviour
     /// </summary>
     private void DrawLogWindow()
     {
-        GUI.Window(0,_windowRect,OnWindow,_btnShowLogStr);
+        GUI.Window(0,_windowRect,OnWindow, _togShowLogStr);
     }
 
     /// <summary>
@@ -99,13 +99,14 @@ public class BuiltinLogGUI : MonoBehaviour
     /// <param name="id"></param>
     private void OnWindow(int id)
     {
-        int height = 80;
-        int inter = 5;
-        int bottom = 15;
-        GUI.Button(new Rect(20, bottom + (height + inter) * 1, height, height), "Debug");
-        GUI.Button(new Rect(20, bottom + (height + inter) * 2, bottom, height), "Log");
-        GUI.Button(new Rect(20, bottom + (height + inter) * 3, height, height), "Warn");
-        GUI.Button(new Rect(20, bottom + (height + inter) * 4, height, height), "Error");
+        int height = 53;
+        int width = 80;
+        int inter = 2;
+        int bottom = 0;
+        GUI.Button(new Rect(20, bottom + (height + inter) * 1, width, height), "Debug");
+        GUI.Button(new Rect(20, bottom + (height + inter) * 2, width, height), "Log");
+        GUI.Button(new Rect(20, bottom + (height + inter) * 3, width, height), "Warn");
+        GUI.Button(new Rect(20, bottom + (height + inter) * 4, width, height), "Error");
 
     }
     #endregion
