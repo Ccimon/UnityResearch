@@ -1,18 +1,10 @@
 
-.vs/UnityResearch/v15/.suo
-.vs/UnityResearch/v15/Server/sqlite3/db.lock
-.vs/UnityResearch/v15/Server/sqlite3/storage.ide
-.vs/UnityResearch/v15/Server/sqlite3/storage.ide-shm
-.vs/UnityResearch/v15/Server/sqlite3/storage.ide-wal
+.vs/
 .vsconfig
 Assembly-CSharp.csproj
-Library/*
-obj/Debug/
-Temp/UnityLockfile
-UnityResearch.sln
-*.bin
-UnityResearch.sln
-Temp/UnityLockfile
-Library/EditorInstance.json
+Library/
+Temp/
 *.log
-Library/Artifacts/01/011ed34a6eee160baa415bbbc1a86f9f
+*.bin
+obj/Debug/
+UnityResearch.sln
