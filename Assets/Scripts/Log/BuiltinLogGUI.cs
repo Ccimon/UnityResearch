@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuiltinLogGUI : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class BuiltinLogGUI : MonoBehaviour
     private static string _mailSender = "2684352466@qq.com";
     private static string _smtpPwd = "hrtvkbapqbpfecii";
     private static string _preTitle = "[GameLogEmial][Product:{0}][Time:{1}]";
+    private static string _smtpServer = "smtp.qq.com";
 
     private string _colorFormatStr = "<color={0}>{1}</color>";
     private string _togShowLogStr = "ShowLog";
@@ -23,6 +25,17 @@ public class BuiltinLogGUI : MonoBehaviour
     private string _colorYellow = "#ffcc66";
     private string _colorRed = "#ff0000";
     private string _colorGreen = "00aa00";
+    #endregion
+
+    #region 公有变量
+
+    public Text TextReceiver;
+    public Button BtnSendType;
+    public Button BtnSend;
+    [HideInInspector]
+    public bool IsSync = false;
+    [HideInInspector]
+    public string StrReciever = "";
     #endregion
 
     #region 私有变量
@@ -37,9 +50,10 @@ public class BuiltinLogGUI : MonoBehaviour
     private Rect _windowRect;
     #endregion
 
-    #region 生命周期
+    #region OnGui绘制
     void Start()
     {
+        StrReciever = "2942693781@qq.com";
         int width = 170;
         int height = 50;
         int y = 150;
@@ -111,29 +125,61 @@ public class BuiltinLogGUI : MonoBehaviour
     }
     #endregion
 
+    #region 公有方法
+    public void OnInputTextChange()
+    {
+        StrReciever = TextReceiver.text;
+    }
+
+    public void OnBtnSendClick()
+    {
+        SendEmail();
+    }
+
+    public void OnBtnSendTypeClick()
+    {
+        IsSync = !IsSync;
+        RefreshSendType();
+    }
+
+    private void RefreshSendType()
+    {
+        string text = IsSync ? "同步" : "异步";
+        BtnSendType.transform.GetChild(0).GetComponent<Text>().text = text;
+    }
+    #endregion
+
     #region 邮件发送
     /// <summary>
     /// 发送异常日志邮件
     /// </summary>
-    static void SendErrorEmail()
+    static void SendErrorEmail(string reciever,bool isSync)
     {
         var mailMessage = new MailMessage();
         mailMessage.From = new MailAddress(_mailSender); // 发送人
-        mailMessage.To.Add(_mailSender); // 收件人 可以多个     
+        mailMessage.To.Add(reciever); // 收件人 可以多个     
         mailMessage.Subject = string.Format(_preTitle,Application.productName,DateTime.Now.ToShortDateString()) ; // 标题
         mailMessage.Body += "ErrorLog:\n"; // 正文
         //添加附件-日志文件
         //if (System.IO.File.Exists(outputLog))
         //    mailMessage.Attachments.Add(new Attachment(outputLog));
-        SmtpClient smtpServer = new SmtpClient("smtp.qq.com");  // 所使用邮箱的SMTP服务器
+        SmtpClient smtpServer = new SmtpClient(_smtpServer);  // 所使用邮箱的SMTP服务器
         // 账号授权码 邮箱开通SMTP服务，可生成授权码
         smtpServer.Credentials = new System.Net.NetworkCredential(_mailSender, _smtpPwd) as ICredentialsByHost;
         smtpServer.EnableSsl = true;
         ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
         //发送邮件回调方法
         smtpServer.SendCompleted += new SendCompletedEventHandler(SendCompletedCallback);
-        //smtpServer.Send(mail);   //同步发送
-        smtpServer.SendAsync(mailMessage, new object()); //异步发送
+        if (isSync)
+        {
+            smtpServer.Send(mailMessage);   //同步发送
+
+        }
+        else
+        {
+            smtpServer.SendAsync(mailMessage, new object()); //异步发送
+
+        }
     }
 
     //发送回调
@@ -145,7 +191,7 @@ public class BuiltinLogGUI : MonoBehaviour
     //非静态封装
     public void SendEmail()
     {
-        SendErrorEmail();
+        SendErrorEmail(StrReciever,IsSync);
     }
     #endregion
 }
