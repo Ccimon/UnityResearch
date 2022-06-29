@@ -8,6 +8,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text;
 
 public class BuiltinLogGUI : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class BuiltinLogGUI : MonoBehaviour
 
     #region 私有变量
     private List<string> _logStrBuffer = new List<string>();
+    private List<StringBuilder> _builderLIst = new List<StringBuilder>();
 
     private GUIStyle _toggleStyle;
     private GUIContent _toggleContent;
@@ -48,9 +50,18 @@ public class BuiltinLogGUI : MonoBehaviour
     private Rect _toggleRect;
     private Rect _boxRect;
     private Rect _windowRect;
+    private Rect _logTextRect;
+    private Vector2 _scrollVec = Vector2.zero;
     #endregion
 
     #region OnGui绘制
+    private void Awake()
+    {
+        Application.logMessageReceived += OnLogReceive;
+    }
+
+
+
     void Start()
     {
         StrReciever = "2942693781@qq.com";
@@ -60,7 +71,7 @@ public class BuiltinLogGUI : MonoBehaviour
         _toggleRect = new Rect(Screen.width / 2 - width / 2, y, width, height);
         _boxRect = new Rect(Screen.width / 2 - width / 2, y, width, height);
         _windowRect = new Rect(0,y + 80,Screen.width,400);
-
+        _logTextRect = new Rect(100,10,Screen.width - 20,380);
         _toggleStyle = new GUIStyle()
         {
             fontSize = 40,
@@ -75,8 +86,14 @@ public class BuiltinLogGUI : MonoBehaviour
 
     }
 
+    private void OnLogReceive(string condition, string stackTrace, LogType type)
+    {
+        _logStrBuffer.Add(condition);
+    }
+
     private void OnGUI()
     {
+
         _isShowLogWindow = DrawToggle();
         if (_isShowLogWindow)
         {
@@ -115,13 +132,16 @@ public class BuiltinLogGUI : MonoBehaviour
     {
         int height = 53;
         int width = 80;
-        int inter = 2;
+        int inter = 20;
         int bottom = 0;
-        GUI.Button(new Rect(20, bottom + (height + inter) * 1, width, height), "Debug");
-        GUI.Button(new Rect(20, bottom + (height + inter) * 2, width, height), "Log");
-        GUI.Button(new Rect(20, bottom + (height + inter) * 3, width, height), "Warn");
-        GUI.Button(new Rect(20, bottom + (height + inter) * 4, width, height), "Error");
+        GUI.Button(new Rect(10, bottom + (height + inter) * 1, width, height), "Debug");
+        GUI.Button(new Rect(10, bottom + (height + inter) * 2, width, height), "Log");
+        GUI.Button(new Rect(10, bottom + (height + inter) * 3, width, height), "Warn");
+        GUI.Button(new Rect(10, bottom + (height + inter) * 4, width, height), "Error");
 
+        _scrollVec = GUI.BeginScrollView(new Rect(200, 50, Screen.width - 200,_windowRect.height - 50), _scrollVec, new Rect(0, 0, Screen.width, _windowRect.height));
+        var textArea = GUI.TextArea(new Rect(0, 0, 4000, 4000), "???");
+        GUI.EndScrollView();
     }
     #endregion
 

@@ -3,6 +3,9 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _MaskTex ("Texture", 2D) = "white" {}
+        _MaskBottom ("Bottom", float) = 0
+        _MaskTop ("Top", float) = 0.1
         _MultiX ("MultiX", float) = 8
         _MultiY ("MultiY", float) = 0.2
         _AddY ("AddY", Range(0,1)) = 0.15
@@ -38,6 +41,7 @@
             };
 
             sampler2D _MainTex;
+            sampler2D _MaskTex;
             float4 _MainTex_ST;
             float _MultiX;
             float _MultiY;
@@ -58,7 +62,12 @@
             {
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 mcol = tex2D(_MaskTex, i.uv);
                 
+                if(mcol.a < 0.1 || i.uv.y > _MaskTop || i.uv.y < _MaskBottom){
+                    discard;
+                }
+
                 if(_IsOpen > 0 && _AddY < 1){
                     float minLerp = 0.3;
                     float x = i.uv.x + _Time.y * _MultiTime;
