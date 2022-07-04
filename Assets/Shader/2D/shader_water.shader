@@ -4,6 +4,7 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
         _MaskTex ("Texture", 2D) = "white" {}
+        _Color("Color",Color) = (1,1,1,1)
         _MaskBottom ("Bottom", float) = 0
         _MaskTop ("Top", float) = 0.1
         _MultiX ("MultiX", float) = 8
@@ -42,7 +43,10 @@
 
             sampler2D _MainTex;
             sampler2D _MaskTex;
+            float4 _Color;
             float4 _MainTex_ST;
+            float _MaskBottom;
+            float _MaskTop;
             float _MultiX;
             float _MultiY;
             float _AddY;
@@ -62,9 +66,12 @@
             {
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
-                fixed4 mcol = tex2D(_MaskTex, i.uv);
+
+                float2 offuv = float2(i.uv.x,i.uv.y * (_MaskTop - _MaskBottom) + _MaskBottom);
+                fixed4 dcol = tex2D(_MaskTex, i.uv);
+                fixed4 mcol = tex2D(_MaskTex, offuv);
                 
-                if(mcol.a < 0.1 || i.uv.y > _MaskTop || i.uv.y < _MaskBottom){
+                if(mcol.a < 0.1){
                     discard;
                 }
 
@@ -79,7 +86,7 @@
                 }
                 // apply fog
                 // UNITY_APPLY_FOG(i.fogCoord, col);
-                return col;
+                return _Color;
             }
             ENDCG
         }
