@@ -84,8 +84,7 @@
                         discard;
                     }
                 }
-                // apply fog
-                // UNITY_APPLY_FOG(i.fogCoord, col);
+   
                 return _Color;
             }
             ENDCG

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,13 +13,12 @@ public class Maskafter : MonoBehaviour
     //用于存储渲染水位的组件，这里泛型放的是Image，按理来说可以放Image，RawImage，Text等可渲染UI的共同父类
     public List<Image> ListRenderComponent = new List<Image>();
     //对外开放的水位属性，每次修改都会刷新Shader渲染
-    public int WaterLine {
+    public float WaterLine {
         get {
             return _waterLine;
         }
         set {
             _waterLine = value;
-            RefreshWater();
         }
     }
 
@@ -27,7 +27,11 @@ public class Maskafter : MonoBehaviour
     //自己的UI变换
     private RectTransform rectTransform;
     //水位
-    private int _waterLine = 0;
+    private float _waterLine = 4;
+    //动画水位
+    private float _animLine = 0;
+    //水位增长速度
+    private float _speed = 0.0125f;
     //可用的Shader参数名
     private string _paramAddY = "_AddY";
     private string _paramIsOpen = "_IsOpen";
@@ -40,15 +44,13 @@ public class Maskafter : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(MaskTexture.width,MaskTexture.height);
 
-        RefreshWater();
+        InitWater();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-
+        RefreshWater();
     }
 
     //计算每个图片在遮罩下的渲染范围
@@ -63,6 +65,36 @@ public class Maskafter : MonoBehaviour
     }
 
     private void RefreshWater()
+    {
+        if (_animLine != _waterLine)
+        {
+            for (int i = 0; i < ListRenderComponent.Count; i++)
+            {
+                Image img = ListRenderComponent[i];
+
+                if (Mathf.Floor(_animLine) > i)
+                {
+                    SetIdle(img);
+                }else if (i < _waterLine && i - _animLine <= 0)
+                {
+                    _animLine += Time.deltaTime/2 * Mathf.Sign(_waterLine - _animLine);
+                    var value = _animLine - i;
+                    SetAnimate(img, value);
+                }
+                else
+                {
+                    SetInvisible(img);
+                }
+            }
+        }
+
+        if (Math.Abs(_animLine - _waterLine) < _speed)
+        {
+            _animLine = _waterLine;
+        }
+    }
+
+    private void InitWater()
     {
         for (int i = 0; i < ListRenderComponent.Count; i++)
         {
@@ -83,7 +115,7 @@ public class Maskafter : MonoBehaviour
                 //大于水位的就不渲染
                 SetInvisible(img);
             }
-            else if(i < WaterLine)
+            else if (i < WaterLine)
             {
                 //等于水位的要渲染，并执行动画
                 SetAnimate(img);
@@ -96,10 +128,10 @@ public class Maskafter : MonoBehaviour
         }
     }
 
-    private void SetAnimate(Image img)
+    private void SetAnimate(Image img,float addy = 0)
     {
         img.material.SetFloat(_paramIsOpen, 1);
-        img.material.SetFloat(_paramAddY, 0);
+        img.material.SetFloat(_paramAddY, addy);
         img.gameObject.SetActive(true);
     }
 
@@ -115,21 +147,29 @@ public class Maskafter : MonoBehaviour
         img.gameObject.SetActive(false);
     }
 
-    public void StartWaterAnimation(Material mat,int Index)
+    public void AddWaterLine()
     {
+        _waterLine++;
+    }
+
+    public void StartWaterAnimation(int Index)
+    {
+        if (Index > ListRenderComponent.Count){return;}
+
         _waterLine = Index;
         for (int i = 0; i < ListRenderComponent.Count; i++)
         {
+            Image img = ListRenderComponent[i];
             if (i > Index)
             {
-
+                SetInvisible(img);
             }else if (i<Index)
             {
-
+                SetIdle(img);
             }
             else
             {
-
+                SetAnimate(img);
             }
         }
     }
