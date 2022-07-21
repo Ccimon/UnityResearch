@@ -233,7 +233,7 @@ public class BuiltinLogGUI : MonoBehaviour
         }
 
         Rect positionRect = new Rect(0, 135, Screen.width, _windowRect.height - 50);
-        Rect viewRect = new Rect(0, 80, Screen.width, _scrollContentHeight);
+        Rect viewRect = new Rect(0, 0, Screen.width, _scrollContentHeight);
         //Rect bottomRect = new Rect(0, _scrollContentHeight, Screen.width, _scrollContentHeight);
         _scrollVec = GUI.BeginScrollView(positionRect, _scrollVec, viewRect);
 

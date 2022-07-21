@@ -20,7 +20,7 @@ public class MeshTest : MonoBehaviour
 
         vertices[0] = new Vector3(0, 0, 0);
         vertices[1] = new Vector3(0, 1, 0);
-        vertices[2] = new Vector3(1, 1, 0);
+        vertices[2] = new Vector3(0.7f, 0.7f    , 0);
         vertices[3] = new Vector3(1, 0, 0);
 
         var shader = Shader.Find("Custom/NewSurfaceShader");
