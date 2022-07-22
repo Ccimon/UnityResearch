@@ -1,32 +1,99 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GlobalModel.Data;
 
-public class LevelData
+namespace GlobalModel.Data
 {
-    public int Index;
-    public List<List<int>> TubeList;
+    public enum BallColor
+    {
+        Red,
+        White,
+        Black,
+        Blue,
+        Yellow,
+        Purple,
+        Grren,
+        Orange
+    }
+
+    public class LevelData
+    {
+        public int Index;
+        public List<List<int>> TubeList;
+    }
+
+    public class TubeData
+    {
+        public int Index;
+        public List<Balldata> BallList;
+    }
+
+    public class Balldata
+    {
+
+    }
 }
 
-public delegate void OnIntValueChange(int value);
 
-public class GameModel
+namespace GlobalModel
 {
-    private int _localLevel;
-    private LevelData _localLevelData;
-    private List<OnIntValueChange> _levelChangeCallBackList = new List<OnIntValueChange>();
-
-    public int LocalLevel
+    public class GameModel
     {
-        get => _localLevel;
-        set
+        public delegate void OnIntValueChange(int value);
+
+        private int _localLevel;
+        private int _coin;
+        private int _lastLevel;
+        private int _maxLevel;
+        private LevelData _localLevelData;
+
+
+
+        private OnIntValueChange _levelEndCallBack;
+        private OnIntValueChange _levelStartCallBack;
+
+        public int LocalLevel
         {
-            _localLevel = value;
-            for (int i =0; i < _levelChangeCallBackList.Count; i++)
+            get => _localLevel;
+            set
             {
-                var callBack = _levelChangeCallBackList[i];
-                callBack(value);
+                _localLevel = value;
+                _levelEndCallBack(_localLevel);
+                AfterLevelChanged();
             }
         }
+
+        private void AfterLevelChanged()
+        {
+            LoadNextLevelData();
+        }
+
+        private void LoadNextLevelData()
+        {
+
+        }
+
+        public void AddLevelEndListener(OnIntValueChange callback)
+        {
+            _levelEndCallBack += callback;
+        }
+
+        public void RemoveLevelEndListener(OnIntValueChange callback)
+        {
+            _levelEndCallBack -= callback;
+        }
+
+        public void AddLevelStartListener(OnIntValueChange callback)
+        {
+            _levelStartCallBack += callback;
+        }
+
+        public void RemoveLevelStartListener(OnIntValueChange callback)
+        {
+            _levelStartCallBack -= callback;
+        }
+
+
     }
 }
