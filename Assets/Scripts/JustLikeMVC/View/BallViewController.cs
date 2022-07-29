@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GlobalModel;
 using GlobalModel.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 管理Ball的信息,皮肤,颜色。只有基本切换皮肤的行为。
+/// </summary>
 public class BallViewController : MonoBehaviour
 {
     [SerializeField]
@@ -19,8 +23,9 @@ public class BallViewController : MonoBehaviour
         }
     }
 
-    private void InitBall()
+    private BallViewController Init()
     {
 
+        return this;
     }
 }

@@ -355,6 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08648615097f743d58f79aec112b7108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BallObj: {fileID: 7698324749062587687, guid: 39cbf61b2bbf7415f88455a9edefbc99, type: 3}
   _ballPosList:
   - {fileID: 1105542948726480464}
   - {fileID: 1105542949271347666}
