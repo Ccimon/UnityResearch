@@ -20,7 +20,7 @@ public class PanelGame : MonoBehaviour
 
     public void Start()
     {
-        
+        InitGamePanel();
     }
 
     private void RegisterListener()
@@ -44,6 +44,7 @@ public class PanelGame : MonoBehaviour
             }
 
             GameObject tube = Instantiate(TubeObj);
+            tube.transform.parent = transform;
             TubeViewController tubeView = tube.GetComponent<TubeViewController>();
             _tubeViewList.Add(tubeView.Init(LocalLevelData.TubeList[i]));
 

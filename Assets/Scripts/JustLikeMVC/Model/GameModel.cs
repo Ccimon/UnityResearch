@@ -26,6 +26,7 @@ namespace GlobalModel.Data
     public class TubeData
     {
         public int Index;
+        public int length = 4;
         public List<Balldata> BallList;
     }
 
@@ -63,7 +64,6 @@ namespace GlobalModel
             }
         }
 
-
         private int _localLevel;
         private int _coin;
         private int _lastLevel;
@@ -75,9 +75,6 @@ namespace GlobalModel
 
         private OnCaseEnter _gameStartCallBack;
         private OnCaseEnter _gameEndCallBack;
-
-        private int[] _levelTemplate = new int[8] { 0, 1, 0, 1, 1, 0, 1, 0 };
-        private int _templateIndex = 0;
 
         public int LocalLevel
         {
@@ -105,16 +102,24 @@ namespace GlobalModel
             LocalLevelData = new LevelData();
             LocalLevelData.Index = levelIndex;
             LocalLevelData.TubeList = new List<TubeData>();
-            var ballList = new List<Balldata>() { new Balldata() { BallColor = 0} };
-            LocalLevelData.TubeList.Add(new TubeData() { Index = 0, BallList = new List<Balldata>() { new Balldata() {  } } });
-        }
-
-        private void FillTemplateToList(List<Balldata> list)
-        {
-            for (int i = _templateIndex; i < _levelTemplate.Length; _templateIndex++) 
-            {
-
-            }
+            var list = LocalLevelData.TubeList;
+            var tubeData0 = new TubeData();
+            var ballList0= tubeData0.BallList = new List<Balldata>();
+            ballList0.Add(new Balldata() { BallColor = 0});
+            ballList0.Add(new Balldata() { BallColor = 1 });
+            ballList0.Add(new Balldata() { BallColor = 0 });
+            ballList0.Add(new Balldata() { BallColor = 1 });
+            var tubeData1 = new TubeData();
+            list.Add(tubeData0);
+            var ballList1 = tubeData1.BallList = new List<Balldata>();
+            ballList1.Add(new Balldata() { BallColor = 1 });
+            ballList1.Add(new Balldata() { BallColor = 0 });
+            ballList1.Add(new Balldata() { BallColor = 1 });
+            ballList1.Add(new Balldata() { BallColor = 0 });
+            list.Add(tubeData1);
+            var tubeData2 = new TubeData();
+            tubeData2.BallList = new List<Balldata>();
+            list.Add(tubeData2);
         }
 
         public void AddLevelEndListener(OnIntValueChange callback)
