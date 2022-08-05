@@ -47,9 +47,6 @@ namespace GlobalModel
     /// </summary>
     public class GameModel
     {
-        public delegate void OnIntValueChange(int value);
-        public delegate void OnCaseEnter();
-
         private static GameModel _instance = null;
         public static GameModel Instance
         {
@@ -58,11 +55,17 @@ namespace GlobalModel
                 if (_instance == null)
                 {
                     _instance = new GameModel();
-                    _instance.Init();
                 }
                 return _instance;
             }
         }
+
+        private GameModel()
+        {
+        }
+
+        public delegate void OnIntValueChange(int value);
+        public delegate void OnCaseEnter();
 
         private int _localLevel;
         private int _coin;
@@ -87,9 +90,13 @@ namespace GlobalModel
             }
         }
 
-        private void Init()
+        /// <summary>
+        /// GameModel在这里初始化，并在初始化完成后开始游戏
+        /// </summary>
+        public void Init()
         {
             LoadNextLevelData();
+            _gameStartCallBack?.Invoke();
         }
 
         private void AfterLevelChanged()

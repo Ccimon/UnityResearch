@@ -140,18 +140,23 @@ public class BuiltinLogGUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// GUI绘制
+    /// </summary>
     private void OnGUI()
     {
-
+        //绘制控制的开关，这里用的是Toggle
         _isShowLogWindow = DrawToggle();
         if (_isShowLogWindow)
         {
+            //打开的时候Toggle字体为黄色
             _toggleContent.text = String.Format(_colorFormatStr, _colorYellow, _togShowLogStr);
             DrawLogWindow();
             DrawButtonGroup();
         }
         else
         {
+            //没打开的时候就是淡蓝色
             _toggleContent.text = String.Format(_colorFormatStr, _colorBlue, _togShowLogStr);
         }
     }
@@ -196,6 +201,7 @@ public class BuiltinLogGUI : MonoBehaviour
 
         float cor = _windowRect.width / 8 - width / 2;
 
+        //绘制Log页面的四个分类按钮
         var _typeButton = new GUIStyle(GUI.skin.button);
         _typeButton.fontSize = 30;
         if (GUI.Button(new Rect(startPos.x + _windowRect.width / 4 * 0 + cor, startPos.y, width, height), "All", _typeButton))
@@ -215,6 +221,7 @@ public class BuiltinLogGUI : MonoBehaviour
             _localLogState = LogInfoType.Error;
         }
 
+        //绘制输入框,Search按钮,Clear按钮
         float inputWidth = Screen.width - 240;
         var inputStyle = new GUIStyle();
         inputStyle.fontSize = 33;
@@ -232,6 +239,7 @@ public class BuiltinLogGUI : MonoBehaviour
             _inputTxt = "";
         }
 
+        //绘制ScrollView并展示Log信息
         Rect positionRect = new Rect(0, 135, Screen.width, _windowRect.height - 50);
         Rect viewRect = new Rect(0, 0, Screen.width, _scrollContentHeight);
         //Rect bottomRect = new Rect(0, _scrollContentHeight, Screen.width, _scrollContentHeight);
@@ -250,7 +258,7 @@ public class BuiltinLogGUI : MonoBehaviour
         {
             var log = _logStrBuffer[i];
             if (!isSearch && (log.type != _localLogState && _localLogState != LogInfoType.All)) { continue; }
-            if (isSearch && !log.log.Contains(_inputTxt)) { continue; }
+            if (isSearch && !log.log.ToLower().Contains(_inputTxt.ToLower())) { continue; }
             if (log.type == LogInfoType.Log)
             {
                 _logBox.normal.textColor = Color.white;
@@ -339,7 +347,7 @@ public class BuiltinLogGUI : MonoBehaviour
 
     }
 
-    //非静态封装
+    //非静态外露接口
     //public void SendEmail()
     //{
     //    SendErrorEmail(StrReciever,IsSync);
