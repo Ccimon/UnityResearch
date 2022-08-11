@@ -41,14 +41,17 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
          _tubeData = data as  TubeData;
          if (_tubeData == null)
          {
-             return null;
+             return this;
          }
          
          var list = _tubeData.BallList;
          for (int i = 0; i < list.Count; i++)
          {
              var ballData = list[i];
-             
+             var pos = _ballPosList[i];
+             var ball = Instantiate(BallObj, pos);
+             var ballview = ball.GetComponent<BallViewController>();
+             ballview.Init(ballData);
          }
 
          return RefreshView(data);

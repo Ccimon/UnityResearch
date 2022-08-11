@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 管理Ball的信息,皮肤,颜色。只有基本切换皮肤的行为。
 /// </summary>
-public class BallViewController : MonoBehaviour
+public class BallViewController : MonoBehaviour,IViewController<BallViewController,Balldata>
 {
     [SerializeField]
     private Image _ballImage;
@@ -23,14 +23,17 @@ public class BallViewController : MonoBehaviour
         }
     }
 
-    public BallViewController Init()
+    public BallViewController Init<TData>(TData data)
     {
-        InitView();
+        RefreshView(data);
+
+        _ballImage = GetComponent<Image>();
         return this;
     }
 
-    private void InitView()
+    public BallViewController RefreshView<TData>(TData data)
     {
         
+        return this;
     }
 }
