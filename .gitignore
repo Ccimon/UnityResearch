@@ -1,12 +1,14 @@
 
+*.log
+*.bin
+*.sln
 .vs/*
 .vsconfig
 Assembly-CSharp.csproj
 Library/*
 Temp/*
-*.log
-*.bin
 obj/Debug/*
 UnityResearch.sln
 Temp/UnityLockfile
 UnityResearch.sln
+.idea/*

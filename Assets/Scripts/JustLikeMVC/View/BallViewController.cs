@@ -23,9 +23,14 @@ public class BallViewController : MonoBehaviour
         }
     }
 
-    private BallViewController Init()
+    public BallViewController Init()
     {
-
+        InitView();
         return this;
+    }
+
+    private void InitView()
+    {
+        
     }
 }

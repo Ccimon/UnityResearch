@@ -17,28 +17,30 @@ namespace GlobalModel.Data
         Orange
     }
 
-    public class LevelData
+    public class Data
+    {
+        
+    }
+
+    public class LevelData:Data
     {
         public int Index;
         public List<TubeData> TubeList;
     }
 
-    public class TubeData
+    public class TubeData:Data
     {
         public int Index;
         public int length = 4;
         public List<Balldata> BallList;
     }
 
-    public class Balldata
+    public class Balldata:Data
     {
         public int BallColor;
     }
 }
 
-/// <summary>
-/// GlobalModel是所有Model的集合,用来存放所有的Model代码
-/// </summary>
 namespace GlobalModel
 {
     /// <summary>

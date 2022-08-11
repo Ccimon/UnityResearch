@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// TubeViewController控制整个管子信息,以及对Ball的操作行为。
 /// </summary>
-public class TubeViewController : MonoBehaviour
+public class TubeViewController : MonoBehaviour,IViewController<TubeViewController,TubeData>
 {
 
     [SerializeField]
@@ -16,6 +16,8 @@ public class TubeViewController : MonoBehaviour
     private List<RectTransform> _ballPosList = new List<RectTransform>();
 
     private List<BallViewController> _ballViewList = new List<BallViewController>();
+    
+    private Stack<BallViewController> _ballBuffer = new Stack<BallViewController>();
 
     private TubeData _tubeData;
 
@@ -34,21 +36,26 @@ public class TubeViewController : MonoBehaviour
         PanelGame.Instance.TubeClick(this);
     }
 
-    private void InitTubeView()
+    public TubeViewController Init<TData>(TData data)
     {
-        for (int i = 0; i < _tubeData.BallList.Count; i++)
-        {
-            var Ball = Instantiate(BallObj);
-            var pos = _ballPosList[i];
-        }
+         _tubeData = data as  TubeData;
+         if (_tubeData == null)
+         {
+             return null;
+         }
+         
+         var list = _tubeData.BallList;
+         for (int i = 0; i < list.Count; i++)
+         {
+             var ballData = list[i];
+             
+         }
+
+         return RefreshView(data);
     }
 
-    public TubeViewController Init(TubeData data)
+    public TubeViewController RefreshView<TData>(TData data)
     {
-        _tubeData = data;
-
-        InitTubeView();
-
         return this;
     }
 

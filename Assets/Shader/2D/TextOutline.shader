@@ -56,6 +56,8 @@ Properties
             #pragma target 2.0
             
             //Add for RectMask2D  
+            #include <UnityShaderUtilities.cginc>
+
             #include "UnityUI.cginc"
             //End for RectMask2D  
             
@@ -137,6 +139,7 @@ Properties
             
             fixed SampleAlpha(int pIndex, v2f IN)
             {
+
                 //这12个值的含义实际上是围绕当前的纹理点绕一个圆形，每隔30度取一个点，360/30 于是就有了这12个值的数组
                 //两个分别对应sin，cos实际上是直接转换了坐标，方便直接采样
                 const fixed sinArray[12] = { 0, 0.5, 0.866, 1, 0.866, 0.5, 0, -0.5, -0.866, -1, -0.866, -0.5 };
