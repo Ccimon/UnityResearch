@@ -71,26 +71,36 @@ public class PanelGame : MonoBehaviour
     {
         if (_tubeClickBuffer.Count >= 2)
         {
-            var left = _tubeClickBuffer[0];
-            var right = _tubeClickBuffer[1];
+            TubeViewController left = _tubeClickBuffer[0];
+            TubeViewController right = _tubeClickBuffer[1];
 
             if (right.GetTopColor() <= 0 || left.GetTopColor() == right.GetTopColor())
             {
                 right.BallPush(left.BallPop());
+                left.TubeFall();
+                right.RefreshView();
             }
 
-            left.TubeFall();
-            right.TubePop();
+
             _tubeClickBuffer.Clear();
-            _tubeClickBuffer.Add(right);
         }
         else
         {
-            if (tube.GetTopColor() > 0)
+            if (!_tubeClickBuffer.Contains(tube))
             {
-                var left = _tubeClickBuffer[0];
-                left.TubePop();
+                _tubeClickBuffer.Add(tube);
+                if (tube.GetTopColor() >= 0)
+                {
+                    TubeViewController left = _tubeClickBuffer[0];
+                    left.TubePop();
+                }
             }
+            else
+            {
+                tube.TubeFall();
+                _tubeClickBuffer.Clear();
+            }
+
         }
     }
 }

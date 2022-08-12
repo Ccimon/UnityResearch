@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GlobalModel.Data;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 /// <summary>
 /// TubeViewController控制整个管子信息,以及对Ball的操作行为。
@@ -14,15 +15,16 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
     private GameObject BallObj;
     [SerializeField]
     private List<RectTransform> _ballPosList = new List<RectTransform>();
+    [SerializeField] 
+    private RectTransform BallOutPos;
 
-    private List<BallViewController> _ballViewList = new List<BallViewController>();
-    
     private Stack<BallViewController> _ballBuffer = new Stack<BallViewController>();
 
     private TubeData _tubeData;
 
     private Button button;
 
+    private BallViewController _outBall;
     public bool IsComplete { get; private set; } = false;
 
     private void Awake()
@@ -48,83 +50,130 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
          for (int i = 0; i < list.Count; i++)
          {
              var ballData = list[i];
-             var pos = _ballPosList[i];
-             var ball = Instantiate(BallObj, pos);
+             var ball = Instantiate(BallObj,_ballPosList[i]);
              var ballview = ball.GetComponent<BallViewController>();
              ballview.Init(ballData);
+             _ballBuffer.Push(ballview);
          }
 
-         return RefreshView(data);
+         return this;
     }
 
-    public TubeViewController RefreshView<TData>(TData data)
+    public TubeViewController RefreshView()
     {
-        return this;
-    }
-
-    public int GetTopColor()
-    {
-        if (_tubeData.BallList.Count > 0)
+        int i = 0;
+        foreach (BallViewController view in _ballBuffer)
         {
-            return _tubeData.BallList[_tubeData.BallList.Count - 1].BallColor;
+            view.transform.parent = _ballPosList[i];
+            view.transform.DOMove(view.transform.parent.position, 0.2f);
+            i++;
         }
 
-        return -1;
+        return this;
+    }
+    
+    /// <summary>
+    /// 获取顶部小球颜色
+    /// </summary>
+    /// <returns></returns>
+    public int GetTopColor()
+    {
+        BallViewController top = GetTopBall();
+        int color = -1;
+        if (top != null)
+        {
+            color = top.GetBallColor();
+        }
+        return color;
     }
 
     public void TubeFall()
     {
-
+        _outBall?.transform.DOMove(_outBall.transform.parent.position, 0.1f);
+        _outBall = null;
     }
 
     public void TubePop()
     {
-
+        GetTopBall()?.transform.DOMove(BallOutPos.position,0.1f);
     }
      
-    public List<Balldata> BallPop()
+    /// <summary>
+    /// 把球弹出去
+    /// </summary>
+    /// <returns></returns>
+    public List<BallViewController> BallPop()
     {
-        List<Balldata> dataList = new List<Balldata>();
+        List<BallViewController> viewList = new List<BallViewController>();
         int sameColor = -1;
-        for (int i = _tubeData.BallList.Count - 1; i >= 0; i--)
+        for (int i = _ballBuffer.Count; i > 0; i--)
         {
-            var data = _tubeData.BallList[i];
+            BallViewController ballview = _ballBuffer.Pop();
             if (sameColor == -1)
             {
-                sameColor = data.BallColor;
+                sameColor = ballview.GetBallColor();
             }
 
-            if (data.BallColor == sameColor)
+            if (ballview.GetBallColor() == sameColor)
             {
-                _tubeData.BallList.Remove(data);
-                dataList.Add(data);
+                viewList.Add(ballview);
             }
             else
             {
+                _ballBuffer.PushRange(viewList);
                 break;
             }
         }
-        return dataList;
+        return viewList;
     }
-
-    public bool BallPush(List<Balldata> dataList)
+    
+    /// <summary>
+    /// 把球放进来
+    /// </summary>
+    /// <param name="dataList"></param>
+    /// <returns></returns>
+    public bool BallPush(List<BallViewController> viewlist)
     {
-        if (dataList.Count < 1)
+        if (viewlist.Count < 1)
         {
             return false;
         }
 
-        if (dataList[0].BallColor != GetTopColor())
+        if (GetTopColor() < 0 && viewlist[0].GetBallColor() != GetTopColor())
         {
             return false;
         }
 
-        _tubeData.BallList.AddRange(dataList);
+        _ballBuffer.PushRange(viewlist);
 
         IsComplete = CheckComplete();
         return true;
     }
 
+    /// <summary>
+    /// 获取顶部的小球
+    /// </summary>
+    /// <returns></returns>
+    private BallViewController GetTopBall()
+    {
+        BallViewController view;
+        if (_outBall == null && _ballBuffer.Count > 0)
+        {
+            view = _ballBuffer.Pop();
+            _outBall = view;
+            _ballBuffer.Push(view);
+        }
+        else
+        {
+            view = _outBall;
+        }
+        return view;
+    }
+    
+    /// <summary>
+    /// 检测管子是否完成
+    /// </summary>
+    /// <returns></returns>
     private bool CheckComplete()
     {
         if (_tubeData.BallList.Count < 4)

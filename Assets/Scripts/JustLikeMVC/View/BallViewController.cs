@@ -25,15 +25,30 @@ public class BallViewController : MonoBehaviour,IViewController<BallViewControll
 
     public BallViewController Init<TData>(TData data)
     {
-        RefreshView(data);
+        _localBallData = data as Balldata;
+        if (_localBallData == null)
+        {
+            return this;
+        }
+        RefreshView();
 
-        _ballImage = GetComponent<Image>();
         return this;
     }
 
-    public BallViewController RefreshView<TData>(TData data)
+    public BallViewController RefreshView()
     {
+        if (_localBallData == null)
+        {
+            return this;
+        }
         
+        
+        _ballImage.color = GameUtil.ConvertEnumToColor((BallColor)_localBallData.BallColor);
         return this;
+    }
+
+    public int GetBallColor()
+    {
+        return Balldata.BallColor;
     }
 }

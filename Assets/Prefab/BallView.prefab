@@ -132,3 +132,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af9baf7a92344459b9aade395171e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ballImage: {fileID: 7698324748617586057}

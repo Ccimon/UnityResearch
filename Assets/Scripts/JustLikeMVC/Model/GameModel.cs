@@ -13,7 +13,7 @@ namespace GlobalModel.Data
         Blue,
         Yellow,
         Purple,
-        Grren,
+        Green,
         Orange
     }
 
@@ -131,6 +131,8 @@ namespace GlobalModel
             list.Add(tubeData2);
         }
 
+        #region 游戏流程回调
+
         public void AddLevelEndListener(OnIntValueChange callback)
         {
             _levelEndCallBack += callback;
@@ -170,5 +172,8 @@ namespace GlobalModel
         {
             _gameEndCallBack -= callback;
         }
+
+        #endregion
+        
     }
 }
