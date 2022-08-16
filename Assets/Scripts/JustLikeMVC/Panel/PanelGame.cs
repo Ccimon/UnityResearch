@@ -14,6 +14,8 @@ public class PanelGame : MonoBehaviour
     private List<TubeViewController> _tubeViewList = new List<TubeViewController>();
     private List<TubeViewController> _tubeClickBuffer = new List<TubeViewController>();
 
+    public RectTransform GameContentLayout;
+    public RectTransform GameCoverLayout;
     public LevelData LocalLevelData
     {
         get
@@ -24,7 +26,7 @@ public class PanelGame : MonoBehaviour
 
     private void Awake()
     {
-        if (PanelGame.Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             RegisterListener();
@@ -36,9 +38,15 @@ public class PanelGame : MonoBehaviour
         }
     }
 
+    #region 事件监听
+
+    /// <summary>
+    /// 添加监听事件
+    /// </summary>
     private void RegisterListener()
     {
         GameModel.Instance.AddGameStartListener(OnGameStart);
+        GameModel.Instance.AddGameEndListener(OnGameEnd);
     }
 
     private void OnGameStart()
@@ -46,53 +54,76 @@ public class PanelGame : MonoBehaviour
         InitGamePanel();
     }
 
-    private void InitGamePanel()
+    private void OnGameEnd()
     {
-        int width = Screen.width;
-        int height = Screen.height;
-        int tubeCount = LocalLevelData.TubeList.Count;
-        for (int i = 0; i < LocalLevelData.TubeList.Count; i++) 
+        GameUtil.ShowToast("GameComplete");
+        foreach (var tube in _tubeViewList)
         {
-            if (TubeObj == null)
-            {
-                break;
-            }
-
-            GameObject tube = Instantiate(TubeObj);
-            tube.transform.parent = transform;
-            tube.transform.SetPositionAndRotation(new Vector3(50 + width/tubeCount*i,height/2,0),new Quaternion());
-            TubeViewController tubeView = tube.GetComponent<TubeViewController>();
-            _tubeViewList.Add(tubeView.Init(LocalLevelData.TubeList[i]));
-
+            // tube.
         }
     }
+    #endregion
+    
+    #region 游戏行为
 
-    public void TubeClick(TubeViewController tube)
+    /// <summary>
+    /// 初始化游戏界面
+    /// </summary>
+    private void InitGamePanel()
     {
-        if (_tubeClickBuffer.Count >= 2)
+        int tubeCount = LocalLevelData.TubeList.Count;
+        if (_tubeViewList.Count < tubeCount)
         {
-            TubeViewController left = _tubeClickBuffer[0];
-            TubeViewController right = _tubeClickBuffer[1];
-
-            if (right.GetTopColor() <= 0 || left.GetTopColor() == right.GetTopColor())
+            for (int i = _tubeViewList.Count; i < tubeCount; i++) 
             {
-                right.BallPush(left.BallPop());
-                left.TubeFall();
-                right.RefreshView();
-            }
+                if (TubeObj == null)
+                {
+                    break;
+                }
 
-
-            _tubeClickBuffer.Clear();
+                GameObject tube = Instantiate(TubeObj,GameContentLayout.transform);
+                tube.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+                TubeViewController tubeView = tube.GetComponent<TubeViewController>();
+                _tubeViewList.Add(tubeView.Init(LocalLevelData.TubeList[i]));
+            } 
         }
         else
         {
+            for (int i = _tubeViewList.Count; i >= 0; i--)
+            {
+                if (i >= tubeCount)
+                {
+                    Destroy(_tubeClickBuffer[i]);
+                    _tubeViewList.Remove(_tubeClickBuffer[i]);
+                }
+                else
+                {
+                    _tubeViewList[i].Init(LocalLevelData.TubeList[i]);
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 点击管子后，对管子进行管理
+    /// </summary>
+    /// <param name="tube"></param>
+    public void TubeClick(TubeViewController tube)
+    {
+        if (_tubeClickBuffer.Count >= 1)
+        {
+            var left = _tubeClickBuffer[0];
+            var right = tube;
             if (!_tubeClickBuffer.Contains(tube))
             {
-                _tubeClickBuffer.Add(tube);
-                if (tube.GetTopColor() >= 0)
+                if (right.GetTopColor() < 0 || left.GetTopColor() == right.GetTopColor())
                 {
-                    TubeViewController left = _tubeClickBuffer[0];
-                    left.TubePop();
+                    if (right.BallPush(left.BallPop()))
+                    {
+                        right.RefreshView();
+                        _tubeClickBuffer.Clear();
+                        CheckGameComplete();
+                    }
                 }
             }
             else
@@ -100,7 +131,47 @@ public class PanelGame : MonoBehaviour
                 tube.TubeFall();
                 _tubeClickBuffer.Clear();
             }
-
+        }
+        else
+        {
+            if (tube.GetTopColor() >= 0)
+            {
+                _tubeClickBuffer.Add(tube);
+                tube.TubePop();
+            }
         }
     }
+    
+    /// <summary>
+    /// 检测游戏是否完成
+    /// </summary>
+    public void CheckGameComplete()
+    {
+        int completeCount = 0;
+        for (int i = 0; i < _tubeViewList.Count; i++)
+        {
+            var tube = _tubeViewList[i];
+            if (tube.IsComplete)
+            {
+                completeCount++;
+            }
+        }
+
+        if (completeCount >= GameModel.Instance.UnSameColor.Count)
+        {
+            GameComplete();
+        }
+    }
+    
+    /// <summary>
+    /// 游戏完成行为
+    /// </summary>
+    private void  GameComplete()
+    {
+        GameModel.Instance.IsGameComplete = true;
+        GameModel.Instance.LocalLevel++;
+    }
+
+    #endregion
+    
 }

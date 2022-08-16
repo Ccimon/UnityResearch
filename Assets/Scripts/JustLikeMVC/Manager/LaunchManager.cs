@@ -19,10 +19,4 @@ public class LaunchManager : MonoBehaviour
         var model = GameModel.Instance;
         model.Init();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

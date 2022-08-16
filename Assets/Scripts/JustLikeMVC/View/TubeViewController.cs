@@ -4,6 +4,7 @@ using GlobalModel.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using GlobalModel;
 
 /// <summary>
 /// TubeViewController控制整个管子信息,以及对Ball的操作行为。
@@ -25,19 +26,20 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
     private Button button;
 
     private BallViewController _outBall;
-    public bool IsComplete { get; private set; } = false;
+    public bool IsComplete { get; private set; }
 
     private void Awake()
     {
+        IsComplete = false;
         button = transform.GetComponent<Button>();
         button.onClick.AddListener(OnTubeClick);
     }
-
+    
     private void OnTubeClick()
     {
         PanelGame.Instance.TubeClick(this);
     }
-
+    
     public TubeViewController Init<TData>(TData data)
     {
          _tubeData = data as  TubeData;
@@ -52,6 +54,7 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
              var ballData = list[i];
              var ball = Instantiate(BallObj,_ballPosList[i]);
              var ballview = ball.GetComponent<BallViewController>();
+             ballview.transform.localPosition = Vector3.zero;
              ballview.Init(ballData);
              _ballBuffer.Push(ballview);
          }
@@ -61,12 +64,12 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
 
     public TubeViewController RefreshView()
     {
-        int i = 0;
+        int i = _ballBuffer.Count - 1;
         foreach (BallViewController view in _ballBuffer)
         {
-            view.transform.parent = _ballPosList[i];
-            view.transform.DOMove(view.transform.parent.position, 0.2f);
-            i++;
+            view.transform.parent = _ballPosList[i].transform;
+            view.transform.DOMove(view.transform.parent.position, 0.1f);
+            i--;
         }
 
         return this;
@@ -87,28 +90,37 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
         return color;
     }
 
+    /// <summary>
+    /// 放下顶端小球
+    /// </summary>
     public void TubeFall()
     {
+        if(IsComplete){return;}
         _outBall?.transform.DOMove(_outBall.transform.parent.position, 0.1f);
         _outBall = null;
     }
-
+    
+    /// <summary>
+    /// 弹起顶端小球
+    /// </summary>
     public void TubePop()
     {
+        if(IsComplete){return;}
         GetTopBall()?.transform.DOMove(BallOutPos.position,0.1f);
     }
      
     /// <summary>
     /// 把球弹出去
     /// </summary>
-    /// <returns></returns>
+    /// <returns>被弹出的小球的列表</returns>
     public List<BallViewController> BallPop()
     {
+        if(IsComplete){return null;}
         List<BallViewController> viewList = new List<BallViewController>();
         int sameColor = -1;
         for (int i = _ballBuffer.Count; i > 0; i--)
         {
-            BallViewController ballview = _ballBuffer.Pop();
+            BallViewController ballview = _ballBuffer.Peek();
             if (sameColor == -1)
             {
                 sameColor = ballview.GetBallColor();
@@ -117,13 +129,15 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
             if (ballview.GetBallColor() == sameColor)
             {
                 viewList.Add(ballview);
+                _ballBuffer.Pop();
             }
             else
             {
-                _ballBuffer.PushRange(viewList);
                 break;
             }
         }
+
+        _outBall = null;
         return viewList;
     }
     
@@ -134,12 +148,13 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
     /// <returns></returns>
     public bool BallPush(List<BallViewController> viewlist)
     {
+        if(IsComplete){return false;}
         if (viewlist.Count < 1)
         {
             return false;
         }
 
-        if (GetTopColor() < 0 && viewlist[0].GetBallColor() != GetTopColor())
+        if (GetTopColor() > 0 && viewlist[0].GetBallColor() != GetTopColor() && _ballBuffer.Count + viewlist.Count > _tubeData.length)
         {
             return false;
         }
@@ -147,6 +162,7 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
         _ballBuffer.PushRange(viewlist);
 
         IsComplete = CheckComplete();
+        _outBall = null;
         return true;
     }
 
@@ -159,9 +175,8 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
         BallViewController view;
         if (_outBall == null && _ballBuffer.Count > 0)
         {
-            view = _ballBuffer.Pop();
+            view = _ballBuffer.Peek();
             _outBall = view;
-            _ballBuffer.Push(view);
         }
         else
         {
@@ -176,21 +191,22 @@ public class TubeViewController : MonoBehaviour,IViewController<TubeViewControll
     /// <returns></returns>
     private bool CheckComplete()
     {
-        if (_tubeData.BallList.Count < 4)
+        if (_ballBuffer.Count < _tubeData.length)
         {
             return false;
         }
 
+        var list = _ballBuffer.ToArray();
         int sameColor = -1;
-        for (int i = 0; i < _tubeData.BallList.Count; i++)
+        for (int i = 0; i < list.Length; i++)
         {
-            var data = _tubeData.BallList[i];
+            var data = list[i];
             if (sameColor == -1)
             {
-                sameColor = data.BallColor;
+                sameColor = data.GetBallColor();
             }
 
-            if (data.BallColor != sameColor)
+            if (data.GetBallColor() != sameColor)
             {
                 return false;
             }

@@ -69,11 +69,11 @@ namespace GlobalModel
         public delegate void OnIntValueChange(int value);
         public delegate void OnCaseEnter();
 
-        private int _localLevel;
+        private int _localLevel = 0;
         private int _coin;
         private int _lastLevel;
         private int _maxLevel;
-        public LevelData LocalLevelData { get; private set; }
+        private bool _isGameComplete = false;
 
         private OnIntValueChange _levelEndCallBack;
         private OnIntValueChange _levelStartCallBack;
@@ -81,14 +81,33 @@ namespace GlobalModel
         private OnCaseEnter _gameStartCallBack;
         private OnCaseEnter _gameEndCallBack;
 
+        public LevelData LocalLevelData { get; private set; }
+        public List<int> UnSameColor { get; private set; }
         public int LocalLevel
         {
             get => _localLevel;
             set
             {
                 _localLevel = value;
-                _levelEndCallBack(_localLevel);
+                _levelEndCallBack?.Invoke(_localLevel);
                 AfterLevelChanged();
+            }
+        }
+
+        public bool IsGameComplete
+        {
+            get => _isGameComplete;
+            set
+            {
+                _isGameComplete = value;
+                if (value)
+                {
+                    _gameEndCallBack?.Invoke();
+                }
+                else
+                {
+                    _gameStartCallBack?.Invoke();
+                }
             }
         }
 
@@ -97,6 +116,10 @@ namespace GlobalModel
         /// </summary>
         public void Init()
         {
+            if (UnSameColor == null)
+            {
+                UnSameColor = new List<int>();
+            }
             LoadNextLevelData();
             _gameStartCallBack?.Invoke();
         }
@@ -105,7 +128,11 @@ namespace GlobalModel
         {
             LoadNextLevelData();
         }
-
+        
+        /// <summary>
+        /// 加载下一关数据
+        /// </summary>
+        /// <param name="levelIndex">关卡</param>
         private void LoadNextLevelData(int levelIndex = 0)
         {
             LocalLevelData = new LevelData();
@@ -129,6 +156,20 @@ namespace GlobalModel
             var tubeData2 = new TubeData();
             tubeData2.BallList = new List<Balldata>();
             list.Add(tubeData2);
+            
+            UnSameColor.Clear();
+            for (int i = 0; i < LocalLevelData.TubeList.Count; i ++)
+            {
+                var tube = LocalLevelData.TubeList[i];
+                for (int j = 0; j < tube.BallList.Count; j ++)
+                {
+                    var ball = tube.BallList[j];
+                    if (!UnSameColor.Contains(ball.BallColor))
+                    {
+                        UnSameColor.Add(ball. BallColor);
+                    }
+                }
+            }
         }
 
         #region 游戏流程回调

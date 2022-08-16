@@ -1,8 +1,10 @@
 ﻿
 using System.Collections.Generic;
 using System.Diagnostics;
+using DG.Tweening;
 using UnityEngine;
 using GlobalModel.Data;
+using UnityEngine.UI;
 
 public static class GameUtil
 {
@@ -23,6 +25,14 @@ public static class GameUtil
         }
     }
 
+    public static void ShowToast(string info)
+    {
+        var toastPrefab = Resources.Load<GameObject>("Prefab/ToastObj");
+        var toast = GameObject.Instantiate(toastPrefab,PanelGame.Instance.GameCoverLayout);
+        var text = toast.GetComponentInChildren<Text>();
+        text.text = info;
+        text.transform.parent.GetComponent<CanvasGroup>().DOFade(0,0.5f).SetDelay(1.5f);
+    }
     #endregion
 
 
