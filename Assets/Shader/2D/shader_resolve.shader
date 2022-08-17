@@ -48,10 +48,14 @@
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 fixed4 rso = tex2D(_ResolveTex, i.uv);
-                // just invert the colors
                 clip(rso.r * 0.1 + rso.g * 0.5 + rso.b * 0.4 - _ResolvePer);
-                col.rgb *= col.a;
 
+                // if(rso.r * 0.1 + rso.g * 0.5 + rso.b * 0.4 < _ResolvePer)
+                // {
+                //     discard;
+                // }
+                
+                col.rgb *= col.a;
                 return col;
             }
             ENDCG
