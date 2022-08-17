@@ -187,8 +187,6 @@ Properties
                     color.a = saturate(color.a);
                     //字逐渐隐藏时，描边也要隐藏
                     color.a *= IN.color.a;	
- 
-                    
                 }
                 
                 //Add for RectMask2D 
