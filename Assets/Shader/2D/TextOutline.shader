@@ -156,12 +156,12 @@ Properties
             fixed4 frag(v2f IN) : SV_Target
             {
                 //默认的文字颜色
-                fixed4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
+                fixed4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color * IsInRect(IN.texcoord, IN.uv1, IN.uv2);
                 //normal.z 存放 _OutlineWidth
                 if (_OutlineWidth > 0)	
                 {
                     //uv1 uv2 存着原始字的uv长方形区域大小
-                    color.w *= IsInRect(IN.texcoord, IN.uv1, IN.uv2);	
+                    // color.w *= IsInRect(IN.texcoord, IN.uv1, IN.uv2);
                     //uv3.xy tangent.z 分别存放着 _OutlineColor的rgb
                     half4 val = half4(_OutlineColor.rgb, 0);		
                     //val 是 _OutlineColor的rgb，a是后面计算的
