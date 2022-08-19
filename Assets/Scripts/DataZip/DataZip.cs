@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GlobalModel.Data;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,9 +24,12 @@ public class DataZip : MonoBehaviour
 
         for (int i = 0; i < Databuffer.Length; i ++)
         {
+            // Debug.Log("MetaData:" + Databuffer[i] + " ReleaseData:" + list[i]);
             Debug.Log(Databuffer[i] == list[i]);
         }
         Debug.Log("check end");
+        
+        // Debug.Log("!" + ((3 & 1) >= 1));
     }
 
     /// <summary>
@@ -42,11 +46,12 @@ public class DataZip : MonoBehaviour
         {
             UInt32 info = 0;
             int max = i + 32;
-            for (int j = i; j < max; j ++)
+            for (int j = i; j < max; j ++,i++)
             {
-                UInt32 extra = datas[j] ? (UInt32)Math.Pow(2, j) : 0;
+                UInt32 extra = (UInt32)(datas[j] ? 1 : 0);
+                info = info << 1;
                 info += extra;
-                i++;
+                // Debug.Log("Bool:" + datas[j] + " extra:" + extra + " info:" + info);
             }
 
             intbuffer[index] = info;
@@ -70,11 +75,11 @@ public class DataZip : MonoBehaviour
         while (i < datas.Count)
         {
             UInt32 info = 0;
-            for (int j = i; j < 32; j ++)
+            for (int j = i; j < 32; j++,i++)
             {
-                UInt32 extra = datas[j] ? (UInt32)Math.Pow(2, j) : 0;
+                UInt32 extra = (UInt32)(datas[j] ? 1 : 0);
+                info = info << 1;
                 info += extra;
-                i++;
             }
 
             intbuffer[index] = info;
@@ -93,15 +98,14 @@ public class DataZip : MonoBehaviour
     public List<bool> DataRelease(UInt32[] datas)
     {
         List<bool> releasebuffer = new List<bool>();
-        UInt32 standard = (UInt32)Math.Pow(2,31);
         // Debug.Log("standard value:" + standard);
         for (int i = 0; i < datas.Length; i ++)
         {
             UInt32 info = datas[i];
             for (int j = 0; j < 32; j ++)
             {
-                bool flag = info % 2 > 0 ? true : false;
-                info =  info >> 1;
+                bool flag = info > UInt32.MaxValue >> 1 ? true : false;
+                info =  info << 1;
                 releasebuffer.Add(flag);
             }
         }

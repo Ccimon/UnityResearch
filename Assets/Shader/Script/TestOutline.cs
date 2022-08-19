@@ -9,19 +9,12 @@ namespace UnityEngine.UI
         [SerializeField]
         private Color32 _gradualColor;
 
-        [SerializeField] private float _lessScale = 1;
-        [SerializeField] private float _largeScale = 1;
-        [SerializeField] private Vector2 _offset;
+        [SerializeField] 
+        private int _repeatRender = 4;
 
-        private VertexHelper _helper;
         protected TestOutline()
         {}
 
-        protected void ApplyShadowZeroAlloc(List<UIVertex> verts, Color32 color, int start, int end, float x, float y)
-        {
-            
-        }
-        
         protected void ApplyShadowZeroAllocGradually(List<UIVertex> verts, Color32 color, int start, int end, float x, float y)
         {
             UIVertex vt;
@@ -39,22 +32,20 @@ namespace UnityEngine.UI
                 v.x += x;
                 v.y += y;
                 vt.position = v;
-                
-                
 
                 byte r;
                 byte g;
                 byte b;
 
-                if (v.y<0)
+                if (v.y < 0)
                 {
-                    r = _gradualColor.a;
+                    r = _gradualColor.r;
                     g = _gradualColor.g;
                     b = _gradualColor.b;
                 }
                 else
                 {
-                    r = color.a;
+                    r = color.r;
                     g = color.g;
                     b = color.b;
                 }
@@ -67,64 +58,11 @@ namespace UnityEngine.UI
                 verts[i] = vt;
             }
         }
-        
-        protected void ApplyShadowZeroAllocByScale(List<UIVertex> verts, Color32 color, int start, int end, float scale)
-        {
-            UIVertex vt;
-
-            var neededCapacity = verts.Count + end - start;
-            if (verts.Capacity < neededCapacity)
-                verts.Capacity = neededCapacity;
-
-            for (int i = start; i < end; ++i)
-            {
-                vt = verts[i];
-                verts.Add(vt);
-
-                vt.position.x += scale * Mathf.Sign(vt.position.x);
-                vt.position.y += scale * Mathf.Sign(vt.position.y);
-                
-                Vector3 v = vt.position;
-
-                v.x += _largeScale;
-                v.y += _largeScale;
-                
-                vt.position = v;
-
-                byte r;
-                byte g;
-                byte b;
-                
-                r = _gradualColor.a;
-                g = _gradualColor.g;
-                b = _gradualColor.b;
-
-                var newColor = new Color32(r, g, b, color.a);
-                
-                if (useGraphicAlpha)
-                    newColor.a = (byte)((newColor.a * verts[i].color.a) / 255);
-                vt.color = newColor;
-                verts[i] = vt;
-            }
-        }
-
-        // private void OnDrawGizmos()
-        // {
-        //     var vts = new List<UIVertex>();
-        //     _helper.GetUIVertexStream(vts);
-        //     
-        //     for (int i = 0; i < vts.Count; i++)
-        //     {
-        //         Gizmos.color = Color.blue;
-        //         Gizmos.DrawSphere(vts[i].position,100);
-        //     }
-        // }
 
         public override void ModifyMesh(VertexHelper vh)
         {
             if (!IsActive())
                 return;
-            _helper = vh;
             var verts = new List<UIVertex>();
             vh.GetUIVertexStream(verts);
             var neededCpacity = verts.Count * 5;
@@ -147,28 +85,23 @@ namespace UnityEngine.UI
                     position =  vt.position * 1.2f
                 };
             }
-            
-    
-            
+
             var start = 0;
             var end = verts.Count;
-            ApplyShadowZeroAllocGradually(verts, effectColor, start, verts.Count, effectDistance.x, effectDistance.y);
-            
-            start = end;
-            end = verts.Count;
-            ApplyShadowZeroAllocGradually(verts, effectColor, start, verts.Count, effectDistance.x, -effectDistance.y);
-            
-            start = end;
-            end = verts.Count;
-            ApplyShadowZeroAllocGradually(verts, effectColor, start, verts.Count, -effectDistance.x, effectDistance.y);
-            
-            start = end;
-            end = verts.Count;
-            ApplyShadowZeroAllocGradually(verts, effectColor, start, verts.Count, -effectDistance.x, -effectDistance.y);
-            
-            // ApplyShadowZeroAllocByScale(verts,effectColor,start,verts.Count,_largeScale);
-            // ApplyShadowZeroAllocByScale(verts,effectColor,start,verts.Count,1/_largeScale);
-            
+            var deg = 360 / _repeatRender;
+            for (int i = 0; i < _repeatRender; i++)
+            {
+                if (i > 0)
+                {
+                    start = end;
+                    end = verts.Count;
+                }
+
+                float x = effectDistance.x * Mathf.Cos(Mathf.Deg2Rad * i *deg);
+                float y = effectDistance.x * Mathf.Sin(Mathf.Deg2Rad * i *deg);
+                ApplyShadowZeroAllocGradually(verts, effectColor, start, verts.Count, x, y);
+            }
+
             vh.Clear();
             vh.AddUIVertexTriangleStream(verts);
             verts.Clear();

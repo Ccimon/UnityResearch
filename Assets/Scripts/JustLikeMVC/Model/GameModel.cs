@@ -47,7 +47,7 @@ namespace GlobalModel
     /// GameModel管理所有的游戏相关数据,关卡,关卡信息,关卡流程。
     /// 向外提供多个委托,提供流程回调
     /// </summary>
-    public class GameModel
+    public class GameModel:Object
     {
         private static GameModel _instance = null;
         public static GameModel Instance
