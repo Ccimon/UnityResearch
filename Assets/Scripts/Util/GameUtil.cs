@@ -1,15 +1,26 @@
 ﻿
-using System.Collections.Generic;
-using System.Diagnostics;
-using DG.Tweening;
 using UnityEngine;
-using GlobalModel.Data;
+using System.Collections;
+using System.Collections.Generic;
+using System;
+using System.IO;
 using UnityEngine.UI;
+using System.Security.Cryptography;
+using System.Text;
+using DG.Tweening;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using GlobalModel.Data;
+
 
 public static class GameUtil
 {
+    private static GameObject _toastObj;
+    
     #region 调用函数
-
     public static Color ConvertEnumToColor(BallColor color)
     {
         switch (color)
@@ -24,14 +35,23 @@ public static class GameUtil
             default: return Color.white;
         }
     }
-
-    public static void ShowToast(string info)
+    
+    /// <summary>
+    /// 展示一个提示
+    /// </summary>
+    /// <param name="info">展示用的信息</param>
+    public static void ShowToast(string info,float duration = 0.5f,float fadeTime = 1.5f)
     {
-        var toastPrefab = Resources.Load<GameObject>("Prefab/ToastObj");
-        var toast = GameObject.Instantiate(toastPrefab,PanelGame.Instance.GameCoverLayout);
-        var text = toast.GetComponentInChildren<Text>();
+        if (_toastObj == null)
+        {
+            var toastPrefab = Resources.Load<GameObject>("Prefab/ToastObj");
+            _toastObj = GameObject.Instantiate(toastPrefab,PanelGame.Instance.GameCoverLayout);
+        }
+        
+
+        var text = _toastObj.GetComponentInChildren<Text>();
         text.text = info;
-        text.transform.parent.GetComponent<CanvasGroup>().DOFade(0,0.5f).SetDelay(1.5f);
+        text.transform.parent.GetComponent<CanvasGroup>().DOFade(0,duration).SetDelay(fadeTime);
     }
     #endregion
 
@@ -85,4 +105,46 @@ public static class GameUtil
     }
     #endregion
 
+    #region 加密解密类
+    /// <summary>
+    /// 加密订单列表明文
+    /// </summary>
+    /// <param name="toE"></param>
+    /// <returns></returns>
+    public static string Encrypt(string toE)
+    {
+        byte[] keyArray = Encoding.UTF8.GetBytes(GameConfig.EncryptKeyWord);
+        RijndaelManaged rDel = new RijndaelManaged();
+        rDel.Key = keyArray;
+        rDel.Mode = CipherMode.ECB;
+        rDel.Padding = PaddingMode.PKCS7;
+        ICryptoTransform cTransform = rDel.CreateEncryptor();
+
+        byte[] toEncryptArray = Encoding.UTF8.GetBytes(toE);
+        byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+
+        return Convert.ToBase64String(resultArray, 0, resultArray.Length);
+    }
+
+    /// <summary>
+    /// 解析订单列表密文
+    /// </summary>
+    /// <param name="toD"></param>
+    /// <returns></returns>
+    public static string Decrypt(string toD)
+    {
+        byte[] keyArray = Encoding.UTF8.GetBytes(GameConfig.EncryptKeyWord);
+
+        RijndaelManaged rDel = new RijndaelManaged();
+        rDel.Key = keyArray;
+        rDel.Mode = CipherMode.ECB;
+        rDel.Padding = PaddingMode.PKCS7;
+        ICryptoTransform cTransform = rDel.CreateDecryptor();
+
+        byte[] toEncryptArray = Convert.FromBase64String(toD);
+        byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+
+        return Encoding.UTF8.GetString(resultArray);
+    }
+    #endregion
 }

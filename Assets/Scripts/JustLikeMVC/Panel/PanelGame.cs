@@ -45,6 +45,7 @@ public class PanelGame : MonoBehaviour
     /// </summary>
     private void RegisterListener()
     {
+        Debug.Log("GameCallBack Register");
         GameModel.Instance.AddGameStartListener(OnGameStart);
         GameModel.Instance.AddGameEndListener(OnGameEnd);
     }
@@ -65,7 +66,6 @@ public class PanelGame : MonoBehaviour
     #endregion
     
     #region 游戏行为
-
     /// <summary>
     /// 初始化游戏界面
     /// </summary>
@@ -85,7 +85,7 @@ public class PanelGame : MonoBehaviour
                 tube.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
                 TubeViewController tubeView = tube.GetComponent<TubeViewController>();
                 _tubeViewList.Add(tubeView.Init(LocalLevelData.TubeList[i]));
-            } 
+            }
         }
         else
         {

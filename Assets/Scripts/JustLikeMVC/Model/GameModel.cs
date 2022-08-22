@@ -5,6 +5,10 @@ using GlobalModel.Data;
 
 namespace GlobalModel.Data
 {
+    public enum LevelType
+    {
+        Normal
+    }
     public enum BallColor
     {
         Red,
@@ -24,15 +28,29 @@ namespace GlobalModel.Data
 
     public class LevelData:Data
     {
-        public int Index;
-        public List<TubeData> TubeList;
+        //唯一标示
+        public string Id;
+        //关卡序号
+        public int LevelIndex;
+        //关卡类型
+        public LevelType LevelType; 
+        //关卡内容
+        public List<List<int>> LevelContain;
+
+        public List<List<int>> TubeList
+        {
+            get
+            {
+                return LevelContain;
+            }
+        }
     }
 
     public class TubeData:Data
     {
         public int Index;
         public int length = 4;
-        public List<Balldata> BallList;
+        public List<int> BallList;
     }
 
     public class Balldata:Data
@@ -120,56 +138,22 @@ namespace GlobalModel
             {
                 UnSameColor = new List<int>();
             }
-            LoadNextLevelData();
+            LoadLevelData();
             _gameStartCallBack?.Invoke();
         }
 
         private void AfterLevelChanged()
         {
-            LoadNextLevelData();
+            LoadLevelData();
         }
         
         /// <summary>
         /// 加载下一关数据
         /// </summary>
         /// <param name="levelIndex">关卡</param>
-        private void LoadNextLevelData(int levelIndex = 0)
+        private void LoadLevelData(int levelIndex = 0)
         {
-            LocalLevelData = new LevelData();
-            LocalLevelData.Index = levelIndex;
-            LocalLevelData.TubeList = new List<TubeData>();
-            var list = LocalLevelData.TubeList;
-            var tubeData0 = new TubeData();
-            var ballList0= tubeData0.BallList = new List<Balldata>();
-            ballList0.Add(new Balldata() { BallColor = 0});
-            ballList0.Add(new Balldata() { BallColor = 1 });
-            ballList0.Add(new Balldata() { BallColor = 0 });
-            ballList0.Add(new Balldata() { BallColor = 1 });
-            var tubeData1 = new TubeData();
-            list.Add(tubeData0);
-            var ballList1 = tubeData1.BallList = new List<Balldata>();
-            ballList1.Add(new Balldata() { BallColor = 1 });
-            ballList1.Add(new Balldata() { BallColor = 0 });
-            ballList1.Add(new Balldata() { BallColor = 1 });
-            ballList1.Add(new Balldata() { BallColor = 0 });
-            list.Add(tubeData1);
-            var tubeData2 = new TubeData();
-            tubeData2.BallList = new List<Balldata>();
-            list.Add(tubeData2);
-            
-            UnSameColor.Clear();
-            for (int i = 0; i < LocalLevelData.TubeList.Count; i ++)
-            {
-                var tube = LocalLevelData.TubeList[i];
-                for (int j = 0; j < tube.BallList.Count; j ++)
-                {
-                    var ball = tube.BallList[j];
-                    if (!UnSameColor.Contains(ball.BallColor))
-                    {
-                        UnSameColor.Add(ball. BallColor);
-                    }
-                }
-            }
+            LocalLevelData = LevelManager.Instance.GetLevelData(levelIndex);
         }
 
         #region 游戏流程回调

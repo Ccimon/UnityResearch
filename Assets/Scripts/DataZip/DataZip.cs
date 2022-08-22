@@ -32,6 +32,7 @@ public class DataZip : MonoBehaviour
         // Debug.Log("!" + ((3 & 1) >= 1));
     }
 
+    #region 长Bool列表压缩
     /// <summary>
     /// 对Bool数据列表进行压缩
     /// </summary>
@@ -98,7 +99,6 @@ public class DataZip : MonoBehaviour
     public List<bool> DataRelease(UInt32[] datas)
     {
         List<bool> releasebuffer = new List<bool>();
-        // Debug.Log("standard value:" + standard);
         for (int i = 0; i < datas.Length; i ++)
         {
             UInt32 info = datas[i];
@@ -112,4 +112,6 @@ public class DataZip : MonoBehaviour
 
         return releasebuffer;
     }
+
+    #endregion
 }
