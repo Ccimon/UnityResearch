@@ -272,6 +272,9 @@
  <Reference Include="DOTween">
  <HintPath>/Users/yyz/Documents/GitHub/UnityResearch/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
  </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>/Users/yyz/Documents/GitHub/UnityResearch/Assets/Scripts/JustLikeMVC/ThirdParty/JsonNet/Newtonsoft.Json.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Hub/Editor/2019.4.34f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
