@@ -8,7 +8,7 @@ public class LogEmulator : MonoBehaviour
     float time = 0;
     void Start()
     {
-        
+        BuiltinLogGUI.Instance.RegisterOnGUIButton("Test",Say);
     }
 
     // Update is called once per frame
@@ -17,8 +17,13 @@ public class LogEmulator : MonoBehaviour
         time += Time.deltaTime;
         if (time > 1)
         {
-            Debug.Log("TestLog" + time);
+            // Debug.Log("TestLog" + time);
             time--;
         }
+    }
+
+    void Say()
+    {
+        Debug.Log("Test Call Back");
     }
 }

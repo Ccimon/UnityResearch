@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GlobalModel;
@@ -162,7 +163,12 @@ public class PanelGame : MonoBehaviour
             GameComplete();
         }
     }
-    
+
+    private void OnDestroy()
+    {
+        Debug.Log("destory");
+    }
+
     /// <summary>
     /// 游戏完成行为
     /// </summary>

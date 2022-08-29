@@ -103,6 +103,19 @@ public static class GameUtil
             rtrans.SetPositionAndRotation(position,Quaternion.identity);
         }
     }
+    
+    /// <summary>
+    /// 将向量放大指定倍数
+    /// </summary>
+    /// <param name="vec"></param>
+    /// <param name="scale"></param>
+    public static Vector3 Multi(this Vector3 vec,float scale)
+    {
+        vec.x *= scale;
+        vec.y *= scale;
+        vec.z *= scale;
+        return vec;
+    }
     #endregion
 
     #region 加密解密类
@@ -146,5 +159,6 @@ public static class GameUtil
 
         return Encoding.UTF8.GetString(resultArray);
     }
+    
     #endregion
 }

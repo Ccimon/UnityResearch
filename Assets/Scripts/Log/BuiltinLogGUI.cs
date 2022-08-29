@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Security;
@@ -10,7 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 
-public class BuiltinLogGUI : MonoBehaviour
+public partial class BuiltinLogGUI : MonoBehaviour
 {
 
     public class LogInfo
@@ -56,6 +57,8 @@ public class BuiltinLogGUI : MonoBehaviour
 
     [Tooltip("存储的Log信息数量上限")]
     public int MaxLogCount = 100;
+    
+    public Vector4 Padding = Vector4.one;
     #endregion
 
     #region 私有变量
@@ -73,7 +76,9 @@ public class BuiltinLogGUI : MonoBehaviour
     private LogInfoType _localLogState = LogInfoType.All;
     private string _inputTxt = "Search for log";
     private bool isSearch = false;
-
+    private List<Action> _actionBuffer = new List<Action>();
+    private List<string> _actionNameBuffer = new List<string>();
+    
     private int LogBufferCount => _logStrBuffer.Count;
     #endregion
 
@@ -83,8 +88,6 @@ public class BuiltinLogGUI : MonoBehaviour
         Application.logMessageReceived += OnLogReceive;
     }
 
-
-
     void Start()
     {
         //StrReciever = "2942693781@qq.com";
@@ -92,7 +95,7 @@ public class BuiltinLogGUI : MonoBehaviour
         int height = 50;
         int y = 150;
         _toggleRect = new Rect(Screen.width / 2 - width / 2, y, width, height);
-        _windowRect = new Rect(0,y + 80,Screen.width,Screen.height * 0.5f);
+        _windowRect = new Rect(Padding.x,y + 80 + Padding.y,Screen.width - Padding.z - Padding.x,Screen.height * 0.5f - Padding.w - Padding.y);
         _toggleStyle = new GUIStyle()
         {
             fontSize = 40,
@@ -152,7 +155,7 @@ public class BuiltinLogGUI : MonoBehaviour
             //打开的时候Toggle字体为黄色
             _toggleContent.text = String.Format(_colorFormatStr, _colorYellow, _togShowLogStr);
             DrawLogWindow();
-            DrawButtonGroup();
+            DrawExtraBtn();
         }
         else
         {
@@ -160,11 +163,7 @@ public class BuiltinLogGUI : MonoBehaviour
             _toggleContent.text = String.Format(_colorFormatStr, _colorBlue, _togShowLogStr);
         }
     }
-
-    private void DrawButtonGroup()
-    {
-
-    }
+    
 
     /// <summary>
     /// 绘制Toggle开关
@@ -183,7 +182,40 @@ public class BuiltinLogGUI : MonoBehaviour
     {
         GUI.Window(0,_windowRect,OnWindow, _togShowLogStr);
     }
+    
+    /// <summary>
+    /// 绘制注册的回调按钮
+    /// </summary>
+    private void DrawExtraBtn()
+    {
+        int line = 3;
+        int row = 5;
+        float width = _windowRect.width;
+        float height = _windowRect.y;
+        float btnWidth = width / row;
+        float btnHeight = height / line;
 
+        var list = from item in _actionBuffer
+            where item != null
+            select item;
+        
+        for (int i = 0; i < _actionBuffer.Count; i++)
+        {
+            int y = i / line;
+            int x = i % line;
+            var rect = new Rect(
+                _windowRect.x + x * btnWidth,
+                0 + btnHeight * y,
+                btnWidth,
+                btnHeight);
+            var flag = GUI.Button(rect,"<size=30>" + _actionNameBuffer[i] +"</size>");
+            if (flag)
+            {
+                _actionBuffer[i]?.Invoke();
+            }
+        }
+    }
+    
     /// <summary>
     /// 绘制Log窗口的内容
     /// </summary>
@@ -193,12 +225,6 @@ public class BuiltinLogGUI : MonoBehaviour
         Vector2 startPos = new Vector2(0,25);
         float height = 50;
         float width = _windowRect.width / 4 - 2;
-
-        //GUI.Button(new Rect(startPos.x, startPos.y + _windowRect.height / 4 * 0, width, height), "Log");
-        //GUI.Button(new Rect(startPos.x, startPos.y + _windowRect.height / 4 * 1, width, height), "Log");
-        //GUI.Button(new Rect(startPos.x, startPos.y + _windowRect.height / 4 * 2, width, height), "Log");
-        //GUI.Button(new Rect(startPos.x, startPos.y + _windowRect.height / 4 * 3, width, height), "Log");
-
         float cor = _windowRect.width / 8 - width / 2;
 
         //绘制Log页面的四个分类按钮
@@ -222,26 +248,26 @@ public class BuiltinLogGUI : MonoBehaviour
         }
 
         //绘制输入框,Search按钮,Clear按钮
-        float inputWidth = Screen.width - 240;
+        float inputWidth = _windowRect.width * 0.6f;
         var inputStyle = new GUIStyle();
         inputStyle.fontSize = 33;
         inputStyle.alignment = TextAnchor.MiddleLeft;
         _inputTxt = GUI.TextField(new Rect(10, 80, inputWidth, 50), _inputTxt, inputStyle);
         GUI.Box(new Rect(10, 80, inputWidth, 50), "");
 
-        if (GUI.Button(new Rect(inputWidth + 15, 80,110,50),"Search",_typeButton))
+        if (GUI.Button(new Rect(inputWidth + 15, 80,_windowRect.width * 0.2f,50),"Search",_typeButton))
         {
             isSearch = true;
         }
-        if (GUI.Button(new Rect(inputWidth + 130, 80, 100, 50), "Clear", _typeButton))
+        if (GUI.Button(new Rect(inputWidth + _windowRect.width * 0.2f + 15, 80, _windowRect.width * 0.2f, 50), "Clear", _typeButton))
         {
             isSearch = false;
             _inputTxt = "";
         }
 
         //绘制ScrollView并展示Log信息
-        Rect positionRect = new Rect(0, 135, Screen.width, _windowRect.height - 50);
-        Rect viewRect = new Rect(0, 0, Screen.width, _scrollContentHeight);
+        Rect positionRect = new Rect(0, 135, _windowRect.width, _windowRect.height - 50);
+        Rect viewRect = new Rect(0, 0, _windowRect.width, _scrollContentHeight);
         //Rect bottomRect = new Rect(0, _scrollContentHeight, Screen.width, _scrollContentHeight);
         _scrollVec = GUI.BeginScrollView(positionRect, _scrollVec, viewRect);
 
@@ -275,8 +301,8 @@ public class BuiltinLogGUI : MonoBehaviour
                 _logBox.normal.textColor = Color.blue;
             }
 
-            var boxHeight =  _logBox.CalcHeight(new GUIContent(log.log), Screen.width - 20);
-            GUI.Box(new Rect(10, _scrollContentHeight, Screen.width - 20, boxHeight), log.log, _logBox);
+            var boxHeight =  _logBox.CalcHeight(new GUIContent(log.log), _windowRect.width - 20);
+            GUI.Box(new Rect(10, _scrollContentHeight, _windowRect.width - 20, boxHeight), log.log, _logBox);
             _scrollContentHeight += boxHeight + 5;
         }
 
@@ -285,6 +311,13 @@ public class BuiltinLogGUI : MonoBehaviour
     #endregion
 
     #region 公有方法
+
+    public void RegisterOnGUIButton(string btnName,Action callback)
+    {
+        _actionBuffer.Add(callback);
+        _actionNameBuffer.Add(btnName);
+    }
+    
     //public void OnInputTextChange()
     //{
     //    StrReciever = TextReceiver.text;

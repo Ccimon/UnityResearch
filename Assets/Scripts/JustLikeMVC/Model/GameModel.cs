@@ -65,7 +65,7 @@ namespace GlobalModel
     /// GameModel管理所有的游戏相关数据,关卡,关卡信息,关卡流程。
     /// 向外提供多个委托,提供流程回调
     /// </summary>
-    public class GameModel:Object
+    public class GameModel
     {
         private static GameModel _instance = null;
         public static GameModel Instance
@@ -82,6 +82,7 @@ namespace GlobalModel
 
         private GameModel()
         {
+            Debug.Log("GameModel:Init Success");
         }
 
         public delegate void OnIntValueChange(int value);
@@ -96,7 +97,21 @@ namespace GlobalModel
         private OnIntValueChange _levelEndCallBack;
         private OnIntValueChange _levelStartCallBack;
 
-        private OnCaseEnter _gameStartCallBack;
+        private OnCaseEnter _StartCallBack;
+
+        private OnCaseEnter _gameStartCallBack
+        {
+            get
+            {
+                Debug.Log("getter _startcallback:" + _StartCallBack);
+                return _StartCallBack;
+            }
+            set
+            {
+                Debug.Log("setter _startcallback:" + _StartCallBack);
+                _StartCallBack += value;
+            }
+        }
         private OnCaseEnter _gameEndCallBack;
 
         public LevelData LocalLevelData { get; private set; }

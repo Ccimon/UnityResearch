@@ -17,12 +17,12 @@ public class MeshTest : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(GenerateMesh());
-        GameObject gameObject = new GameObject("Quad");
+
+        GameObject gameObject = new GameObject("Cube");
         gameObject.transform.SetParent(transform, false);
         var mf = gameObject.AddComponent<MeshFilter>();
         var mr = gameObject.AddComponent<MeshRenderer>();
-        
+        StartCoroutine(GenerateMesh());
         var shader = Shader.Find("Custom/NewSurfaceShader");
         Material mat = new Material(shader);
         
@@ -31,7 +31,7 @@ public class MeshTest : MonoBehaviour
         // mesh.colors = colors;
         // mesh.uv = uvs;
         mesh.triangles = triangles;
-        // mf.mesh = mesh;
+        mf.mesh = mesh;
         mesh.RecalculateNormals();
         
         mr.material = mat;
@@ -48,50 +48,56 @@ public class MeshTest : MonoBehaviour
         {
             for (int x = 0; x <= xSize; x++,i++)
             {
-                // Color color = MeshTexture.GetPixel(x, y);
-                vertices[i] = new Vector3(x, y);
-                // yield return wait;
+                Color color = MeshTexture.GetPixel(x, y);
+                vertices[i] = new Vector3(x, y,color.a * 10f);
+                yield return wait;
             }
         }
 
         triangles = new int[xSize * ySize * 6];
-        for (int ti = 0,vi = 0,x = 0; x < xSize; ti+=6,x++,vi++)
+        for (int y = 0,vi = 0,ti = 0; y < ySize; y++,vi++)
         {
-            triangles[ti] = vi;
-            triangles[ti + 3] = triangles[ti + 2] = vi + 1;
-            triangles[ti + 4] = triangles[ti + 1] = vi + xSize + 1;
-            triangles[ti + 5] = vi + xSize + 2;
-            yield return wait;
+            for (int x = 0; x < xSize; ti += 6,x++,vi++)
+            {
+                triangles[ti] = vi * 1;
+                triangles[ti + 3] = triangles[ti + 2] = (vi + 1) * 1;
+                triangles[ti + 4] = triangles[ti + 1] = (vi + xSize + 1) * 1;
+                triangles[ti + 5] = (vi + xSize + 2) * 1;
+                yield return wait;
+            }
         }
+        
     }
 
     void OnDrawGizmos()
     {
-        // if (vertices == null)
-        // {
-        //     return;
-        // }
+        if (vertices == null)
+        {
+            return;
+        }
         
-        // Gizmos.color = Color.black;
-        // for (int i = 0; i < vertices.Length; i++)
-        // {
-        //     Gizmos.DrawSphere(vertices[i] * 100,20);
-        // }
+        Gizmos.color = Color.black;
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            Gizmos.DrawSphere(vertices[i] * 100,20);
+        }
 
-        // if (triangles == null)
-        // {
-        //     return;
-        // }
-        //
-        // Gizmos.color = Color.red;;
-        // for (int i = 0; i < triangles.Length; i += 6)
-        // {
-        //     Gizmos.DrawLine(vertices[triangles[i]],vertices[triangles[i+1]]);
-        //     Gizmos.DrawLine(vertices[triangles[i+1]],vertices[triangles[i+2]]);
-        //     Gizmos.DrawLine(vertices[triangles[i+2]],vertices[triangles[i]]);
-        //     Gizmos.DrawLine(vertices[triangles[i+3]],vertices[triangles[i+4]]);
-        //     Gizmos.DrawLine(vertices[triangles[i+4]],vertices[triangles[i+5]]);
-        //     Gizmos.DrawLine(vertices[triangles[i+5]],vertices[triangles[i+3]]);
-        // }
+        if (triangles == null)
+        {
+            return;
+        }
+
+        float scale = 100f;
+        Gizmos.color = Color.red;;
+        for (int i = 0; i < triangles.Length; i += 6)
+        {
+            Gizmos.DrawLine(vertices[triangles[i]].Multi(scale),vertices[triangles[i+1]].Multi(scale));
+            Gizmos.DrawLine(vertices[triangles[i+1]].Multi(scale),vertices[triangles[i+2]].Multi(scale));
+            Gizmos.DrawLine(vertices[triangles[i+2]].Multi(scale),vertices[triangles[i]].Multi(scale));
+            
+            Gizmos.DrawLine(vertices[triangles[i+3]].Multi(scale),vertices[triangles[i+4]].Multi(scale));
+            Gizmos.DrawLine(vertices[triangles[i+4]].Multi(scale),vertices[triangles[i+5]].Multi(scale));
+            Gizmos.DrawLine(vertices[triangles[i+5]].Multi(scale),vertices[triangles[i+3]].Multi(scale));
+        }
     }
 }

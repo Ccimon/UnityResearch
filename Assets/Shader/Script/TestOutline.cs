@@ -6,38 +6,66 @@ namespace UnityEngine.UI
     [AddComponentMenu("UI/Effects/TestOutline", 15)]
     public class TestOutline : Shadow
     {
+        private const int RENDER_LIMITED = 15;
+        
         /// <summary>
         /// 渐变色的另一个颜色
         /// </summary>
         [SerializeField]
         private Color32 _gradualColor;
-        
+
         /// <summary>
         /// 重复渲染次数
         /// </summary>
-        [SerializeField] 
-        private int _repeatRender = 4;
-
+        private int _repeatRender;
+        
+        public int RepeatRender
+        {
+            get => _repeatRender;
+            set => _repeatRender = Math.Max(1,Math.Min(RENDER_LIMITED,value));
+        }
+        
         protected TestOutline()
         {}
-        
+
         /// <summary>
         /// 调整Mesh的位置，以及颜色，是其呈现描边效果，以及颜色渐变
         /// </summary>
         /// <param name="verts">顶点列表</param>
-        /// <param name="color">默认颜色</param>
         /// <param name="start">顶点列表的索引起始点</param>
         /// <param name="end">顶点列表的索引终点</param>
         /// <param name="x">x轴方向偏移量</param>
         /// <param name="y">y轴方向偏移量</param>
-        protected void ApplyShadowZeroAllocGradually(List<UIVertex> verts, Color32 color, int start, int end, float x, float y)
+        protected void ApplyShadowZeroAllocGradually(List<UIVertex> verts, int start, int end, float x, float y)
         {
             UIVertex vt;
 
+            int wordCount = verts.Count / 6;
             var neededCapacity = verts.Count + end - start;
             if (verts.Capacity < neededCapacity)
                 verts.Capacity = neededCapacity;
 
+            float fHeight = 0;
+
+            List<float> minPosY = new List<float>();
+            for (int i = 0; i < wordCount; i++)
+            {
+                //单个字体内一定是左下或者右下 这里随便取一个
+                minPosY.Add(verts[i * 6 + 4].position.y);
+            }
+
+            //遍历顶点集合  单个矩形内操作
+            for (int i = start; i < wordCount; i++)
+            {
+                //第0个顶点y  与第四个顶点的y  也就是单个字体内 左高
+                float leftH = verts[i * 6].position.y - verts[i * 6 + 4].position.y;
+                //第一个顶点y 与 第二个顶点y   也就是单个字体内右高
+                float rightH = verts[i * 6 + 1].position.y - verts[i * 6 + 2].position.y;
+
+                //找出最大的单位间距
+                fHeight = Mathf.Max(leftH, rightH, fHeight);
+            }
+            
             for (int i = start; i < end; ++i)
             {
                 vt = verts[i];
@@ -48,25 +76,11 @@ namespace UnityEngine.UI
                 v.y += y;
                 vt.position = v;
 
-                byte r;
-                byte g;
-                byte b;
-                
+                Color32 lerpColor = Color.Lerp(effectColor, _gradualColor, (vt.position.y - minPosY[i/6]) / fHeight);
                 // 字体渲染本身自带过渡效果，这里直接添加颜色
-                if (v.y < 0)
-                {
-                    r = _gradualColor.r;
-                    g = _gradualColor.g;
-                    b = _gradualColor.b;
-                }
-                else
-                {
-                    r = color.r;
-                    g = color.g;
-                    b = color.b;
-                }
 
-                var newColor = new Color32(r, g, b, color.a);
+
+                var newColor = lerpColor;
                 
                 if (useGraphicAlpha)
                     newColor.a = (byte)((newColor.a * verts[i].color.a) / 255);
@@ -89,6 +103,10 @@ namespace UnityEngine.UI
             if (verts.Capacity < neededCpacity)
                 verts.Capacity = neededCpacity;
 
+            var length = Vector2.Distance(effectDistance, Vector2.zero);
+            RepeatRender = Mathf.CeilToInt(RENDER_LIMITED * (length/(length + (RENDER_LIMITED+1)/2)));
+            
+            Debug.Log("RepeatRender:" + RepeatRender);
             
             for (int i = 0; i < verts.Count; i++)
             {
@@ -115,8 +133,8 @@ namespace UnityEngine.UI
             // 于是就有了以下这段逻辑
             var start = 0;
             var end = verts.Count;
-            var deg = 360 / _repeatRender;
-            for (int i = 0; i < _repeatRender; i++)
+            var deg = 360 / RepeatRender;
+            for (int i = 0; i < RepeatRender; i++)
             {
                 if (i > 0)
                 {
@@ -126,7 +144,7 @@ namespace UnityEngine.UI
 
                 float x = effectDistance.x * Mathf.Cos(Mathf.Deg2Rad * i *deg);
                 float y = effectDistance.x * Mathf.Sin(Mathf.Deg2Rad * i *deg);
-                ApplyShadowZeroAllocGradually(verts, effectColor, start, verts.Count, x, y);
+                ApplyShadowZeroAllocGradually(verts, start, verts.Count, x, y);
             }
 
             vh.Clear();

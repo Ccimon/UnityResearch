@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 13373011}
   - component: {fileID: 13373010}
   m_Layer: 0
-  m_Name: BuiltinLog
+  m_Name: TestManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxLogCount: 100
+  Padding: {x: 100, y: 1, z: 100, w: 1}
 --- !u!4 &13373011
 Transform:
   m_ObjectHideFlags: 0
