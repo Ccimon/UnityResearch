@@ -8,11 +8,30 @@ using System.Net.Mail;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using System.Runtime.InteropServices;
 using UnityEngine.UI;
 using System.Text;
 
 public partial class BuiltinLogGUI : MonoBehaviour
 {
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MEMORY_INFO
+    {
+        public uint dwLength;
+
+        public uint dwMemoryLoad;
+
+        //系统内存总量
+        public ulong dwTotalPhys;
+
+        //系统可用内存
+        public ulong dwAvailPhys;
+        public ulong dwTotalPageFile;
+        public ulong dwAvailPageFile;
+        public ulong dwTotalVirtual;
+        public ulong dwAvailVirtual;
+    }
 
     public class LogInfo
     {
@@ -78,8 +97,18 @@ public partial class BuiltinLogGUI : MonoBehaviour
     private bool isSearch = false;
     private List<Action> _actionBuffer = new List<Action>();
     private List<string> _actionNameBuffer = new List<string>();
-    
+
     private int LogBufferCount => _logStrBuffer.Count;
+    private MEMORY_INFO _localMemory;
+
+    public long GlobalMemory
+    {
+        get
+        {
+            // GetMemoryStatus();
+            return Convert.ToInt64( _localMemory.dwAvailPhys.ToString())/1024/1024;;
+        }
+    }
     #endregion
 
     #region OnGui绘制
@@ -156,6 +185,7 @@ public partial class BuiltinLogGUI : MonoBehaviour
             _toggleContent.text = String.Format(_colorFormatStr, _colorYellow, _togShowLogStr);
             DrawLogWindow();
             DrawExtraBtn();
+            // DrawMemoryInfo();
         }
         else
         {
@@ -308,10 +338,35 @@ public partial class BuiltinLogGUI : MonoBehaviour
 
         GUI.EndScrollView();
     }
+    
+    
+    // private void DrawMemoryInfo()
+    // {
+    //     float height = 50;
+    //     float width = 300;
+    //     GUI.TextArea(new Rect(_windowRect.x, _windowRect.y + _windowRect.height + height / 2, width,height),
+    //         "Memory:" + GlobalMemory);
+    // }
+    
+    // [DllImport("kernel32")]
+    // public static extern void GlobalMemoryStatus(ref MEMORY_INFO memory);
+    //
+    // /// <summary>
+    // /// 获取当前内存信息
+    // /// </summary>
+    // private void GetMemoryStatus()
+    // {
+    //     GlobalMemoryStatus(ref _localMemory);
+    // }
     #endregion
 
     #region 公有方法
-
+    
+    /// <summary>
+    /// 注册一个OnGui的Button
+    /// </summary>
+    /// <param name="btnName"></param>
+    /// <param name="callback"></param>
     public void RegisterOnGUIButton(string btnName,Action callback)
     {
         _actionBuffer.Add(callback);
