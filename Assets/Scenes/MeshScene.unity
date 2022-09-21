@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 510230901}
   - component: {fileID: 510230902}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MeshTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c1f6b6136f1d4a3d92d677982d7200c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GizmosDrawable: 1
   MeshTexture: {fileID: 2800000, guid: f9b4c05959e7b429eb418653bd223863, type: 3}
+  threshold: 3.14
 --- !u!1 &1109817427
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,7 +51,7 @@ public partial class BuiltinLogGUI : MonoBehaviour
     #region 配置信息
     private static string _mailSender = "2684352466@qq.com";
     private static string _smtpPwd = "hrtvkbapqbpfecii";
-    private static string _preTitle = "[GameLogEmial][Product:{0}][Time:{1}]";
+    private static string _preTitle = "[GameLogEmail][Product:{0}][Time:{1}]";
     private static string _smtpServer = "smtp.qq.com";
 
     private string _colorFormatStr = "<color={0}>{1}</color>";
@@ -296,7 +296,7 @@ public partial class BuiltinLogGUI : MonoBehaviour
         }
 
         //绘制ScrollView并展示Log信息
-        Rect positionRect = new Rect(0, 135, _windowRect.width, _windowRect.height - 50);
+        Rect positionRect = new Rect(0, 135, _windowRect.width, _windowRect.height - 130);
         Rect viewRect = new Rect(0, 0, _windowRect.width, _scrollContentHeight);
         //Rect bottomRect = new Rect(0, _scrollContentHeight, Screen.width, _scrollContentHeight);
         _scrollVec = GUI.BeginScrollView(positionRect, _scrollVec, viewRect);
@@ -441,4 +441,27 @@ public partial class BuiltinLogGUI : MonoBehaviour
     //    SendErrorEmail(StrReciever,IsSync);
     //}
     #endregion
+    
+    private static BuiltinLogGUI _instance;
+
+    public static BuiltinLogGUI Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = GameObject.Find("TestManager").GetComponent<BuiltinLogGUI>();
+            }
+
+            return _instance;
+        }
+    }
+    
+    protected BuiltinLogGUI()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+    }
 }

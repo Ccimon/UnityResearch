@@ -6,7 +6,7 @@ namespace UnityEngine.UI
     [AddComponentMenu("UI/Effects/TestOutline", 15)]
     public class TestOutline : Shadow
     {
-        private const int RENDER_LIMITED = 15;
+        private const int RENDER_LIMITED = 12;
         
         /// <summary>
         /// 渐变色的另一个颜色
@@ -65,7 +65,8 @@ namespace UnityEngine.UI
                 //找出最大的单位间距
                 fHeight = Mathf.Max(leftH, rightH, fHeight);
             }
-            
+
+            byte a = Byte.MinValue;
             for (int i = start; i < end; ++i)
             {
                 vt = verts[i];
@@ -77,8 +78,6 @@ namespace UnityEngine.UI
                 vt.position = v;
 
                 Color32 lerpColor = Color.Lerp(effectColor, _gradualColor, (vt.position.y - minPosY[i/6]) / fHeight);
-                // 字体渲染本身自带过渡效果，这里直接添加颜色
-
 
                 var newColor = lerpColor;
                 
@@ -87,6 +86,7 @@ namespace UnityEngine.UI
                 vt.color = newColor;
                 verts[i] = vt;
             }
+            Debug.Log("LerpColor.Alpha:" + a);
         }
         
         /// <summary>
@@ -102,9 +102,10 @@ namespace UnityEngine.UI
             var neededCpacity = verts.Count * 5;
             if (verts.Capacity < neededCpacity)
                 verts.Capacity = neededCpacity;
-
+            
+            //使用一个计算公式自动优化渲染次数
             var length = Vector2.Distance(effectDistance, Vector2.zero);
-            RepeatRender = Mathf.CeilToInt(RENDER_LIMITED * (length/(length + (RENDER_LIMITED+1)/2)));
+            RepeatRender = Mathf.CeilToInt(RENDER_LIMITED * (length * 1.2f /(length + (RENDER_LIMITED+  1) / 2)));
             
             Debug.Log("RepeatRender:" + RepeatRender);
             

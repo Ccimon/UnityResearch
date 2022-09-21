@@ -1279,7 +1279,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: SSS
 --- !u!222 &1565815786
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1300,12 +1300,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009061d8e538844c2926908ab4b15ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0.08247185, b: 1, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
+  m_EffectColor: {r: 0.05724919, g: 1, b: 0, a: 1}
+  m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 1
   _gradualColor:
     serializedVersion: 2
-    rgba: 4282709338
+    rgba: 4294914816
 --- !u!1 &1629422451
 GameObject:
   m_ObjectHideFlags: 0

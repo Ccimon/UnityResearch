@@ -27,7 +27,7 @@ public class TextVerticalGradientThreeColor : BaseMeshEffect
         return a;
     }
 
-    private void ModifyVertices(VertexHelper vh)
+    private void Modify_vertices(VertexHelper vh)
     {
         List<UIVertex> verts = new List<UIVertex>(vh.currentVertCount);
         vh.GetUIVertexStream(verts);
@@ -111,7 +111,7 @@ public class TextVerticalGradientThreeColor : BaseMeshEffect
         }
 
 
-        ModifyVertices(vh);
+        Modify_vertices(vh);
     }
 
     #endregion

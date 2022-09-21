@@ -118,7 +118,7 @@ namespace TooSimpleFramework.UI
                 base.graphic.material.SetColor("_OutlineColor", this.OutlineColor);
                 base.graphic.material.SetInt("_OutlineWidth", this.OutlineWidth);
             }*/
-            base.graphic.SetVerticesDirty();
+            // base.graphic.Set_verticesDirty();
         }
  
  
@@ -126,14 +126,14 @@ namespace TooSimpleFramework.UI
         {
             vh.GetUIVertexStream(m_VetexList);
  
-            this._ProcessVertices();
+            this._Process_vertices();
  
             vh.Clear();
-            vh.AddUIVertexTriangleStream(m_VetexList);
+            // vh.AddUIVertex_trianglestream(m_VetexList);
         }
  
  
-        private void _ProcessVertices()
+        private void _Process_vertices()
         {
             for (int i = 0, count = m_VetexList.Count - 3; i <= count; i += 3)
             {
