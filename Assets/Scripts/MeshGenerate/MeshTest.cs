@@ -11,34 +11,48 @@ public class MeshTest : MonoBehaviour
 
     public bool GizmosDrawable = true;
     public Texture2D MeshTexture;
-    public float threshold;
+
     
+    
+    [SerializeField()]
+    private MeshFilter _filter;
+    [SerializeField()]
+    private MeshRenderer _renderer;
+    [SerializeField()]
+
+    // public float threshold;
     private Color[] _colors;
     private Vector2[] _uvs;
     private Vector3[] _vertices;
     private int[] _triangles;
 
+
+    private List<Vector3> _drawPointList;
+    private List<int> _drawTriangles;
     void Start()
     {
 
-        GameObject gameObject = new GameObject();
-        gameObject.transform.SetParent(transform, false);
-        var mf = gameObject.AddComponent<MeshFilter>();
-        var mr = gameObject.AddComponent<MeshRenderer>();
-        StartCoroutine(GenerateMesh());
-        var shader = Shader.Find("shader3d/borderline");
-        Material mat = new Material(shader);
+        // GameObject gameObject = new GameObject();
+        // gameObject.transform.SetParent(transform, false);
+        // var mf = gameObject.AddComponent<MeshFilter>();
+        // var mr = gameObject.AddComponent<MeshRenderer>();
+        // // StartCoroutine(GenerateMesh());
+        // var shader = Shader.Find("shader3d/borderline");
+        // Material mat = new Material(shader);
+        //
+        // mf.mesh.Clear();
         
-        mf.mesh.Clear();
+        _drawPointList = GeneratedHelix();
+        _drawTriangles = GeneratedTriangles(_drawPointList);
+        
         Mesh mesh = new Mesh();
-        mesh.vertices = _vertices;
+        mesh.vertices = _drawPointList.ToArray();
+        mesh.triangles = _drawTriangles.ToArray();
         mesh.colors = _colors;
         mesh.uv = _uvs;
-        mesh.triangles = _triangles;
         mesh.RecalculateNormals();
-        
-        mf.mesh = CreateArcSurface(threshold);
-        mr.material = mat;
+
+        _filter.mesh = mesh;
     }
 
     IEnumerator GenerateMesh()
@@ -79,7 +93,7 @@ public class MeshTest : MonoBehaviour
     {
         float planeWidth = 1;
         float planeHeight = 1;
-        int planesSeg = 64;
+        int planesSeg = 500;
 
         Mesh mesh = new Mesh();
 
@@ -128,8 +142,8 @@ public class MeshTest : MonoBehaviour
             {
                 // 阈值不为0时,根据圆的几何性质计算弧上一点
                 // https://zh.wikipedia.org/wiki/%E5%9C%86
-                x = r * Mathf.Cos(coangle + angleSetup * si);
-                z = r * Mathf.Sin(coangle + angleSetup * si);
+                x = r + si * 0.1f * Mathf.Cos(coangle + angleSetup * si);
+                z = r + si * 0.1f * Mathf.Sin(coangle + angleSetup * si);
 
                 vertices[vi++] = new Vector3(-x, planeHeight / 2, z - diff);
                 vertices[vi++] = new Vector3(-x, -planeHeight / 2, z - diff);
@@ -178,39 +192,102 @@ public class MeshTest : MonoBehaviour
 
         return mesh;
     }
-// ————————————————
-// 版权声明：本文为CSDN博主「别志华」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-// 原文链接：https://blog.csdn.net/biezhihua/article/details/78789794
+    // 版权声明：本文为CSDN博主「别志华」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+    // 原文链接：https://blog.csdn.net/biezhihua/article/details/78789794
     
     void OnDrawGizmos()
     {
-        if (_vertices == null || !GizmosDrawable)
+        if (!GizmosDrawable) return;
+        if (_drawPointList == null)
         {
             return;
         }
         
         Gizmos.color = Color.black;
-        for (int i = 0; i < _vertices.Length; i++)
+        for (int i = 0; i < _drawPointList.Count; i++)
         {
-            Gizmos.DrawSphere(_vertices[i] * 100,20);
+            float percent = i / _drawPointList.Count;
+            Gizmos.color = Color.blue * percent + Color.red * (1 - percent);
+            Gizmos.DrawSphere(_drawPointList[i],0.1f);
         }
-
-        if (_triangles == null)
+        // float scale = 100f;
+        // for (int i = 0; i < _drawPointList.Count - 1; i++)
+        // {
+        //     Gizmos.DrawLine(_drawPointList[i].Multi(scale),_drawPointList[i+1].Multi(scale));
+        // }
+        
+        if (_drawTriangles == null)
         {
             return;
         }
 
-        float scale = 100f;
-        Gizmos.color = Color.red;;
-        for (int i = 0; i < _triangles.Length; i += 6)
+        float scale = 1;
+        Gizmos.color = Color.red;
+        for (int i = 0; i < _drawTriangles.Count; i += 3)
         {
-            Gizmos.DrawLine(_vertices[_triangles[i]].Multi(scale),_vertices[_triangles[i+1]].Multi(scale));
-            Gizmos.DrawLine(_vertices[_triangles[i+1]].Multi(scale),_vertices[_triangles[i+2]].Multi(scale));
-            Gizmos.DrawLine(_vertices[_triangles[i+2]].Multi(scale),_vertices[_triangles[i]].Multi(scale));
-            
-            Gizmos.DrawLine(_vertices[_triangles[i+3]].Multi(scale),_vertices[_triangles[i+4]].Multi(scale));
-            Gizmos.DrawLine(_vertices[_triangles[i+4]].Multi(scale),_vertices[_triangles[i+5]].Multi(scale));
-            Gizmos.DrawLine(_vertices[_triangles[i+5]].Multi(scale),_vertices[_triangles[i+3]].Multi(scale));
+            Gizmos.DrawLine(_drawPointList[_drawTriangles[i]].Multi(scale),_drawPointList[_drawTriangles[i+1]].Multi(scale));
+            Gizmos.DrawLine(_drawPointList[_drawTriangles[i+1]].Multi(scale),_drawPointList[_drawTriangles[i+2]].Multi(scale));
+            Gizmos.DrawLine(_drawPointList[_drawTriangles[i+2]].Multi(scale),_drawPointList[_drawTriangles[i]].Multi(scale));
         }
+    }
+
+    private List<Vector3> GeneratedHelix()
+    {
+        var list = new List<Vector3>();
+        var interAngle = 30;
+        var turns = 5;
+        var radius = 1;
+        var increase = 0.1f;
+        var height = 1;
+        var thickness = 0.2f;
+        
+        var seg = turns * 360 / interAngle;
+        for (int i = 0;i < seg; i++)
+        {
+            var angle = Mathf.Deg2Rad * interAngle * i;
+            float applyRadius = radius + i * increase;
+            var vector = new Vector3(Mathf.Sin(angle) * applyRadius,0,Mathf.Cos(angle) * applyRadius);
+            list.Add(vector);
+            vector.y += 1;
+            list.Add(vector);
+        }
+
+        var backList = new List<Vector3>();
+        for (int i = seg-1; i >= 0; i-=1)
+        {
+            var angle = Mathf.Deg2Rad * interAngle * i;
+            float applyRadius = radius + i * increase;
+            var vector = new Vector3(Mathf.Sin(angle) * applyRadius,0,Mathf.Cos(angle) * applyRadius);
+
+            vector.x += vector.normalized.x * thickness;
+            vector.z += vector.normalized.z * thickness;
+            
+            backList.Add(vector);
+            vector.y += 1;
+
+            backList.Add(vector);
+        }
+        list.AddRange(backList);
+        list.Add(list[0]);
+        list.Add(list[1]);
+        return list;
+    }
+
+    private List<int> GeneratedTriangles(List<Vector3> pointList)
+    {
+        var list = new List<int>();
+
+        for (int i = 0; i < pointList.Count - 2; i+=2)
+        {
+            list.Add(i);
+            list.Add(i+1);
+            list.Add(i+3);
+            
+            list.Add(i);
+            list.Add(i+3);
+            list.Add(i+2);
+        }
+        
+        return list;
     }
 }

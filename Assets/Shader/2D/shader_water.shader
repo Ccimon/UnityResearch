@@ -3,12 +3,12 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _MaskTex ("Texture", 2D) = "white" {}
+        _MaskTex ("MaskTexture", 2D) = "white" {}
         _Color("Color",Color) = (1,1,1,1)
         _MaskBottom ("Bottom", float) = 0
         _MaskTop ("Top", float) = 0.1
-        _MultiX ("MultiX", float) = 8
-        _MultiY ("MultiY", float) = 0.2
+        _MultiX ("Frequence", float) = 8
+        _MultiY ("Amplitude", float) = 0.2
         _AddY ("AddY", Range(0,1)) = 0.15
         _MultiTime ("MultiTime",float) = 1
         [Toggle(WaterAnimate)]_IsOpen ("WaterAnimate", int) = 0
@@ -66,15 +66,11 @@
             {
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
-
-                float2 offuv = float2(i.uv.x,i.uv.y * (_MaskTop - _MaskBottom) + _MaskBottom);
-                fixed4 dcol = tex2D(_MaskTex, i.uv);
-                fixed4 mcol = tex2D(_MaskTex, offuv);
                 
-                if(mcol.a < 0.1){
+                if(col.a < 0.1){
                     discard;
                 }
-
+                
                 if(_IsOpen > 0 && _AddY < 1){
                     float minLerp = 0.3;
                     float x = i.uv.x + _Time.y * _MultiTime;

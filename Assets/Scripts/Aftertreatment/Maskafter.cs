@@ -4,30 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
+[RequireComponent(typeof(Image))]
 public class Maskafter : MonoBehaviour
 {
-    //遮罩图
-    public Texture2D MaskTexture;
-    //用于渲染睡眠的材质
-    public Material WaterMat;
-    //用于存储渲染水位的组件，这里泛型放的是Image，按理来说可以放Image，RawImage，Text等可渲染UI的共同父类
-    public List<Image> ListRenderComponent = new List<Image>();
+
     //对外开放的水位属性，每次修改都会刷新Shader渲染
     public float WaterLine {
-        get {
-            return _waterLine;
-        }
-        set {
-            _waterLine = value;
-        }
-    }
+        get =>_waterLine;
 
-    //存放了所有渲染水位组件所用的材质
-    private List<Material> ListMaterial = new List<Material>();
-    //自己的UI变换
-    private RectTransform rectTransform;
+        set => SetWaterLine(value);
+    }
+    
+    private int MaxBlock = 4;
+    
+    private Image img;
+    
     //水位
-    private float _waterLine = 4;
+    private float _waterLine = 3;
     //动画水位
     private float _animLine = 0;
     //水位增长速度
@@ -38,139 +33,159 @@ public class Maskafter : MonoBehaviour
     private string _paramMaskTop = "_MaskTop";
     private string _paramMaskBottom = "_MaskBottom";
     private string _paramColor = "_Color";
+    private string _paramMaskTexture = "_MaskTex";
+    private string _paramMultiX = "_MultiX";
+    private string _paramMultiY = "_MultiY";
 
-    void Start()
+    private float _addY;
+    private int _isOpen;
+    private float _maskTop;
+    private float _maskBot;
+    private Color _color;
+    private Texture2D _maskTex;
+    private float _multiY;
+    private float _multiX;
+
+    #region Inspector面板
+
+    //遮罩图
+    public Sprite MaskTexture;
+    //用于渲染水面的材质
+    public Material WaterMat;
+
+    public float WaterFrequence;
+
+    public float WaterAmplitude;
+
+    public float PaddingTop;
+    #endregion
+
+    #region 公有变量
+
+    public float Frequence
     {
-        rectTransform = GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(MaskTexture.width,MaskTexture.height);
-
-        InitWater();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        RefreshWater();
-    }
-
-    //计算每个图片在遮罩下的渲染范围
-    Vector2 CalculatePercent(RectTransform rt)
-    {
-        Vector2 percent = new Vector2();
-        float bottom = rt.localPosition.y + rectTransform.sizeDelta.y * rectTransform.pivot.y;
-        float top = rt.localPosition.y + rectTransform.sizeDelta.y * rectTransform.pivot.y  +  rt.sizeDelta.y;
-        percent.x = bottom / rectTransform.sizeDelta.y;
-        percent.y = top / rectTransform.sizeDelta.y;
-        return percent;
-    }
-
-    private void RefreshWater()
-    {
-        if (_animLine != _waterLine)
+        get => _multiX;
+        set
         {
-            for (int i = 0; i < ListRenderComponent.Count; i++)
-            {
-                Image img = ListRenderComponent[i];
-
-                if (Mathf.Floor(_animLine) > i)
-                {
-                    SetIdle(img);
-                }else if (i < _waterLine && i - _animLine <= 0)
-                {
-                    _animLine += Time.deltaTime/2 * Mathf.Sign(_waterLine - _animLine);
-                    var value = _animLine - i;
-                    SetAnimate(img, value);
-                }
-                else
-                {
-                    SetInvisible(img);
-                }
-            }
-        }
-
-        if (Math.Abs(_animLine - _waterLine) < _speed)
-        {
-            _animLine = _waterLine;
+            _multiX = value;
+            WaterMat.SetFloat(_paramMultiX,value);
         }
     }
-
-    private void InitWater()
+    
+    public float Amplitude
     {
-        for (int i = 0; i < ListRenderComponent.Count; i++)
+        get => _multiY;
+        set
         {
-            var img = ListRenderComponent[i];
-            //计算每格水对应在遮罩里的哪段范围
-            var range = CalculatePercent(img.GetComponent<RectTransform>());
-            if (ListMaterial.Count <= i)
-            {
-                ListMaterial.Add(new Material(WaterMat));
-            }
-            img.material = ListMaterial[i];
-            img.material.SetFloat(_paramMaskTop, range.y);
-            img.material.SetFloat(_paramMaskBottom, range.x);
-            img.material.SetColor(_paramColor, img.color);
-
-            if (i > WaterLine)
-            {
-                //大于水位的就不渲染
-                SetInvisible(img);
-            }
-            else if (i < WaterLine)
-            {
-                //等于水位的要渲染，并执行动画
-                SetAnimate(img);
-            }
-            else
-            {
-                //小于水位的要渲染，并且不执行动画
-                SetIdle(img);
-            }
+            _multiY = value;
+            WaterMat.SetFloat(_paramMultiY,value);
+        }
+    }
+    
+    public float AddY
+    {
+        get => _addY;
+        set
+        {
+            _addY = value;
+            WaterMat.SetFloat(_paramAddY,value);
+        }
+    }
+    
+    public bool IsOpen
+    {
+        get => _isOpen > 0;
+        set
+        {
+            _isOpen = value ? 1 : 0;
+            WaterMat.SetFloat(_paramIsOpen,_isOpen);
         }
     }
 
-    private void SetAnimate(Image img,float addy = 0)
+    public float MaskTop
     {
-        img.material.SetFloat(_paramIsOpen, 1);
-        img.material.SetFloat(_paramAddY, addy);
-        img.gameObject.SetActive(true);
-    }
-
-    private void SetIdle(Image img)
-    {
-        img.material.SetFloat(_paramIsOpen, 0);
-        img.gameObject.SetActive(true);
-    }
-
-    private void SetInvisible(Image img)
-    {
-        img.material.SetFloat(_paramIsOpen, 0);
-        img.gameObject.SetActive(false);
-    }
-
-    public void AddWaterLine()
-    {
-        _waterLine++;
-    }
-
-    public void StartWaterAnimation(int Index)
-    {
-        if (Index > ListRenderComponent.Count){return;}
-
-        _waterLine = Index;
-        for (int i = 0; i < ListRenderComponent.Count; i++)
+        get => _maskTop;
+        set
         {
-            Image img = ListRenderComponent[i];
-            if (i > Index)
-            {
-                SetInvisible(img);
-            }else if (i<Index)
-            {
-                SetIdle(img);
-            }
-            else
-            {
-                SetAnimate(img);
-            }
+            _maskTop = value;
+            WaterMat.SetFloat(_paramMaskTop,value);
         }
     }
+
+    public float MaskBot
+    {
+        get => _maskBot;
+        set
+        {
+            _maskBot = value;
+            WaterMat.SetFloat(_paramMaskBottom,value);
+        }
+    }
+
+    public Color Color
+    {
+        get => _color;
+        set
+        {
+            _color = value;
+            WaterMat.SetColor(_paramColor,value);
+        }
+    }
+
+    public Texture2D MaskTex
+    {
+        get => _maskTex;
+        set
+        {
+            _maskTex = value;
+            WaterMat.SetTexture(_paramMaskTexture,value);
+        }
+    }
+
+    #endregion
+
+    #region 私有方法
+
+    private void Start()
+    {
+        img = GetComponent<Image>();
+        
+        InitWaterData(MaskTexture,4,Color.red,4);
+    }
+
+    private void InitWaterData(Sprite imgTube,float waterLine,Color waterColor,int maxBlock)
+    {
+        MaxBlock = maxBlock;
+        // _waterLine = waterLine;
+        img.material = WaterMat;
+        img.sprite = MaskTexture = imgTube;
+        Color = waterColor;
+        Amplitude = WaterAmplitude;
+        Frequence = WaterFrequence;
+        SetWaterLine((int)_waterLine);
+    }
+
+    private IEnumerator FadeAnimLineToWater()
+    {
+        while (!_waterLine.Equals(_animLine))
+        {
+            float sign = Mathf.Sign(_waterLine - _animLine);
+            float temp = Mathf.Min(Mathf.Abs(_waterLine - _animLine) , _speed);
+            _animLine += sign * temp;
+            AddY = _animLine / MaxBlock;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+    
+    #endregion
+
+    #region 公有方法
+
+    public void SetWaterLine(float index)
+    {
+        _waterLine = index;
+        StartCoroutine(FadeAnimLineToWater());
+    }
+    
+    #endregion
 }

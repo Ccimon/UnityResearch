@@ -11,34 +11,60 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using UnityEngine.UI;
 using System.Text;
+using Object = System.Object;
 
-public partial class BuiltinLogGUI : MonoBehaviour
+/// <summary>
+/// BuiltinLogGui 内置LogGUI代码
+/// 1.会根据
+/// </summary>
+public class BuiltinLogGUI : MonoBehaviour
 {
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct MEMORY_INFO
-    {
-        public uint dwLength;
-
-        public uint dwMemoryLoad;
-
-        //系统内存总量
-        public ulong dwTotalPhys;
-
-        //系统可用内存
-        public ulong dwAvailPhys;
-        public ulong dwTotalPageFile;
-        public ulong dwAvailPageFile;
-        public ulong dwTotalVirtual;
-        public ulong dwAvailVirtual;
-    }
 
     public class LogInfo
     {
         public string log;
         public LogInfoType type;
     }
-
+    
+    private class GuiAction
+    {
+        public string ActionName = "";
+        public System.Action Action = null;
+        public static Stack<GuiAction> SelfPool = new Stack<GuiAction>();
+        
+        /// <summary>
+        /// 对象池申请
+        /// </summary>
+        /// <param name="actionName">申请注册的按钮名称</param>
+        /// <param name="action">申请注册的回调</param>
+        /// <returns>GuiAction对象</returns>
+        public static GuiAction Allocate(string actionName = "",System.Action action = null)
+        {
+            if (SelfPool.Count > 0)
+            {
+                return SelfPool.Pop();
+            }
+            else
+            {
+                return new GuiAction(actionName,action);
+            }
+        }
+        
+        private GuiAction(string name,System.Action callFunc)
+        {
+            ActionName = name;
+            Action = callFunc;
+        }
+        
+        /// <summary>
+        /// 对象池回收
+        /// </summary>
+        public void Recycle()
+        {
+            SelfPool.Push(this);
+        }
+    }
+    
     public enum LogInfoType
     {
         Log,
@@ -49,10 +75,6 @@ public partial class BuiltinLogGUI : MonoBehaviour
     }
 
     #region 配置信息
-    private static string _mailSender = "2684352466@qq.com";
-    private static string _smtpPwd = "hrtvkbapqbpfecii";
-    private static string _preTitle = "[GameLogEmail][Product:{0}][Time:{1}]";
-    private static string _smtpServer = "smtp.qq.com";
 
     private string _colorFormatStr = "<color={0}>{1}</color>";
     private string _togShowLogStr = "ShowLog";
@@ -95,20 +117,10 @@ public partial class BuiltinLogGUI : MonoBehaviour
     private LogInfoType _localLogState = LogInfoType.All;
     private string _inputTxt = "Search for log";
     private bool isSearch = false;
-    private List<Action> _actionBuffer = new List<Action>();
-    private List<string> _actionNameBuffer = new List<string>();
+    private Dictionary<Type , List<GuiAction>> _typeActionBuffer = new Dictionary<Type , List<GuiAction>>();
 
     private int LogBufferCount => _logStrBuffer.Count;
-    private MEMORY_INFO _localMemory;
-
-    public long GlobalMemory
-    {
-        get
-        {
-            // GetMemoryStatus();
-            return Convert.ToInt64( _localMemory.dwAvailPhys.ToString())/1024/1024;;
-        }
-    }
+    
     #endregion
 
     #region OnGui绘制
@@ -119,7 +131,6 @@ public partial class BuiltinLogGUI : MonoBehaviour
 
     void Start()
     {
-        //StrReciever = "2942693781@qq.com";
         int width = 170;
         int height = 50;
         int y = 150;
@@ -225,23 +236,27 @@ public partial class BuiltinLogGUI : MonoBehaviour
         float btnWidth = width / row;
         float btnHeight = height / line;
 
-        var list = from item in _actionBuffer
-            where item != null
-            select item;
-        
-        for (int i = 0; i < _actionBuffer.Count; i++)
+        for (int i = 0,index = 0; i < _typeActionBuffer.Count; i++)
         {
-            int y = i / line;
-            int x = i % line;
-            var rect = new Rect(
-                _windowRect.x + x * btnWidth,
-                0 + btnHeight * y,
-                btnWidth,
-                btnHeight);
-            var flag = GUI.Button(rect,"<size=30>" + _actionNameBuffer[i] +"</size>");
-            if (flag)
+            var _actionBuffer = _typeActionBuffer.ElementAt(i);
+
+            for (int j = 0;j < _actionBuffer.Value.Count; j++)
             {
-                _actionBuffer[i]?.Invoke();
+                int y = index / line;
+                int x = index % line;
+                GuiAction actionObj = _actionBuffer.Value[j];
+                var rect = new Rect(
+                    _windowRect.x + x * btnWidth,
+                    0 + btnHeight * y,
+                    btnWidth,
+                    btnHeight);
+                var flag = GUI.Button(rect,"<size=30>" + actionObj.ActionName +"</size>");
+                if (flag)
+                {
+                    actionObj.Action?.Invoke();
+                }
+
+                index++;
             }
         }
     }
@@ -301,14 +316,17 @@ public partial class BuiltinLogGUI : MonoBehaviour
         //Rect bottomRect = new Rect(0, _scrollContentHeight, Screen.width, _scrollContentHeight);
         _scrollVec = GUI.BeginScrollView(positionRect, _scrollVec, viewRect);
 
-        _logBox = new GUIStyle(GUI.skin.box);
-        _logBox.imagePosition = ImagePosition.TextOnly;
-        _logBox.alignment = TextAnchor.LowerLeft;
-        _logBox.fontSize = 20;
-        _logBox.richText = true;
-        _logBox.wordWrap = true;
-        //_logBox.wordWrap = true;
 
+        if (_logBox == null)
+        {
+            _logBox = new GUIStyle();
+            _logBox.imagePosition = ImagePosition.TextOnly;
+            _logBox.alignment = TextAnchor.LowerLeft;
+            _logBox.fontSize = 20;
+            _logBox.richText = true;
+            _logBox.wordWrap = true;
+        }
+        
         _scrollContentHeight = 0;
         for (int i = 0; i < LogBufferCount; i++)
         {
@@ -363,40 +381,77 @@ public partial class BuiltinLogGUI : MonoBehaviour
     #region 公有方法
     
     /// <summary>
-    /// 注册一个OnGui的Button
+    /// 注册一个OnGui的Button,默认以BuiltinLogGui为关键字注册
     /// </summary>
-    /// <param name="btnName"></param>
-    /// <param name="callback"></param>
+    /// <param name="btnName">按钮文本</param>
+    /// <param name="callback">点击回调</param>
     public void RegisterOnGUIButton(string btnName,Action callback)
     {
-        _actionBuffer.Add(callback);
-        _actionNameBuffer.Add(btnName);
+        var key = typeof(BuiltinLogGUI);
+        _typeActionBuffer.TryGetValue(key, out var list);
+        if (list != null)
+        {
+            list.Add(GuiAction.Allocate(btnName,callback));
+        }
+        else
+        {
+            list = new List<GuiAction>();
+            _typeActionBuffer.Add(key,list);
+            list.Add(GuiAction.Allocate(btnName,callback));
+        }
     }
     
-    //public void OnInputTextChange()
-    //{
-    //    StrReciever = TextReceiver.text;
-    //}
+    /// <summary>
+    /// 注册一个OnGui的Button,选择一个指定类作为关键字注册
+    /// </summary>
+    /// <param name="btnName">按钮文本</param>
+    /// <param name="callback">点击回调</param>
+    public void RegisterOnGUIButton<T>(string btnName,Action callback)
+    {
+        var key = typeof(T);
+        _typeActionBuffer.TryGetValue(key, out var list);
+        if (list != null)
+        {
+            list.Add(GuiAction.Allocate(btnName,callback));
+        }
+        else
+        {
+            list = new List<GuiAction>();
+            _typeActionBuffer.Add(key,list);
+            list.Add(GuiAction.Allocate(btnName,callback));
+        }
+    }
+    
+    /// <summary>
+    /// 取消注册指定类为关键字的按钮
+    /// </summary>
+    /// <typeparam name="T">指定的类</typeparam>
+    public void UnregisterOnGuiButton<T>()
+    {
+        var key = typeof(T);
+        _typeActionBuffer.TryGetValue(key, out var list);
+        if (list == null || list.Count <= 0)
+        {
+            return;
+        }
 
-    //public void OnBtnSendClick()
-    //{
-    //    SendEmail();
-    //}
-
-    //public void OnBtnSendTypeClick()
-    //{
-    //    IsSync = !IsSync;
-    //    RefreshSendType();
-    //}
-
-    //private void RefreshSendType()
-    //{
-    //    string text = IsSync ? "同步" : "异步";
-    //    BtnSendType.transform.GetChild(0).GetComponent<Text>().text = text;
-    //}
+        foreach (var elem in list)
+        {
+            elem.Recycle();
+        }
+        
+        list.Clear();
+    }
+    
     #endregion
 
     #region 邮件发送
+    private static string _mailSender = "2684352466@qq.com";
+    private static string _smtpPwd = "hrtvkbapqbpfecii";
+    private static string _preTitle = "[GameLogEmail][Product:{0}][Time:{1}]";
+    private static string _smtpServer = "smtp.qq.com";
+    
+    
     /// <summary>
     /// 发送异常日志邮件
     /// </summary>
@@ -434,12 +489,7 @@ public partial class BuiltinLogGUI : MonoBehaviour
     {
 
     }
-
-    //非静态外露接口
-    //public void SendEmail()
-    //{
-    //    SendErrorEmail(StrReciever,IsSync);
-    //}
+    
     #endregion
     
     private static BuiltinLogGUI _instance;
