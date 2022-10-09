@@ -1,5 +1,9 @@
-# UnityResearch
-自学用的Unity项目
+# UnityResearch项目需知
+自学用的Unity项目。  
+Unity版本 2021.3.9f1c1  
+包含插件：  
+DoTween
+
 
 ## 项目简介
 关于项目由下面几点需要介绍。  
