@@ -11,6 +11,7 @@
         _MultiY ("Amplitude", float) = 0.2
         _AddY ("AddY", Range(0,1)) = 0.15
         _MultiTime ("MultiTime",float) = 1
+        _WaterLine ("WaterLine",float) = 1
         [Toggle(WaterAnimate)]_IsOpen ("WaterAnimate", int) = 0
     }
     SubShader
@@ -52,6 +53,7 @@
             float _AddY;
             bool _IsOpen;
             float _MultiTime;
+            float _WaterLine;
 
             v2f vert (appdata v)
             {
@@ -74,9 +76,9 @@
                 if(_IsOpen > 0 && _AddY < 1){
                     float minLerp = 0.3;
                     float x = i.uv.x + _Time.y * _MultiTime;
-                    float lerp = min((1 - _AddY),minLerp) * _MultiY;
+                    float lerp = min(_WaterLine - _AddY,minLerp) * _MultiY;
                     float cory = max(_AddY , lerp);
-                    if(i.uv.y > (sin(x * _MultiX) * lerp) + cory){
+                    if(i.uv.y > sin(x * _MultiX) * lerp + cory){
                         discard;
                     }
                 }

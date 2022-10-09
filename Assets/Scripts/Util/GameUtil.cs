@@ -116,6 +116,7 @@ public static class GameUtil
         vec.z *= scale;
         return vec;
     }
+    
     #endregion
 
     #region 加密解密类
@@ -160,5 +161,66 @@ public static class GameUtil
         return Encoding.UTF8.GetString(resultArray);
     }
     
+    /// <summary>
+    /// 获取相较于一个物体的相对位置
+    /// </summary>
+    /// <param name="self">自己的位置</param>
+    /// <param name="other">目标位置</param>
+    /// <returns>相对位置坐标</returns>
+    public static Vector3 GetRelativePosition(this Transform self,Transform other)
+    {
+        Vector3 distance = other.position - self.position;
+        Vector3 relative = Vector3.zero;
+        relative.x = Vector3.Dot(distance, other.right.normalized);
+        relative.y = Vector3.Dot(distance, other.up.normalized);
+        relative.z = Vector3.Dot(distance, other.forward.normalized);
+        return relative;
+    }
+    
+    /// <summary>
+    /// 获取相较于一个物体的相对位置
+    /// </summary>
+    /// <param name="self">自己的位置</param>
+    /// <param name="other">目标位置</param>
+    /// <returns>相对位置坐标</returns>
+    public static Vector3 GetRelativePosition(this Vector3 self,Transform other)
+    {
+        Vector3 distance = other.position - self;
+        Vector3 relative = Vector3.zero;
+        relative.x = Vector3.Dot(distance, other.right.normalized);
+        relative.y = Vector3.Dot(distance, other.up.normalized);
+        relative.z = Vector3.Dot(distance, other.forward.normalized);
+        return relative;
+    }
+    
+    /// <summary>
+    /// 获取节点的RectTransform
+    /// </summary>
+    /// <param name="self">当前节点</param>
+    /// <returns>RectTransform组件</returns>
+    public static RectTransform GetRectTransform(this MonoBehaviour self)
+    {
+        return self.GetComponent<RectTransform>();
+    }
+
+    /// <summary>
+    /// 获取节点的RectTransform
+    /// </summary>
+    /// <param name="self">当前节点</param>
+    /// <returns>RectTransform组件</returns>
+    public static RectTransform GetRectTransform(this GameObject self)
+    {
+        return self.GetComponent<RectTransform>();
+    }
+    
+    /// <summary>
+    /// 获取节点的RectTransform
+    /// </summary>
+    /// <param name="self">当前节点</param>
+    /// <returns>RectTransform组件</returns>
+    public static RectTransform GetRectTransform(this Transform self)
+    {
+        return self.GetComponent<RectTransform>();
+    }
     #endregion
 }

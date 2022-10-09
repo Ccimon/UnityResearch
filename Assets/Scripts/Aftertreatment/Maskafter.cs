@@ -10,6 +10,19 @@ using UnityEngine.UI;
 public class Maskafter : MonoBehaviour
 {
 
+    private static class ShaderProperties
+    {
+        public static string PARAM_ADDY = "_AddY";
+        public static string PARAM_ISOPEN = "_IsOpen";
+        public static string PARAM_MASKTOP = "_MaskTop";
+        public static string PARAM_MASKBOTTOM = "_MaskBottom";
+        public static string PARAM_COLOR = "_Color";
+        public static string PARAM_MASKTEX = "_MaskTex";
+        public static string PARAM_MULTI_X = "_MultiX";
+        public static string PARAM_MULTI_Y = "_MultiY";
+        public static string PARAM_WATERLINE = "_WaterLine";
+    }
+    
     //对外开放的水位属性，每次修改都会刷新Shader渲染
     public float WaterLine {
         get =>_waterLine;
@@ -27,15 +40,12 @@ public class Maskafter : MonoBehaviour
     private float _animLine = 0;
     //水位增长速度
     private float _speed = 0.0125f;
-    //可用的Shader参数名
-    private string _paramAddY = "_AddY";
-    private string _paramIsOpen = "_IsOpen";
-    private string _paramMaskTop = "_MaskTop";
-    private string _paramMaskBottom = "_MaskBottom";
-    private string _paramColor = "_Color";
-    private string _paramMaskTexture = "_MaskTex";
-    private string _paramMultiX = "_MultiX";
-    private string _paramMultiY = "_MultiY";
+
+    private float _top
+    {
+        get => 1 - PaddingTop - PaddingBot;
+    }
+
 
     private float _addY;
     private int _isOpen;
@@ -58,6 +68,7 @@ public class Maskafter : MonoBehaviour
     public float WaterAmplitude;
 
     public float PaddingTop;
+    public float PaddingBot;
     #endregion
 
     #region 公有变量
@@ -68,7 +79,7 @@ public class Maskafter : MonoBehaviour
         set
         {
             _multiX = value;
-            WaterMat.SetFloat(_paramMultiX,value);
+            WaterMat.SetFloat(ShaderProperties.PARAM_MULTI_X,value);
         }
     }
     
@@ -78,7 +89,7 @@ public class Maskafter : MonoBehaviour
         set
         {
             _multiY = value;
-            WaterMat.SetFloat(_paramMultiY,value);
+            WaterMat.SetFloat(ShaderProperties.PARAM_MULTI_Y,value);
         }
     }
     
@@ -88,7 +99,7 @@ public class Maskafter : MonoBehaviour
         set
         {
             _addY = value;
-            WaterMat.SetFloat(_paramAddY,value);
+            WaterMat.SetFloat(ShaderProperties.PARAM_ADDY,value);
         }
     }
     
@@ -98,7 +109,7 @@ public class Maskafter : MonoBehaviour
         set
         {
             _isOpen = value ? 1 : 0;
-            WaterMat.SetFloat(_paramIsOpen,_isOpen);
+            WaterMat.SetFloat(ShaderProperties.PARAM_ISOPEN,_isOpen);
         }
     }
 
@@ -108,7 +119,7 @@ public class Maskafter : MonoBehaviour
         set
         {
             _maskTop = value;
-            WaterMat.SetFloat(_paramMaskTop,value);
+            WaterMat.SetFloat(ShaderProperties.PARAM_MASKTOP,value);
         }
     }
 
@@ -118,7 +129,7 @@ public class Maskafter : MonoBehaviour
         set
         {
             _maskBot = value;
-            WaterMat.SetFloat(_paramMaskBottom,value);
+            WaterMat.SetFloat(ShaderProperties.PARAM_MASKBOTTOM,value);
         }
     }
 
@@ -128,7 +139,7 @@ public class Maskafter : MonoBehaviour
         set
         {
             _color = value;
-            WaterMat.SetColor(_paramColor,value);
+            WaterMat.SetColor(ShaderProperties.PARAM_COLOR,value);
         }
     }
 
@@ -138,10 +149,10 @@ public class Maskafter : MonoBehaviour
         set
         {
             _maskTex = value;
-            WaterMat.SetTexture(_paramMaskTexture,value);
+            WaterMat.SetTexture(ShaderProperties.PARAM_MASKTEX,value);
         }
     }
-
+        
     #endregion
 
     #region 私有方法
@@ -172,7 +183,7 @@ public class Maskafter : MonoBehaviour
             float sign = Mathf.Sign(_waterLine - _animLine);
             float temp = Mathf.Min(Mathf.Abs(_waterLine - _animLine) , _speed);
             _animLine += sign * temp;
-            AddY = _animLine / MaxBlock;
+            AddY = _animLine / MaxBlock * _top + PaddingBot;
             yield return new WaitForEndOfFrame();
         }
     }
@@ -184,6 +195,7 @@ public class Maskafter : MonoBehaviour
     public void SetWaterLine(float index)
     {
         _waterLine = index;
+        WaterMat.SetFloat(ShaderProperties.PARAM_WATERLINE,_waterLine/MaxBlock);
         StartCoroutine(FadeAnimLineToWater());
     }
     
