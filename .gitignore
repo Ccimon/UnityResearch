@@ -14,3 +14,7 @@ UnityResearch.sln
 obj/*
 Packages/*
 bin/*
+
+
+/Assets/test.txt
+/Assets/test1.txt
