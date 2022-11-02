@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_default
-  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: mat_sky
+  m_Shader: {fileID: 10700, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -20,6 +20,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BackTex:
+        m_Texture: {fileID: 2800000, guid: 0028337f64ec040c98c1cd5ec7aaf0bc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -36,8 +40,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DownTex:
+        m_Texture: {fileID: 2800000, guid: 086eb73c8209a4a3ab3be128bb9b88dc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FrontTex:
+        m_Texture: {fileID: 2800000, guid: 625f94642f2f742919860474db5a4fb7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LeftTex:
+        m_Texture: {fileID: 2800000, guid: d9a08192e7374471694c1fc7f01c8bda, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -56,8 +72,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
+    - _RightTex:
+        m_Texture: {fileID: 2800000, guid: 9d78e1a266fde44f1b549ce04acaca9a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UpTex:
+        m_Texture: {fileID: 2800000, guid: a5dce52d66b034a0bbf96a6a6e5b1d9f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -67,7 +87,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 1
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
@@ -81,5 +101,4 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecColor: {r: 1, g: 0.84232974, b: 0.042452812, a: 0}
   m_BuildTextureStacks: []

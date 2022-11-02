@@ -5,7 +5,7 @@ using UnityEngine;
 public class MirrorEffect : MonoBehaviour
 {
     // Start is called before the first frame update
-    new Camera camera;
+    private Camera camera;
     public bool Horizontal;
     void Awake()
     {

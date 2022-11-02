@@ -4,8 +4,10 @@ Shader "shader3d/shader_alpha"
     {
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _ResolveTex("ResolveTexture", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
+        _Alpha ("ModeAlpha",Range(0,1)) = 1
     }
     SubShader
     {
@@ -28,6 +30,7 @@ Shader "shader3d/shader_alpha"
         half _Glossiness;
         half _Metallic;
         fixed4 _Color;
+        fixed _Alpha;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -48,7 +51,7 @@ Shader "shader3d/shader_alpha"
         }
 
         void final(Input IN, SurfaceOutputStandard o, inout fixed4 color){
-            color.a = 0.2;
+            color.a = _Alpha;
         }
         ENDCG
     }

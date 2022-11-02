@@ -5,9 +5,8 @@ using UnityEngine;
 
 public enum ElementsType
 {
-    LeftLocation,
-    RightLocation,
-    MiddleLocation
+    Self,
+    Recursive
 }
 
 public class ArabicAdapterGroup : MonoBehaviour
@@ -34,10 +33,7 @@ public class ArabicAdapterGroup : MonoBehaviour
         for (int i = 0; i < Elements.Count; i++)
         {
             var element = Elements[i];
-            if (element.LocationType != ElementsType.MiddleLocation)
-            {
-                element.RefreshLocation(this);
-            }
+            element?.RefreshLocation(this);
         }
     }
 

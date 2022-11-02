@@ -169,7 +169,7 @@ public static class GameUtil
     /// <returns>相对位置坐标</returns>
     public static Vector3 GetRelativePosition(this Transform self,Transform other)
     {
-        Vector3 distance = other.position - self.position;
+        Vector3 distance = self.position - other.position;
         Vector3 relative = Vector3.zero;
         relative.x = Vector3.Dot(distance, other.right.normalized);
         relative.y = Vector3.Dot(distance, other.up.normalized);

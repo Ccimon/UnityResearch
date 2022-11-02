@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
@@ -7,7 +8,7 @@ using Vector3 = UnityEngine.Vector3;
 
 public class ArabicAdapterElement : MonoBehaviour
 {
-    public ElementsType LocationType;
+    public ElementsType ELtype;
 
     public void RefreshLocation(ArabicAdapterGroup group)
     {
@@ -16,22 +17,32 @@ public class ArabicAdapterElement : MonoBehaviour
 
     private void RefreshLocationRecursive(Transform local,Transform group)
     {
-        ReverseAnchorPreset(local.GetRectTransform(),group.GetRectTransform());
-        if (local.childCount > 0)
+        ReverseAnchorPreset(local,group);
+        if (ELtype == ElementsType.Recursive && local.childCount > 0)
         {
             for (int i = 0; i < local.childCount; i++)
             {
                 var child = local.GetChild(i);
                 RefreshLocationRecursive(child,local);
-                // Debug.Log(child.gameObject.name + "" + child.GetRectTransform().offsetMax.ToString() + child.GetRectTransform().offsetMin.ToString() );
             }
         }
     }
 
-    private void ReverseAnchorPreset(RectTransform transform,RectTransform group)
+    private void ReverseAnchorPreset(Transform trans,Transform group)
     {
-        var position = transform.GetRelativePosition(group);
-        var location = group.position + position;
-        transform.position = location;
+        // string logStr =  "{0},AnchorMax:{1},AnchorMin:{2}";
+        // Debug.Log(string.Format(logStr,trans.gameObject.name
+        //     ,trans.GetRectTransform().anchorMax
+        //     ,trans.GetRectTransform().anchorMin));
+        // Debug.Log(string.Format(logStr,group.gameObject.name
+        //     ,group.GetRectTransform().anchorMax
+        //     ,group.GetRectTransform().anchorMin));
+        // Debug.Log("________________________________");
+        
+        var relative = trans.GetRelativePosition(group);
+        relative.x *= -1;
+        relative.x -= trans.GetRectTransform().rect.width * Math.Sign(relative.x);
+
+        trans.position = group.transform.position + relative;
     }
 }
