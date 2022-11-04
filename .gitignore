@@ -15,7 +15,6 @@ obj/*
 Packages/*
 bin/*
 
-
-/Assets/test.txt
-/Assets/test1.txt
 /Assets/TestFolder/
+/UnityResearch/Library/
+/DOTSResearch/Library/
