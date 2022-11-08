@@ -297,10 +297,10 @@
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.9f1c1/Unity.app/Contents/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
      </Reference>
      <Reference Include="DOTween">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
      </Reference>
      <Reference Include="Newtonsoft.Json">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.0.2/Runtime/Newtonsoft.Json.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.0.2/Runtime/Newtonsoft.Json.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.iOS.Extensions.Xcode">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.9f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -681,37 +681,37 @@
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.9f1c1/Unity.app/Contents/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VSCode.Editor">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Core.Analytics">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/Unity.Services.Core.Analytics.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/Unity.Services.Core.Analytics.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualStudio.Editor">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Core.Environments">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/Unity.Services.Core.Environments.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/Unity.Services.Core.Environments.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Timeline.Editor">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Timeline">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.UI">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
      </Reference>
      <Reference Include="Unity.PlasticSCM.Editor">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Rider.Editor">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Core">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/Library/ScriptAssemblies/Unity.Services.Core.dll</HintPath>
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/UnityResearch/Library/ScriptAssemblies/Unity.Services.Core.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

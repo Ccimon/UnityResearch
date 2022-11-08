@@ -3,10 +3,16 @@
 Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _MainColor("MainColor",Color) = (1,1,1,1)
         _Outline("Outline",float) = 0.1
         _OutlineColor("OutlineColor",Color) = (0,0,0,1)
+        _Specluar("Specular",Range(1,32)) = 1
         _Metallic("Metallic",float) = 0.5
         _Glossiness("Glossiness",float) = 0.5
+        _FrontCoe("FrontCoefficient",float) = 1
+        _BackCoe("BackCoefficient",Range(0,1)) = 0.75
+        _AmbientFactor("AmbientFactor",Range(0,1)) = 0.5
+        _LightBorder("LightBorder",float) = 0.0
     }
     SubShader
     {
@@ -21,6 +27,7 @@ Properties
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #include "UnityCG.cginc"
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -55,40 +62,37 @@ Properties
         //正常阶段
         Pass
         {
-
+            Cull Back
             CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members pos)
-#pragma exclude_renderers d3d11
+            // Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members pos)
+            #pragma exclude_renderers d3d11
             #pragma vertex vert
             #pragma fragment frag
+            #include "UnityCG.cginc"
+            #include "Lighting.cginc"
 
+            float4 _MainColor;
+            int _Specluar;
             float _Metallic;
             float _Glossiness;
-            half2 MetallicGloss(float2 uv)
-            {
-               half2 mg;
-               #ifdef _METALLICGLOSSMAP
-                    mg = tex2D(_MetallicGlossMap,uv.xy).ra;
-               #else
-                   mg = half2(_Metallic,_Glossiness);  
-               #endif
-                  return mg;
-
-            }
+            float _LightBorder;
+            float _FrontCoe;
+            float _BackCoe;
+            float _AmbientFactor;
             
             struct appdata
             {
                 float4 vertex : POSITION;
                 float2 uv :TEXCOORD0;
-                // float2 normal;
+                fixed3 normal:NORMAL;
             };
             
             struct v2f
             {
                 float4 vertex : SV_POSITION;
                 float2 uv:TEXCOORD0;
-                // float2 pos;
-                // float2 shphereUV;
+                fixed3 normal:NORMAL;
+                float3 pos:TEXCOORD1;
             };
             
             sampler2D _MainTex;     
@@ -97,20 +101,46 @@ Properties
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
-                
-                // half3 viewNormal = mul((float3x3)UNITY_MATRIX_MV,v.normal);
-                // half4 viewPos = mul(UNITY_MATRIX_MV,v.vertex); 
-                // half3 projPos = normalize(viewPos.xyz/viewPos.w);
-                // half3 reflectVar = reflect(projPos,viewNormal);
-                // half m = 2.0 * sqrt(reflectVar.x * reflectVar.x + reflectVar.y*reflectVar.y + (reflectVar.x+1)*(reflectVar.z + 1));
-                // o.shphereUV = fixed2(reflectVar.x/m + 0.5, reflectVar.y/m + 0.5);
+                // 法线从模型空间转换到世界空间
+                o.normal = UnityObjectToWorldNormal(v.normal);
+                // 坐标也从模型空间转到世界空间
+                o.pos = mul(unity_ObjectToWorld, v.vertex).xyz;
                 return o;
             }
             
             fixed4 frag (v2f i) : SV_Target
             {
+                fixed4 color = tex2D(_MainTex,i.uv);
+                fixed3 nor = i.normal;
+                fixed3 light = normalize(_WorldSpaceLightPos0.xyz);
                 
-                return tex2D(_MainTex,i.uv);
+                fixed3 cameraPos = _WorldSpaceCameraPos.xyz;
+                fixed3 faceDir = normalize(cameraPos - i.pos);
+                fixed3 hightLight = normalize(faceDir + light);
+                
+                float specular = max(0,dot(hightLight,nor));
+                fixed3 specColor = pow(specular,_Specluar) * fixed3(1,1,1);
+                
+                float diff = saturate(dot(nor,light));
+                fixed3 ambient = _AmbientFactor * UNITY_LIGHTMODEL_AMBIENT.xyz * color;
+                color.rgb = color.rgb * diff + specColor + ambient; 
+                
+                return color;
+
+                
+                // // 漫反射实现
+                // // diff是由顶点的法线世界向量与光照向量点乘获得
+                // // 如果小于0，说明与光照的夹角大于180度，及该顶点面朝方向与光照相背，及该点为阴影处
+                // // 相反则处于光照下
+                // float diff = dot(nor,light);
+                // float para = diff > _LightBorder ? _FrontCoe : _BackCoe;
+                // // 获取环境光
+                // color.rgb += UNITY_LIGHTMODEL_AMBIENT.xyz * color.rgb;
+                // // rgb值强制归一 
+                // color.rgb = saturate(color.rgb);
+                // // 乘以前后渲染的颜色系数
+                // color.rgb *= para;
+                // return color;
             }
             ENDCG
         }
