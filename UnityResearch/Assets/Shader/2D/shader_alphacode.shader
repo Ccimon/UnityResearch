@@ -1,18 +1,19 @@
-﻿Shader "shader2d/unlite"
+Shader "shader2d/alphacode"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Color("Color",Color) = (1,1,1,1)
+        _Color("MainColor",Color) = (1,1,1,1)
     }
     SubShader
     {
         Tags
 		{ 
 			"Queue"="Transparent" 
-			"RenderType"="Transparent" 
-		}
-		Blend off 
+            "RenderType"="Transparent" 
+        }
+
+		Blend SrcColor DstColor
 
         Pass
         {
@@ -37,6 +38,7 @@
             };
 
             sampler2D _MainTex;
+            float4 _MainCol;
             float4 _MainTex_ST;
             float4 _Color;
 

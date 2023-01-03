@@ -16,7 +16,7 @@ readonly partial struct CannonBallAspect : IAspect
       get => Transform.Position;
       set => Transform.Position = value;
    }
-
+   
    public float3 Speed
    {
       get => CannonBall.ValueRO.Speed;
