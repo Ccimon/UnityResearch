@@ -1,11 +1,11 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "shader3d/cartoon" {
+Shader "shader3d/simpleborder" {
 
 Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Outline("Outline",Range(0.1,0.001)) = 0.1
+        _Outline("Outline",Range(0.1,0.0001)) = 0.1
         _OutlineColor("OutlineColor",Color) = (0,0,0,1)
         _Specluar("Specular",Range(1,32)) = 1
         _Metallic("Metallic",float) = 0.5
@@ -19,12 +19,10 @@ Properties
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
-        //描边阶段，法线外扩，渲染背面
         Pass
         {
-            //只需要边缘外扩
             Cull Front
-            
+            offset 1,1
             CGPROGRAM
             #pragma exclude_renderers d3d11
             #pragma vertex vert
@@ -42,14 +40,14 @@ Properties
             fixed _Outline;
             float4 _OutlineColor;
             
-            v2f vert (appdata v)
+            v2f vert (appdata_base v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                float3 normal = mul((float3x3) UNITY_MATRIX_MV, v.normal);
-                normal.x *= UNITY_MATRIX_P[0][0];
-                normal.y *= UNITY_MATRIX_P[1][1];
-                o.vertex.xy += normal.xy * _Outline;
+                float3 dir = normalize(v.vertex.xyz);
+                float4 newPos = v.vertex;
+                newPos.xyz += dir * _Outline;
+                o.vertex = UnityObjectToClipPos(newPos);
+                
                 return o;
             }
 
@@ -114,33 +112,33 @@ Properties
                 fixed3 nor = i.normal;
                 fixed3 light = normalize(_WorldSpaceLightPos0.xyz);
                 
-                // fixed3 cameraPos = _WorldSpaceCameraPos.xyz;
-                // fixed3 faceDir = normalize(cameraPos - i.pos);
-                // fixed3 hightLight = normalize(faceDir + light);
-                //
-                // float specular = max(0,dot(hightLight,nor));
-                // fixed3 specColor = saturate(pow(specular,_Specluar)) * fixed3(1,1,1);
-                //
-                // float diff = saturate(dot(nor,light));
-                // fixed3 ambient = _AmbientFactor * UNITY_LIGHTMODEL_AMBIENT.xyz * color;
-                // color.rgb = color.rgb * diff + specColor + ambient; 
-                //
-                // return color;
+                fixed3 cameraPos = _WorldSpaceCameraPos.xyz;
+                fixed3 faceDir = normalize(cameraPos - i.pos);
+                fixed3 hightLight = normalize(faceDir + light);
+                
+                float specular = max(0,dot(hightLight,nor));
+                fixed3 specColor = saturate(pow(specular,_Specluar)) * fixed3(1,1,1);
+                
+                float diff = saturate(dot(nor,light));
+                fixed3 ambient = _AmbientFactor * UNITY_LIGHTMODEL_AMBIENT.xyz ;
+                color.rgb = color.rgb * diff + specColor + ambient; 
+                
+                return color;
 
                 
                 // 漫反射实现
                 // diff是由顶点的法线世界向量与光照向量点乘获得
                 // 如果小于0，说明与光照的夹角大于180度，及该顶点面朝方向与光照相背，及该点为阴影处
                 // 相反则处于光照下
-                float diff = dot(nor,light);
-                float para = diff > _LightBorder ? _FrontCoe : _BackCoe;
-                // 获取环境光
-                color.rgb += UNITY_LIGHTMODEL_AMBIENT.xyz * color.rgb;
-                // rgb值强制归一 
-                color.rgb = saturate(color.rgb);
-                // 乘以前后渲染的颜色系数，实现卡通渲染
-                color.rgb *= para;
-                return color;
+                // float diff = dot(nor,light);
+                // float para = diff > _LightBorder ? _FrontCoe : _BackCoe;
+                // // 获取环境光
+                // color.rgb += UNITY_LIGHTMODEL_AMBIENT.xyz * color.rgb;
+                // // rgb值强制归一 
+                // color.rgb = saturate(color.rgb);
+                // // 乘以前后渲染的颜色系数，实现卡通渲染
+                // color.rgb *= para;
+                // return color;
             }
             ENDCG
         }
