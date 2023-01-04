@@ -120,7 +120,8 @@ Properties
                 fixed3 specColor = saturate(pow(specular,_Specluar)) * fixed3(1,1,1);
                 
                 float diff = saturate(dot(nor,light));
-                fixed3 ambient = _AmbientFactor * UNITY_LIGHTMODEL_AMBIENT.xyz ;
+                fixed4 ambient = UNITY_LIGHTMODEL_AMBIENT;
+                ambient.xyz *= ambient.a * 0.1;
                 color.rgb = color.rgb * diff + specColor + ambient; 
                 
                 return color;
