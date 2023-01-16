@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Flow
-  m_Shader: {fileID: 4800000, guid: 4d21703e9181649baba54dc67490a525, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4eecb0b9c59744ee88d34df1fb3bd241, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -56,6 +56,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ToonShade:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
@@ -82,6 +86,7 @@ Material:
     - _XSpeed: -0.2
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.9150943, g: 0.19424175, b: 0.19424175, a: 1}
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MainColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

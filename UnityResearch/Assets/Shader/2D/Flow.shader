@@ -1,4 +1,4 @@
-﻿Shader "Flow"
+﻿Shader "shader2d/Flow"
 {
 
     Properties{
@@ -80,18 +80,19 @@
                 fixed4 mainTex = tex2D(_MainTex, i.uv);
                 fixed2 uv = i.uv;
 
-                [unroll(100)]
-                for (fixed i = 1.0; i < 5.0; i++)
-                {   
-                    uv.x += 0.6 / i * cos(i * 2.5 * uv.y + _Time.y * _XSpeed);
-                    uv.y += 0.6 / i * cos(i * 1.5 * uv.x + _Time.y * _XSpeed);
-                }
-                
-                fixed4 col = fixed4(mainTex.xyz / abs(sin(_Time.y * _XSpeed - uv.y - uv.x )), _Color.a);
+                // [unroll(100)]
+                // for (fixed i = 1.0; i < 5.0; i++)
+                // {   
+                //     uv.x += 0.6 / i * cos(i * 2.5 * uv.y + _Time.y * _XSpeed);
+                //     uv.y += 0.6 / i * cos(i * 1.5 * uv.x + _Time.y * _XSpeed);
+                // }
+                //
+                // fixed4 col = fixed4(mainTex.xyz / abs(sin(_Time.y * _XSpeed - uv.y - uv.x )), _Color.a);
+                fixed4 col = fixed4(mainTex.rgb / sin(uv.x),_Color.a);
 
-
-                col.xyz = _Color.a;
-                col.xyz *= _Color.xyz;
+                //fixed4 col = fixed4(mainTex.xyz / min(abs(sin(_Time.y * _XSpeed - uv.y - uv.x ),1)), _Color.a);
+                col.rgb *= _Color.a;
+                col.rgb *= _Color.rgb;
                 col.a *= _Color.a;
 
                 return col; 

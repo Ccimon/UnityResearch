@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
@@ -231,6 +232,13 @@ public class MeshTest : MonoBehaviour
         }
     }
 
+    private List<Vector3> GenerateCube()
+    {
+        List<Vector3> pointList = new List<Vector3>();
+        
+        return pointList;
+    }
+
     private List<Vector3> GeneratedHelix()
     {
         var list = new List<Vector3>();
@@ -240,6 +248,7 @@ public class MeshTest : MonoBehaviour
         var increase = 0.1f;
         var height = 1;
         var thickness = 0.2f;
+        // transform.DOMoveX(0, 1).SetEase(new EaseFunction());
         
         var seg = turns * 360 / interAngle;
         for (int i = 0;i < seg; i++)
