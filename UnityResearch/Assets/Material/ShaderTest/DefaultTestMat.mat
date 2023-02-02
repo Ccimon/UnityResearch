@@ -25,7 +25,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ContentTex:
-        m_Texture: {fileID: 2800000, guid: 96031adc76d7541e19699b897eaa65b4, type: 3}
+        m_Texture: {fileID: 2800000, guid: a5dce52d66b034a0bbf96a6a6e5b1d9f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -71,14 +71,14 @@ Material:
     - _ColorMask: 15
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Dis: 1
+    - _Dis: 0.8
     - _DstBlend: 0
     - _FilterfRedPass: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _HighLitghtFilter: 0.5
-    - _Light: 1
+    - _Light: 3
     - _LightAlpha: 1
     - _Metallic: 0
     - _Mode: 0
@@ -106,7 +106,7 @@ Material:
     - _FilterfColor: {r: 0, g: 1, b: 1, a: 1}
     - _FilterfRedPass: {r: 1, g: 1, b: 1, a: 1}
     - _FinalColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ReplaceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ReplaceColor: {r: 1, g: 0, b: 0, a: 0}
     - _ReplaceColorB: {r: 1, g: 1, b: 1, a: 1}
     - _ReplaceColorG: {r: 1, g: 1, b: 1, a: 1}
     - _ReplaceColorR: {r: 1, g: 1, b: 1, a: 1}

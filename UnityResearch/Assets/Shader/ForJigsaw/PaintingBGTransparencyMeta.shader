@@ -13,6 +13,7 @@
 		SubShader{
 			Tags { "RenderType" = "Opaque" }
 			Blend SrcAlpha OneMinusSrcAlpha
+			
 			pass
 			{
 				CGPROGRAM
@@ -65,13 +66,13 @@
 					float4 content = tex2D(_ContentTex,contentUV);
 					float4 col = c;
 					c.a *= ColorLerp(c.rgb,_FilterfColor.rgb);
-					
+
 					c.rgb = c.rgb * (1 - col.r) + content.rgb * col.r;
 					c.rgb *= length(col.rgb);
-					c.a *= _Alpha;
+					c.a *= col.r;
+										
 					return c;
 				}
- 
 			ENDCG
 			}
 		}
