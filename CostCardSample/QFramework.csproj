@@ -299,6 +299,9 @@
      <Reference Include="UnityEditor.iOS.Extensions">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.9f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
      </Reference>
+     <Reference Include="Markdig">
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Assets/QFramework/Toolkits/_CoreKit/PackageKit/Markdown/Markdig.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Plastic.Newtonsoft.Json">
      <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Library/PackageCache/com.unity.collab-proxy@1.17.2/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
      </Reference>
@@ -328,9 +331,6 @@
      </Reference>
      <Reference Include="unityplastic">
      <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Library/PackageCache/com.unity.collab-proxy@1.17.2/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
-     </Reference>
-     <Reference Include="Markdig">
-     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Assets/QFramework/Toolkits/_CoreKit/PackageKit/Markdown/Markdig.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.iOS.Extensions.Xcode">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.9f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
