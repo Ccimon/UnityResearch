@@ -5,6 +5,21 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="MainGame" t="Include">
+          <e p="CommandCollections.cs" t="Include" />
+          <e p="EventCollections.cs" t="Include" />
+          <e p="Scripts" t="Include">
+            <e p="Extention" t="Include">
+              <e p="GameSingletion.cs" t="Include" />
+            </e>
+            <e p="LifeCycle" t="Include">
+              <e p="LaunchManager.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="Shader_BgWater.shader" t="Include" />
+          </e>
+        </e>
         <e p="QFramework" t="Include">
           <e p="Framework" t="Include">
             <e p="Examples" t="Include">

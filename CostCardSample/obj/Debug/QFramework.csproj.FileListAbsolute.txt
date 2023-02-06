@@ -1,0 +1,2 @@
+/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/obj/Debug/QFramework.csproj.AssemblyReference.cache
+/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/obj/Debug/QFramework.csproj.CoreCompileInputs.cache
