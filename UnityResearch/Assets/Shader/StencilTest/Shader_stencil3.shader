@@ -12,9 +12,9 @@ Shader "Custom/Shader_stencil3"
         Tags { "RenderType"="Opaque" }
         Stencil 
         {
-            Ref 0
+            Ref 2
             Comp Equal
-//            Pass replace
+            Pass replace
         }
         LOD 200
 

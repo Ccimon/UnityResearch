@@ -38,6 +38,7 @@ Properties
             struct v2f
             {
                 float4 vertex : SV_POSITION;
+                UNITY_FOG_COORDS(1)
             };
             fixed _Outline;
             float4 _OutlineColor;

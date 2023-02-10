@@ -10,10 +10,21 @@
           <e p="EventCollections.cs" t="Include" />
           <e p="Scripts" t="Include">
             <e p="Extention" t="Include">
+              <e p="Extention.cs" t="Include" />
               <e p="GameSingletion.cs" t="Include" />
             </e>
             <e p="LifeCycle" t="Include">
               <e p="LaunchManager.cs" t="Include" />
+            </e>
+            <e p="Model" t="Include">
+              <e p="GridModel.cs" t="Include" />
+              <e p="MainArchitecture.cs" t="Include" />
+            </e>
+            <e p="UI" t="Include">
+              <e p="Panel.cs" t="Include" />
+              <e p="Panel.Designer.cs" t="Include" />
+              <e p="PanelHome.cs" t="Include" />
+              <e p="PanelHome.Designer.cs" t="Include" />
             </e>
           </e>
           <e p="Shaders" t="Include">
@@ -1229,6 +1240,12 @@
               </e>
             </e>
           </e>
+        </e>
+        <e p="QFrameworkData" t="Include">
+          <e p="ProjectConfig" t="Include">
+            <e p="ProjectConfig.json" t="Include" />
+          </e>
+          <e p="QAssets.cs" t="Include" />
         </e>
       </e>
       <e p="AudioKit.csproj" t="IncludeRecursive" />

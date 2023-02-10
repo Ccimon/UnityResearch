@@ -13,7 +13,7 @@ namespace MainGame.Scripts
         private void Awake()
         {
             UIRoot.Instance.OnSingletonInit();
-            _timeModel = new TimeModel();
+             var game = MainArchitecture.Interface;
         }
     }
 

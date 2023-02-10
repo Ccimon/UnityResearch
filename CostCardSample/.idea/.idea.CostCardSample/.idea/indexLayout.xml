@@ -23,6 +23,7 @@
     </explicitIncludes>
     <explicitExcludes>
       <Path>.idea</Path>
+      <Path>AssetBundles</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
       <Path>Temp</Path>

@@ -6,14 +6,15 @@ Shader "Custom/Shader_stencil1"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
+        _Stencil("",int) = 0
     }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
         Stencil
         {
-            Ref 3
-            Comp GEqual
+            Ref [_Stencil]
+            Comp Less
         }
         LOD 200
 
