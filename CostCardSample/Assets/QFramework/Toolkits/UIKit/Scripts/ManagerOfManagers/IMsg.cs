@@ -77,14 +77,15 @@ namespace QFramework
 
         public QMsg()
         {
+            
         }
 
         #region Object Pool
 
-        public static QMsg Allocate<T>(T eventId) where T : IConvertible
+        public static QMsg Allocate<T>(T eventId) where T : IntegerContertable
         {
             QMsg msg = SafeObjectPool<QMsg>.Instance.Allocate();
-            msg.EventID = eventId.ToInt32(null);
+            msg.EventID = eventId.ToInt32();
             msg.ReuseAble = true;
             return msg;
         }

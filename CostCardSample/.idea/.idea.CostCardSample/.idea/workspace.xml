@@ -2,20 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03489a31-b39d-40ad-a124-6df0351787af" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/LifeCycle/LaunchManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Scripts/LifeCycle/LaunchManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/ViewController.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainGame/EventCollections.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/EventCollections.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Prefab/Panel/PanelHome.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Prefab/Panel/PanelHome.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/Extention/Extention.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Scripts/Extention/Extention.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/GridModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/GridModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/MainArchitecture.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/MainArchitecture.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/UI/PanelHome.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Scripts/UI/PanelHome.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IMsg.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IMsg.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMgrBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMgrBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMonoBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMonoBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/ActionKit/Scripts/DeprecateActionKit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/ActionKit/Scripts/DeprecateActionKit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/EventKit/EnumEventSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/EventKit/EnumEventSystem.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ArtifactDB" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ArtifactDB" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ArtifactDB-lock" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ArtifactDB-lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Artifacts/18/18a7a780698194c6b2f11aacdfdb02c0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Artifacts/4b/4b4470bad85553939eb7633e9a647d6c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/Artifacts/35/356a309193207bc51a882ce474bf0d23" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/Artifacts/6e/6ea9cf108081d43bf12e88218748d6cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/Artifacts/9f/9fa65f7b332530b16809a12fe774da75" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/Artifacts/b5/b596d771a7a22a329ba81af4e8b74f00" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/Artifacts/d1/d1d2a11977cf4f1c1e0806e384dcad6f" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/Bee/TundraBuildState.state" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/TundraBuildState.state" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/Bee/TundraBuildState.state.map" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/TundraBuildState.state.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/Bee/backend_profiler0.traceevents" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/backend_profiler0.traceevents" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Bee/backend_profiler1.traceevents" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/backend_profiler1.traceevents" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Bee/buildprogram0.traceevents" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/buildprogram0.traceevents" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/Bee/fullprofile.json" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/fullprofile.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/Bee/tundra.digestcache" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/tundra.digestcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/Bee/tundra.log.json" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/tundra.log.json" afterDir="false" />
@@ -24,20 +33,25 @@
       <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/AudioKit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/AudioKit.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/AudioKit.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/AudioKit.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/QFramework.CoreKit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/QFramework.CoreKit.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/QFramework.CoreKit.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/QFramework.CoreKit.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.Editor.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.Editor.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.Editor.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.Editor.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.Editor.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.Editor.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.Editor.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.Editor.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/Search/transactions.db" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Search/transactions.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/SourceAssetDB" beforeDir="false" afterPath="$PROJECT_DIR$/Library/SourceAssetDB" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/SourceAssetDB-lock" beforeDir="false" afterPath="$PROJECT_DIR$/Library/SourceAssetDB-lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/StateCache/MainStageHierarchy/4d/4d2a36d9faf65734f0bbefb3ee623532.json" beforeDir="false" afterPath="$PROJECT_DIR$/Library/StateCache/MainStageHierarchy/4d/4d2a36d9faf65734f0bbefb3ee623532.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/com.unity.ide.rider/PersistedState.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Library/com.unity.ide.rider/PersistedState.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UIKit.Editor.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UIKit.Editor.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UnityResearch/Assets/Material/StencilTest/Stencil3.mat" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/Assets/Material/StencilTest/Stencil3.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UnityResearch/Assets/Scenes/StencilScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/Assets/Scenes/StencilScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UnityResearch/Assets/Shader/3D/shader_cartoon.shader" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/Assets/Shader/3D/shader_cartoon.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UnityResearch/Assets/Shader/StencilTest/Shader_stencil1.shader" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/Assets/Shader/StencilTest/Shader_stencil1.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UnityResearch/Assets/Shader/StencilTest/Shader_stencil3.shader" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/Assets/Shader/StencilTest/Shader_stencil3.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UnityResearch/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,11 +88,17 @@
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/ViewController/PanelHome.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/UI.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/LifeCycle/LaunchManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/MainGame/EventCollections.cs" />
-      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/UI/PanelHome.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Extention/Extention.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/UI/PanelHome.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/MainArchitecture.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/GridModel.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/EventCollections.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IMsg.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/ActionKit/Scripts/DeprecateActionKit.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMonoBehaviour.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMgrBehaviour.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/EventKit/EnumEventSystem.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="2LAtkRaHvZomtKiW3qyjII1hnCe" />
@@ -127,7 +147,9 @@
       <workItem from="1675650134716" duration="10205000" />
       <workItem from="1675934191692" duration="4435000" />
       <workItem from="1675994957716" duration="3251000" />
-      <workItem from="1676018030210" duration="2165000" />
+      <workItem from="1676018030210" duration="6926000" />
+      <workItem from="1676269317932" duration="2189000" />
+      <workItem from="1676271686357" duration="8390000" />
     </task>
     <servers />
   </component>

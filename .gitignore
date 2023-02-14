@@ -18,5 +18,5 @@ bin/*
 /Assets/TestFolder/
 /UnityResearch/Library/
 /DOTSResearch/Library/
-/CostCardSample/Temp/*
-/CostCardSample/Library/*
+/CostCardSample/Temp/
+/CostCardSample/Library/

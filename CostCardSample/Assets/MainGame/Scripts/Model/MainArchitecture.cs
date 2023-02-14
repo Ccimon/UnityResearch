@@ -6,15 +6,20 @@ using UnityEngine;
 
 namespace MainGame.Scripts
 {
-    public class MainArchitecture : Architecture<MainArchitecture>,ISingleton
+    public class MainArchitecture : Architecture<MainArchitecture>
     {
         public Vector2 CanvasSize;
+        private GridModel _gridModel;
+        private TimeModel _timeModel;
         protected override void Init()
         {
             ResKit.Init();
+
+            _gridModel = new GridModel();
+            _timeModel = new TimeModel();
             
-            this.RegisterModel(new GridModel());
-            this.RegisterModel(new TimeModel());
+            RegisterModel(_gridModel);
+            RegisterModel(_timeModel);
 
             UIKit.OpenPanel<PanelHome>();
 
@@ -22,12 +27,12 @@ namespace MainGame.Scripts
 
             var rect = UIRoot.Instance.GetRectTransform().rect;
             CanvasSize = new Vector2(rect.width, rect.height);
+            
+            _gridModel.InitBoard();
+            _gridModel.RandomBoardInfo();
+            _gridModel.GridBoardInit();
             Debug.Log("MainArchitecture Start Complete");
         }
-
-        public void OnSingletonInit()
-        {
-            
-        }
+        
     }
 }

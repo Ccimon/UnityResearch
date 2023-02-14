@@ -34,12 +34,14 @@ namespace QFramework
     {
         void Init();
 
-        void RegisterEvent<T>(T msgId, Action<int,object[]> process) where T : IConvertible;
+        void RegisterEvent<T>(T msgId, Action<int,object[]> process) where T : IntegerContertable;
 
-        void UnRegisterEvent<T>(T msgEvent, Action<int,object[]> process) where T : IConvertible;
+        void UnRegisterEvent<T>(T msgEvent, Action<int, object[]> process);
 
-        void SendEvent<T>(T eventId) where T : IConvertible;
+        void SendEvent<T>(T eventId) where T : IntegerContertable;
 
         void SendMsg(IMsg msg);
     }
+    
+
 }

@@ -71,7 +71,7 @@ namespace QFramework
 
 		protected virtual void OnHide() {}
 
-		protected void RegisterEvents<T>(params T[] eventIDs) where T : IConvertible
+		protected void RegisterEvents<T>(params T[] eventIDs) where T : IntegerContertable
 		{
 			foreach (var eventId in eventIDs)
 			{
@@ -79,16 +79,16 @@ namespace QFramework
 			}
 		}
 
-		protected void RegisterEvent<T>(T eventId) where T : IConvertible
+		protected void RegisterEvent<T>(T eventId) where T : IntegerContertable
 		{
-			mCachedEventIds.Add(eventId.ToUInt16(null));
+			mCachedEventIds.Add(eventId.ToUInt16());
 			Manager.RegisterEvent(eventId, Process);
 		}
 		
-		protected void UnRegisterEvent<T>(T eventId) where T : IConvertible
+		protected void UnRegisterEvent<T>(T eventId) where T : IntegerContertable
 		{
-			mCachedEventIds.Remove(eventId.ToUInt16(null));
-			Manager.UnRegisterEvent(eventId.ToInt32(null), Process);
+			mCachedEventIds.Remove(eventId.ToUInt16());
+			Manager.UnRegisterEvent(eventId, Process);
 		}
 
 		protected void UnRegisterAllEvent()
@@ -104,7 +104,7 @@ namespace QFramework
 			Manager.SendMsg(msg);
 		}
 		
-        public virtual void SendEvent<T>(T eventId) where T : IConvertible
+        public virtual void SendEvent<T>(T eventId) where T : IntegerContertable
 		{
 			Manager.SendEvent(eventId);
 		}

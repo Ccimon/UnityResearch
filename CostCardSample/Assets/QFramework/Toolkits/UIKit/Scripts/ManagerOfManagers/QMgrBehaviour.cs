@@ -51,14 +51,14 @@ namespace QFramework
             get { return this; }
         }
 
-        public void RegisterEvent<T>(T msgId, Action<int,object[]> process) where T : IConvertible
+        public void RegisterEvent<T>(T msgId, Action<int,object[]> process) where T : IntegerContertable
         {
             mEventSystem.Value.Register(msgId, process);
         }
 
-        public void UnRegisterEvent<T>(T msgEvent, Action<int,object[]> process) where T : IConvertible
+        public void UnRegisterEvent<T>(T msgEvent, Action<int,object[]> process) where T : IntegerContertable
         {
-            mEventSystem.Value.UnRegister(msgEvent, process);
+            mEventSystem.Value.UnRegister(msgEvent.ToUInt16(), process);
         }
 
         public override void SendMsg(IMsg msg)

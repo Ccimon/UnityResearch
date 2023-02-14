@@ -22,9 +22,9 @@ namespace QFramework
 
         #region 功能函数
 
-        public IUnRegister Register<T>(T key, Action<int,object[]> onEvent) where T : IConvertible
+        public IUnRegister Register<T>(T key, Action<int,object[]> onEvent) where T : IntegerContertable
         {
-            var kv = key.ToInt32(null);
+            var kv = key.ToInt32();
 
             if (mEvents.TryGetValue(kv, out var e))
             {
@@ -39,9 +39,9 @@ namespace QFramework
             }
         }
 
-        public void UnRegister<T>(T key, Action<int,object[]> onEvent) where T : IConvertible
+        public void UnRegister<T>(T key, Action<int,object[]> onEvent) where T : IntegerContertable
         {
-            var kv = key.ToInt32(null);
+            var kv = key.ToInt32();
 
             if (mEvents.TryGetValue(kv, out var e))
             {
@@ -90,19 +90,19 @@ namespace QFramework
         
         
         [Obsolete("请使用 Global.Send,Please use Global.Send instead", APIVersion.Force)]
-        public static void SendEvent<T>(T key, params object[] param) where T : IConvertible
+        public static void SendEvent<T>(T key, params object[] param) where T : IntegerContertable
         {
             Global.Send(key, param);
         }
 
         [Obsolete("请使用 Global.Register,Please use Global.Register instead", APIVersion.Force)]
-        public static void RegisterEvent<T>(T key, Action<int,object[]> fun) where T : IConvertible
+        public static void RegisterEvent<T>(T key, Action<int,object[]> fun) where T : IntegerContertable
         {
             Global.Register(key, fun);
         }
 
         [Obsolete("请使用 Global.UnRegister,Please use Global.UnRegister instead", APIVersion.Force)]
-        public static void UnRegisterEvent<T>(T key, Action<int,object[]> fun) where T : IConvertible
+        public static void UnRegisterEvent<T>(T key, Action<int,object[]> fun) where T : IntegerContertable
         {
             Global.UnRegister(key, fun);
         }

@@ -15,8 +15,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+
 namespace QFramework
 {
+    public interface IntegerContertable
+    {
+        public ushort ToUInt16();
+        public int ToInt32();
+    }
     public class DeprecateActionKit
     {
         [RuntimeInitializeOnLoadMethod]
@@ -980,7 +986,7 @@ namespace QFramework
         }
     }
 
-    public struct EnumStateChangeEvent<T> where T : struct, IComparable, IConvertible, IFormattable
+    public struct EnumStateChangeEvent<T> where T : struct, IComparable, IntegerContertable, IFormattable
     {
         public GameObject Target;
         public EnumStateMachine<T> TargetStateMachine;
@@ -1001,7 +1007,7 @@ namespace QFramework
         bool TriggerEvents { get; set; }
     }
 
-    public class EnumStateMachine<T> : IEnumStateMachine where T : struct, IComparable, IConvertible, IFormattable
+    public class EnumStateMachine<T> : IEnumStateMachine where T : struct, IComparable, IntegerContertable, IFormattable
     {
         /// If you set TriggerEvents to true, the state machine will trigger events when entering and exiting a state. 
         /// Additionnally, if you also use a StateMachineProcessor, it'll trigger events for the current state on FixedUpdate, LateUpdate, but also
