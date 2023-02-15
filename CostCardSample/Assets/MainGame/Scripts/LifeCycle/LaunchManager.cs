@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using MainGame.Basic;
 using QFramework;
 using UnityEngine;
 
 namespace MainGame.Scripts
 {
-    public class LaunchManager : MonoBehaviour,GameSingletion<LaunchManager>
+    public class LaunchManager : MonoBehaviour,GameSingleton<LaunchManager>
     {
         private TimeModel _timeModel;
         private void Awake()
