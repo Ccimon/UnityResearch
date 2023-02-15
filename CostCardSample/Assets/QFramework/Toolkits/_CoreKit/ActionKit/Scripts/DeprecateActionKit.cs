@@ -12,8 +12,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Codice.Client.BaseCommands;
 using UnityEngine;
 using UnityEngine.Events;
+using Attribute = System.Attribute;
 
 
 namespace QFramework
@@ -23,6 +25,52 @@ namespace QFramework
         public ushort ToUInt16();
         public int ToInt32();
     }
+
+    public interface GameSingleton<T> where T : new()
+    {
+        private static T _instance;
+
+        public static T Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new T();
+                return _instance;
+            }
+        }
+    }  
+    
+    public class EventIntegerObject : IntegerContertable
+    {
+        private int _eventId = 0;
+        public EventIntegerObject(int eventId = 0)
+        {
+            _eventId = eventId;
+        }
+        
+        public EventIntegerObject()
+        {
+            _eventId = 0;
+        }
+        
+        public EventIntegerObject SetEventId(int evenId)
+        {
+            _eventId = _eventId;
+            return this;
+        }
+        
+        public ushort ToUInt16()
+        {
+            return Convert.ToUInt16(_eventId);
+        }
+
+        public int ToInt32()
+        {
+            return _eventId;
+        }
+    }
+    
     public class DeprecateActionKit
     {
         [RuntimeInitializeOnLoadMethod]

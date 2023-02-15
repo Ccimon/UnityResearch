@@ -88,14 +88,19 @@ namespace QFramework
 		protected void UnRegisterEvent<T>(T eventId) where T : IntegerContertable
 		{
 			mCachedEventIds.Remove(eventId.ToUInt16());
-			Manager.UnRegisterEvent(eventId, Process);
+			Manager.UnRegisterEvent<T>(eventId, Process);
 		}
 
 		protected void UnRegisterAllEvent()
 		{
 			if (null != mPrivateEventIds)
 			{
-				mPrivateEventIds.ForEach(id => Manager.UnRegisterEvent(id,Process));
+				var _eventConvert = new EventIntegerObject();
+				mPrivateEventIds.ForEach(id =>
+				{
+					_eventConvert.SetEventId(id);
+					Manager.UnRegisterEvent(_eventConvert,Process);
+				});
 			}
 		}
 

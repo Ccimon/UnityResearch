@@ -11,7 +11,7 @@
           <e p="Scripts" t="Include">
             <e p="Extention" t="Include">
               <e p="Extention.cs" t="Include" />
-              <e p="GameSingletion.cs" t="Include" />
+              <e p="GameSingleton.cs" t="Include" />
             </e>
             <e p="LifeCycle" t="Include">
               <e p="LaunchManager.cs" t="Include" />

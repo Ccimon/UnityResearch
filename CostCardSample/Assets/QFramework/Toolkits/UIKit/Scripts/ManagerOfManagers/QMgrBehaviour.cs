@@ -36,10 +36,12 @@ namespace QFramework
         private readonly Lazy<EnumEventSystem> mEventSystem =
             new Lazy<EnumEventSystem>(ObjectFactory.CreateNonPublicConstructorObject<EnumEventSystem>);
 
+        private EventIntegerObject _evenConvert;
         #region IManager
 
         public virtual void Init()
         {
+            _evenConvert = new EventIntegerObject(0);
         }
 
         #endregion
@@ -58,9 +60,13 @@ namespace QFramework
 
         public void UnRegisterEvent<T>(T msgEvent, Action<int,object[]> process) where T : IntegerContertable
         {
-            mEventSystem.Value.UnRegister(msgEvent.ToUInt16(), process);
+            mEventSystem.Value.UnRegister<T>(msgEvent, process);
         }
-
+        
+        public void UnRegisterEvent( Action<int,object[]> process,ushort msgEvent)
+        {
+            mEventSystem.Value.UnRegister(msgEvent, process);
+        }
         public override void SendMsg(IMsg msg)
         {
             if (msg.ManagerID == ManagerId)

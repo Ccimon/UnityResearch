@@ -38,6 +38,23 @@ namespace QFramework
                 return easyEvent.Register(onEvent);
             }
         }
+        
+        public IUnRegister Register(int key, Action<int,object[]> onEvent)
+        {
+            var kv = key;
+
+            if (mEvents.TryGetValue(kv, out var e))
+            {
+                var easyEvent = e.As<EasyEvent<int,object[]>>();
+                return easyEvent.Register(onEvent);
+            }
+            else
+            {
+                var easyEvent = new EasyEvent<int,object[]>();
+                mEvents.Add(kv, easyEvent);
+                return easyEvent.Register(onEvent);
+            }
+        }
 
         public void UnRegister<T>(T key, Action<int,object[]> onEvent) where T : IntegerContertable
         {
@@ -48,14 +65,30 @@ namespace QFramework
                 e.As<EasyEvent<int,object[]>>()?.UnRegister(onEvent);
             }
         }
-
-        public void UnRegister<T>(T key) where T : IConvertible
+        
+        public void UnRegister<T>(T key) where T : IntegerContertable
         {
-            var kv = key.ToInt32(null);
+            var kv = key.ToInt32();
 
             if (mEvents.ContainsKey(kv))
             {
                 mEvents.Remove(kv);
+            }
+        }
+        
+        public void UnRegister(int key)
+        {
+            if (mEvents.ContainsKey(key))
+            {
+                mEvents.Remove(key);
+            }
+        }
+        
+        public void UnRegister(int key,Action<int,object[]> onEvent)
+        {
+            if (mEvents.TryGetValue(key, out var e))
+            {
+                e.As<EasyEvent<int,object[]>>()?.UnRegister(onEvent);
             }
         }
 
@@ -64,16 +97,26 @@ namespace QFramework
             mEvents.Clear();
         }
 
-        public void Send<T>(T key, params object[] args) where T : IConvertible
+        public void Send<T>(T key, params object[] args) where T : IntegerContertable
         {
-            var kv = key.ToInt32(null);
+            var kv = key.ToInt32();
 
             if (mEvents.TryGetValue(kv, out var e))
             {
                 e.As<EasyEvent<int,object[]>>().Trigger(kv,args);
             }
         }
+        
+        public void  Send(int key, params object[] args)
+        {
+            var kv = key;
 
+            if (mEvents.TryGetValue(kv, out var e))
+            {
+                e.As<EasyEvent<int,object[]>>().Trigger(kv,args);
+            }
+        }
+        
         #endregion
         
     }

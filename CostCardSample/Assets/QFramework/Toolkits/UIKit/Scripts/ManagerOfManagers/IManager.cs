@@ -36,7 +36,7 @@ namespace QFramework
 
         void RegisterEvent<T>(T msgId, Action<int,object[]> process) where T : IntegerContertable;
 
-        void UnRegisterEvent<T>(T msgEvent, Action<int, object[]> process);
+        void UnRegisterEvent<T>(T msgEvent, Action<int, object[]> process) where T : IntegerContertable;
 
         void SendEvent<T>(T eventId) where T : IntegerContertable;
 

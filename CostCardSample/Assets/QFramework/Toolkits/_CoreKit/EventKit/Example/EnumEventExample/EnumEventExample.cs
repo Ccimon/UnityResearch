@@ -33,7 +33,7 @@ namespace QFramework
 		
 		void Start()
 		{
-			EnumEventSystem.Global.Register(TestEvent.TestOne, OnEvent);
+			EnumEventSystem.Global.Register((int)TestEvent.TestOne, OnEvent);
 		}
 
 		void OnEvent(int key, params object[] obj)
@@ -50,13 +50,13 @@ namespace QFramework
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				EnumEventSystem.Global.Send(TestEvent.TestOne, "Hello World!");
+				EnumEventSystem.Global.Send((int)TestEvent.TestOne, "Hello World!");
 			}
 		}
 
 		private void OnDestroy()
 		{
-			EnumEventSystem.Global.UnRegister(TestEvent.TestOne, OnEvent);
+			EnumEventSystem.Global.UnRegister((int)TestEvent.TestOne, OnEvent);
 		}
 	}
 }
