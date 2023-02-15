@@ -24,15 +24,15 @@ namespace  MainGame.Scripts
     
     public class GridModel : AbstractModel
     {
-        public Block[,] BlockBoard;
-        public Vector2Int BlockSize;
+        public Block[][] BlockBoard;
+        public Vector2Int BlockSize = Vector2Int.one;
         public int RandomCount = 5;
         
         private bool _isFull = false;
         protected override void OnInit()
         {
             Debug.Log("GridModel Init");
-            BlockBoard = new Block[BlockSize.x,BlockSize.y];
+            BlockBoard = new Block[BlockSize.x][];
         }
         
         public void InitBoard()
@@ -40,12 +40,12 @@ namespace  MainGame.Scripts
             if(_isFull) return;
             for (int i = 0; i < BlockSize.x; i++)
             {
+                BlockBoard[i] = new Block[BlockSize.y];
                 for (int j = 0; j < BlockSize.y; j++)
                 {
                     Block block = new Block();
                     block.TypeInfo = BlockType.Space;
-                    BlockBoard[i, j] = new Block();
-                    
+                    BlockBoard[i][j] = block;
                 }                
             }
 
@@ -62,7 +62,7 @@ namespace  MainGame.Scripts
                 int index = list[i];
                 int row = index / BlockSize.x;
                 int line = index % BlockSize.x;
-                Block block = BlockBoard[row, line];
+                Block block = BlockBoard[row][line];
                 block.TypeInfo = (BlockType)blockList.GetRandomElement();
 
             }
