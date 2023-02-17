@@ -109,20 +109,20 @@ Properties
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 color = tex2D(_MainTex,i.uv);
-                fixed3 nor = i.normal;
-                fixed3 light = normalize(_WorldSpaceLightPos0.xyz);
-                
-                fixed3 cameraPos = _WorldSpaceCameraPos.xyz;
-                fixed3 faceDir = normalize(cameraPos - i.pos);
-                fixed3 hightLight = normalize(faceDir + light);
-                
-                float specular = max(0,dot(hightLight,nor));
-                fixed3 specColor = saturate(pow(specular,_Specluar)) * fixed3(1,1,1);
-                
-                float diff = saturate(dot(nor,light));
-                fixed4 ambient = UNITY_LIGHTMODEL_AMBIENT;
-                ambient.xyz *= ambient.a * 0.1;
-                color.rgb = color.rgb * diff + specColor + ambient; 
+                // fixed3 nor = i.normal;
+                // fixed3 light = normalize(_WorldSpaceLightPos0.xyz);
+                //
+                // fixed3 cameraPos = _WorldSpaceCameraPos.xyz;
+                // fixed3 faceDir = normalize(cameraPos - i.pos);
+                // fixed3 hightLight = normalize(faceDir + light);
+                //
+                // float specular = max(0,dot(hightLight,nor));
+                // fixed3 specColor = saturate(pow(specular,_Specluar)) * fixed3(1,1,1);
+                //
+                // float diff = saturate(dot(nor,light));
+                // fixed4 ambient = UNITY_LIGHTMODEL_AMBIENT;
+                // ambient.xyz *= ambient.a * 0.1;
+                // color.rgb = color.rgb * diff + specColor + ambient; 
                 
                 return color;
 
