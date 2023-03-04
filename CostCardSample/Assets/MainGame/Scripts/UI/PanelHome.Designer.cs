@@ -5,7 +5,7 @@ using QFramework;
 
 namespace QFramework.Scripts
 {
-	// Generate Id:1cb54a7b-ac58-4c82-a792-59d9242a11f8
+	// Generate Id:41a8538c-b377-4a2c-819c-19cdb9c0b048
 	public partial class PanelHome
 	{
 		public const string Name = "PanelHome";
@@ -21,6 +21,8 @@ namespace QFramework.Scripts
 		[SerializeField]
 		public UnityEngine.UI.Text TextGameStart;
 		[SerializeField]
+		public RectTransform GameContent;
+		[SerializeField]
 		public RectTransform PanelBottom;
 		
 		private PanelHomeData mPrivateData = null;
@@ -32,6 +34,7 @@ namespace QFramework.Scripts
 			PanelTop = null;
 			PanelContent = null;
 			TextGameStart = null;
+			GameContent = null;
 			PanelBottom = null;
 			
 			mData = null;

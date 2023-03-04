@@ -36,7 +36,7 @@ Shader "UI_Shader/Effect/distort_blend" {
 					float4 vertex : POSITION;
 					fixed4 color : COLOR;
 					half2 texcoord: TEXCOORD0;
-					float4 vertexColor : COLOR;
+					float4 vertexColor : COLOR2;
 				};
 
 				struct v2f {

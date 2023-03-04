@@ -40,7 +40,7 @@ namespace QFramework
         public RectTransform Common;
         public RectTransform PopUI;
         public RectTransform CanvasPanel;
-        
+
         private static UIRoot mInstance;
 
         public static UIRoot Instance

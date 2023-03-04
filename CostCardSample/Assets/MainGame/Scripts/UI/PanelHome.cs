@@ -19,6 +19,7 @@ namespace QFramework.Scripts
 	}
 	public partial class PanelHome : UIPanel,IController
 	{
+		// private ResLoader _loader = ResLoader.Allocate();
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as PanelHomeData ?? new PanelHomeData();
@@ -46,20 +47,16 @@ namespace QFramework.Scripts
 
 		private void InitListener()
 		{
-
 			var playButton = TextGameStart.GetComponent<Button>();
 			playButton.onClick.AddListener(OnBtnPlayClick);
-			this.RegisterEvent<Game_Event_Board_Init>(GameBoardInit);
+			// this.RegisterEvent<Game_Event_Board_Init>(GameBoardInit);
 		}
 		
 		#endregion
 
 		#region 事件
 
-		private void GameBoardInit(Game_Event_Board_Init data)
-		{
-			Debug.Log("GameBoard Init Success");
-		}
+		
 		
 		private void OnBtnPlayClick()
 		{

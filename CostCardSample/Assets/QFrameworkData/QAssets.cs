@@ -41,6 +41,11 @@ namespace QAssetBundle
         public const string BundleName = "b_png";
         public const string B = "b";
     }
+    public class Block_prefab
+    {
+        public const string BundleName = "block_prefab";
+        public const string BLOCK = "block";
+    }
     public class C_png
     {
         public const string BundleName = "c_png";

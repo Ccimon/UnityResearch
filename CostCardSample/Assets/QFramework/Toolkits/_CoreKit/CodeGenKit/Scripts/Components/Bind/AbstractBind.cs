@@ -124,7 +124,7 @@ namespace QFramework
             if (GetComponent<SpriteRenderer>()) return "SpriteRenderer";
 
             // NGUI 支持
-            if (GetComponent("UIButton")) return "UIButton";
+            // if (GetComponent("UIButton")) return "UIButton";
             if (GetComponent("UILabel")) return "UILabel";
             if (GetComponent("UISprite")) return "UISprite";
             if (GetComponent("UISlider")) return "UISlider";
