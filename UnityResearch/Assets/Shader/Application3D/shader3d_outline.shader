@@ -53,6 +53,12 @@ Shader "Applications/outline"
             fixed4 frag (v2f i) : SV_Target
             {
                 float4 col = _OutLineColor;
+                // float2 v_xy = float2(col.x,col.y);
+                // float2 v_xz = float2(col.x,col.z);
+                // float2 v_yz = float2(col.y,col.z);
+                // float2 stand = float2(1,0);
+                col.rgb = i.pos.rgb;
+
                 return col;
             }
             ENDCG
