@@ -23,6 +23,8 @@ Properties
         {
             Cull Front
             offset 1,1
+            Zwrite on
+            
             CGPROGRAM
             #pragma exclude_renderers d3d11
             #pragma vertex vert
@@ -62,6 +64,7 @@ Properties
         {
             blend SrcAlpha OneMinusSrcAlpha
             Cull Back
+            Zwrite on
             CGPROGRAM
             // Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members pos)
             #pragma exclude_renderers d3d11

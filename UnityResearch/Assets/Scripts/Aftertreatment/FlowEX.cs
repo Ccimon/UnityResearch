@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+// using QFra
 
 public class FlowEX : MonoBehaviour
 {
@@ -22,12 +23,7 @@ public class FlowEX : MonoBehaviour
     {
         if(_flowShader == null)
         {
-#if UNITY_EDITOR
             _flowShader = Shader.Find("Flow");
-
-#else
-        _flowShader = QFramework.ResLoader.Allocate().LoadSync<Shader>(QAssetBundle.Shader_flow.FLOW);
-#endif
         }
 
         if (_image == null)

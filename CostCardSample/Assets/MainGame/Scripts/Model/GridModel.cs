@@ -9,18 +9,27 @@ namespace  MainGame.Scripts
 {
     public enum BlockType
     {
-        Space,
+        Land,
+        Forest,
         Grass,
         Water,
         Moutain,
         
         Tower = 100
     }
+
+    public enum ElementType
+    {
+        Metal,
+        Wood,
+        Water,
+        Fire,
+        Earth
+    }
     
     public class Block
     {
-        public BlockType TypeInfo = BlockType.Space;
-        public int Owner;
+        public BlockType TypeInfo = BlockType.Land;
     }
     
     public class GridModel : AbstractModel
@@ -36,13 +45,29 @@ namespace  MainGame.Scripts
         {
             Debug.Log("GridModel Init");
             BlockBoard = new Block[BlockSize.x][];
-            
+            InitController();
+        }
+
+        #region 公有方法
+
+        
+
+        #endregion
+
+        #region 私有方法
+        private void StartGame(Game_Event_Start g)
+        {
             InitBoard();
             RandomBoardInfo();
-            GridBoardInit();
+            GameBoardInit();
         }
         
-        public void InitBoard()
+        private void InitController()
+        {
+            TypeEventSystem.Global.Register<Game_Event_Start>(StartGame);
+        }
+        
+        private void InitBoard()
         {
             if(_isFull) return;
             for (int i = 0; i < BlockSize.x; i++)
@@ -51,15 +76,15 @@ namespace  MainGame.Scripts
                 for (int j = 0; j < BlockSize.y; j++)
                 {
                     Block block = new Block();
-                    block.TypeInfo = BlockType.Space;
+                    block.TypeInfo = BlockType.Land;
                     BlockBoard[i][j] = block;
-                }                
+                }
             }
 
             _isFull = true;
         }
 
-        public void RandomBoardInfo()
+        private void RandomBoardInfo()
         {
             List<int> blockList = new List<int>() { 0,1,2,3 };
 
@@ -74,33 +99,25 @@ namespace  MainGame.Scripts
             }
         }
 
-        public void GridBoardInit()
-        {
-            this.SendEvent<Game_Event_Board_Init>();
-            
-        }
-
-        #region 似有方法
-        
-        private void GameBoardInit(Game_Event_Board_Init data)
+        private void GameBoardInit()
         {
             Debug.Log("GameBoard Init Success");
             GameObject obj = _loader.LoadSync<GameObject>(QAssetBundle.Block_prefab.BLOCK);
 			
-            // Vector2 pos = Vector2.down;
-            // RectTransform objRTS = obj.GetRectTransform();
-            // Vector2 boardOffset = new Vector2((objRTS.rect.width + BlockInter) * (BlockSize.x - 1) / 2,
-            //     (objRTS.rect.width + BlockInter) * (BlockSize.y - 1) / 2);
-            // Transform GameContent = UIKit.GetPanel<PanelHome>().PanelContent;
+            Vector2 pos = Vector2.down;
+            RectTransform objRTS = obj.GetRectTransform();
+            Vector2 boardOffset = new Vector2((objRTS.rect.width + BlockInter) * (BlockSize.x - 1) / 2,
+                (objRTS.rect.width + BlockInter) * (BlockSize.y - 1) / 2);
+            Transform GameContent = UIKit.GetPanel<PanelHome>().PanelContent;
             for (int x = 0; x < BlockSize.x; x++)
             {
                 for (int y = 0; y < BlockSize.y; y++)
                 {
                     Block blockData = BlockBoard[x][y];
-                    GameObject block = Object.Instantiate(obj);
+                    GameObject block = Object.Instantiate(obj,GameContent);
                     RectTransform rts = block.GetRectTransform();
-                    // pos = new Vector2((rts.rect.width + BlockInter)* x, (rts.rect.width + BlockInter) * y);
-                    // rts.anchoredPosition = pos - boardOffset;
+                    pos = new Vector2((rts.rect.width + BlockInter)* x, (rts.rect.width + BlockInter) * y);
+                    rts.anchoredPosition = pos - boardOffset;
                 }
             }
         }

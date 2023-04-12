@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_template
-  m_Shader: {fileID: 4800000, guid: 5807aac374aff4cacb80c2b9f9f319bb, type: 3}
+  m_Shader: {fileID: 4800000, guid: f728ac265dff542d3820d6182b297eb7, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -21,6 +21,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cubemap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -44,6 +48,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -62,23 +70,52 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 1
+    - _AmbientFactor: 1
+    - _BackCoe: 0
     - _BumpScale: 1
-    - _Cutoff: 0.5
+    - _ColorMask: 15
+    - _Cutoff: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FrontCoe: 0
+    - _Gloss: 100
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _LightBorder: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OutLine: 0.1
+    - _Outline: 0.0022
+    - _OutlineWidth: 1
     - _Parallax: 0.02
+    - _Progress: 1
+    - _ReflectAmount: 0
+    - _RimFactor: 1
     - _SmoothnessTextureChannel: 0
+    - _Specluar: 32
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Stencil: 0
+    - _StencilComp: 5
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilValue: 1
+    - _StencilWriteMask: 255
     - _UVSec: 0
+    - _UseUIAlphaClip: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Diffuse: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ModelColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _OutLineColor: {r: 1, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
+    - _ReflectColor: {r: 1, g: 0, b: 0, a: 1}
+    - _RimColor: {r: 1, g: 0, b: 0, a: 1}
+    - _Specular: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

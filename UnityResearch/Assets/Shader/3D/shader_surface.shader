@@ -10,13 +10,47 @@ Shader "Custom/shader_surface"
     }
     SubShader
     {
+        pass
+        {
+            Tags {"RenderType" = "TransParent"}
+            Blend SrcAlpha OneMinusSrcAlpha
+            cull front
+            Zwrite on
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+    
+            
+            #include  "UnityCG.cginc"
+
+            float4 _Color;
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                float2 uv : TEXCOORD0;
+            };
+
+            v2f vert (appdata_full v)
+            {
+                v2f o;
+                o.uv = v.texcoord;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                return o;
+            }
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                return float4(0,0,0,0);
+            }
+            ENDCG
+        }
+        
         Tags { "RenderType"="Opaque" }
-        LOD 200
 
-        CGPROGRAM
+    CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows finalcolor:frag
-
+        #pragma surface surf Standard fullforwardshadows finalcolor:frag alpha:blend
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
 
@@ -50,15 +84,15 @@ Shader "Custom/shader_surface"
             o.Alpha = c.a;
         }
 
-        fixed4 frag(Input IN, SurfaceOutputStandard o, inout fixed4 color)
+        void frag(Input IN, SurfaceOutputStandard o, inout fixed4 color)
         {
             // color = float4(1,0,0,1);
-            float2 uv = IN.uv_MainTex;
-            uv.x += _Time.y;
-            uv.x = uv.x % 1;
-            color.rgb *= tex2D(_MoveTex,uv);
-            
-            return float4(1,1,0,1);
+            // float2 uv = IN.uv_MainTex;
+            // uv.x += _Time.y;
+            // uv.x = uv.x % 1;
+            // color.rgb *= tex2D(_MoveTex,uv);
+            // color.rgb = float3(1,0,0);
+            // color.a = abs(sin(_Time.z));
         }
         ENDCG
     }

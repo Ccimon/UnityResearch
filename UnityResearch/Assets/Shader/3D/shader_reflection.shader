@@ -9,9 +9,8 @@ Shader "shader3d/shader_reflection"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue"="Geometry"}
-        LOD 100
-
+        Tags { "RenderType"="TransParent" "Queue"="Geometry"}
+        
         Pass
         {
             Tags{"LightMode"="ForwardBase"}

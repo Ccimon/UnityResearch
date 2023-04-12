@@ -3,9 +3,10 @@ Shader "Applications/outline"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _OutLine("OutLineBold",Range(0.2,0)) = 0.05
+        _OutLine("OutLineBold",Range(0,0.2)) = 0.05
         _OutLineColor("OutLineColor",Color) = (0,0,0,1)
         _ModelColor("ModelColor",Color) = (1,1,1,1)
+        _Progress("Progress",Range(0,1)) = 1
     }
     SubShader
     {
@@ -15,13 +16,6 @@ Shader "Applications/outline"
             Blend SrcAlpha OneMinusSrcAlpha
             cull front
             Zwrite off
-            
-            Stencil
-            {
-                ref 2
-                comp GEqual
-                pass Replace
-            }
             
             CGPROGRAM
             #pragma vertex vert
@@ -38,6 +32,7 @@ Shader "Applications/outline"
 
             float4 _OutLineColor;
             float _OutLine;
+            float _Progress;
 
             v2f vert (appdata_full v)
             {
@@ -53,12 +48,18 @@ Shader "Applications/outline"
             fixed4 frag (v2f i) : SV_Target
             {
                 float4 col = _OutLineColor;
-                // float2 v_xy = float2(col.x,col.y);
-                // float2 v_xz = float2(col.x,col.z);
-                // float2 v_yz = float2(col.y,col.z);
-                // float2 stand = float2(1,0);
-                col.rgb = i.pos.rgb;
-
+                // float3 fxyz = normalize(i.pos.xyz);
+                // float3 meta = float3(0,1,0);
+                // float dot = mul(fxyz,meta);
+                // float angle = acos(dot) * 180 / 3.14;
+                // float param = angle / 180;
+                //
+                // if(angle < 60)
+                // {
+                //     discard;
+                // }
+                
+                
                 return col;
             }
             ENDCG
@@ -68,13 +69,6 @@ Shader "Applications/outline"
         {
             Tags { "RenderType"="TransParent" }
             Blend SrcAlpha OneMinusSrcAlpha
-            
-            Stencil
-            {
-                ref 1
-                comp Less
-                pass replace
-            }
             
             CGPROGRAM
             #pragma vertex vert

@@ -27,6 +27,5 @@ namespace MainGame.Scripts
             
             Debug.Log("MainArchitecture Start Complete");
         }
-        
     }
 }

@@ -41,6 +41,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Assets/Plugin/DOTween/Editor/DOTweenEditor.dll" />
+    <Analyzer Include="/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Assets/Plugin/DOTween/Editor/DOTweenUpgradeManager.dll" />
+    <Analyzer Include="/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Assets/Plugin/DOTween/DOTween.dll" />
+  </ItemGroup>
+  <ItemGroup>
      <Compile Include="Assets/QFramework/Toolkits/_CoreKit/EventKit/EventTrigger/OnCollisionStay2DEventTrigger.cs" />
      <Compile Include="Assets/QFramework/Toolkits/_CoreKit/PackageKit/QFramework.PackageKit.cs" />
      <Compile Include="Assets/QFramework/Toolkits/_CoreKit/PackageKit/EditorKit/View/Framework/IMGUILayoutRoot.cs" />
@@ -660,6 +665,15 @@
      </Reference>
      <Reference Include="unityplastic">
      <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Library/PackageCache/com.unity.collab-proxy@1.17.2/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
+     </Reference>
+     <Reference Include="DOTween">
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Assets/Plugin/DOTween/DOTween.dll</HintPath>
+     </Reference>
+     <Reference Include="DOTweenEditor">
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Assets/Plugin/DOTween/Editor/DOTweenEditor.dll</HintPath>
+     </Reference>
+     <Reference Include="DOTweenUpgradeManager">
+     <HintPath>/Users/ccimonyang/Desktop/GitHub/UnityResearch/CostCardSample/Assets/Plugin/DOTween/Editor/DOTweenUpgradeManager.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.iOS.Extensions.Xcode">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.9f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

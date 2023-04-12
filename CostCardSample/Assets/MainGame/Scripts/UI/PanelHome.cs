@@ -55,12 +55,11 @@ namespace QFramework.Scripts
 		#endregion
 
 		#region 事件
-
-		
 		
 		private void OnBtnPlayClick()
 		{
-			
+			TypeEventSystem.Global.Send<Game_Event_Start>();
+			TextGameStart.Hide();
 		}
 		
 		#endregion
