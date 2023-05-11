@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using GlobalModel.Data;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

@@ -1,4 +1,4 @@
-﻿Shader "Custom/MakeTransparent" {
+﻿Shader "Shader2D/MakeTransparent" {
   Properties {
     _MainTex ("Base (RGB)", 2D) = "white" {}
     _TransparentColorKey ("Transparent Color Key", Color) = (0,1,0,1)

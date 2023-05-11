@@ -19,7 +19,7 @@ Properties
 	{
 		//指明光照模式为前向渲染模式
 		Tags{ "LightMode" = "ForwardBase" }
-		blend srcalpha oneminussrcalpha
+		Blend SrcAlpha OneMinusSrcAlpha
 		
 		CGPROGRAM
 #pragma vertex vert  

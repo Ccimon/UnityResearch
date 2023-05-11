@@ -9,6 +9,10 @@
           <e p="CommandCollections.cs" t="Include" />
           <e p="EventCollections.cs" t="Include" />
           <e p="Scripts" t="Include">
+            <e p="Basic" t="Include">
+              <e p="IBlock.cs" t="Include" />
+              <e p="ICard.cs" t="Include" />
+            </e>
             <e p="Extention" t="Include">
               <e p="Extention.cs" t="Include" />
               <e p="GameSingleton.cs" t="Include" />
@@ -17,6 +21,7 @@
               <e p="LaunchManager.cs" t="Include" />
             </e>
             <e p="Model" t="Include">
+              <e p="GameModel.cs" t="Include" />
               <e p="GridModel.cs" t="Include" />
               <e p="MainArchitecture.cs" t="Include" />
             </e>
@@ -26,9 +31,28 @@
               <e p="PanelHome.cs" t="Include" />
               <e p="PanelHome.Designer.cs" t="Include" />
             </e>
+            <e p="ViewController" t="Include">
+              <e p="BlockViewController.cs" t="Include" />
+              <e p="BlockViewController.Designer.cs" t="Include" />
+            </e>
           </e>
           <e p="Shaders" t="Include">
             <e p="Shader_BgWater.shader" t="Include" />
+          </e>
+        </e>
+        <e p="Plugin" t="Include">
+          <e p="DOTween" t="Include">
+            <e p="Modules" t="Include">
+              <e p="DOTweenModuleAudio.cs" t="Include" />
+              <e p="DOTweenModuleEPOOutline.cs" t="Include" />
+              <e p="DOTweenModulePhysics.cs" t="Include" />
+              <e p="DOTweenModulePhysics2D.cs" t="Include" />
+              <e p="DOTweenModuleSprite.cs" t="Include" />
+              <e p="DOTweenModuleUI.cs" t="Include" />
+              <e p="DOTweenModuleUnityVersion.cs" t="Include" />
+              <e p="DOTweenModuleUtils.cs" t="Include" />
+            </e>
+            <e p="readme.txt" t="Include" />
           </e>
         </e>
         <e p="QFramework" t="Include">

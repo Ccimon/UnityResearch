@@ -15,8 +15,16 @@ obj/*
 Packages/*
 bin/*
 
-/Assets/TestFolder/
-/UnityResearch/Library/
-/DOTSResearch/Library/
-/CostCardSample/Temp/
-/CostCardSample/Library/
+Assets/TestFolder/
+UnityResearch/Library/
+UnityResearch/Temp/
+DOTSResearch/Library/
+DOTSResearch/Temp/
+CostCardSample/Library/
+CostCardSample/Temp/
+CostCardSample/.idea/
+ShaderTutorial/Temp/
+ShaderTutorial/Library/
+ShaderTutorial/.idea/
+
+

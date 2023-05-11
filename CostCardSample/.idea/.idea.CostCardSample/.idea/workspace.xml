@@ -2,56 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03489a31-b39d-40ad-a124-6df0351787af" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CostCardSample/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainGame/EventCollections.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/EventCollections.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Prefab/Panel/PanelHome.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Prefab/Panel/PanelHome.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/Extention/Extention.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Scripts/Extention/Extention.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/GridModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/GridModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/MainArchitecture.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/MainArchitecture.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainGame/Scripts/UI/PanelHome.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainGame/Scripts/UI/PanelHome.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IMsg.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IMsg.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMgrBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMgrBehaviour.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMonoBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMonoBehaviour.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/ActionKit/Scripts/DeprecateActionKit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/ActionKit/Scripts/DeprecateActionKit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/EventKit/EnumEventSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/EventKit/EnumEventSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ArtifactDB" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ArtifactDB" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ArtifactDB-lock" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ArtifactDB-lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Artifacts/35/356a309193207bc51a882ce474bf0d23" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Artifacts/6e/6ea9cf108081d43bf12e88218748d6cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Artifacts/9f/9fa65f7b332530b16809a12fe774da75" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Artifacts/b5/b596d771a7a22a329ba81af4e8b74f00" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Artifacts/d1/d1d2a11977cf4f1c1e0806e384dcad6f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Bee/TundraBuildState.state" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/TundraBuildState.state" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Bee/TundraBuildState.state.map" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/TundraBuildState.state.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Bee/backend_profiler0.traceevents" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/backend_profiler0.traceevents" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Bee/fullprofile.json" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/fullprofile.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Bee/tundra.digestcache" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/tundra.digestcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Bee/tundra.log.json" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Bee/tundra.log.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/SceneVisibilityState.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Library/SceneVisibilityState.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/AudioKit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/AudioKit.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/AudioKit.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/AudioKit.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/QFramework.CoreKit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/QFramework.CoreKit.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/QFramework.CoreKit.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/QFramework.CoreKit.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.Editor.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.Editor.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.Editor.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.Editor.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/ResKit.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.Editor.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.Editor.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.Editor.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.Editor.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UIKit.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Search/transactions.db" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Search/transactions.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/SourceAssetDB" beforeDir="false" afterPath="$PROJECT_DIR$/Library/SourceAssetDB" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/SourceAssetDB-lock" beforeDir="false" afterPath="$PROJECT_DIR$/Library/SourceAssetDB-lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/StateCache/MainStageHierarchy/4d/4d2a36d9faf65734f0bbefb3ee623532.json" beforeDir="false" afterPath="$PROJECT_DIR$/Library/StateCache/MainStageHierarchy/4d/4d2a36d9faf65734f0bbefb3ee623532.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/com.unity.ide.rider/PersistedState.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Library/com.unity.ide.rider/PersistedState.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/QFramework.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/QFramework.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/UIKit.Editor.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UIKit.Editor.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UnityResearch/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UnityResearch/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UnityResearch/ProjectSettings/UnityConnectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/ProjectSettings/UnityConnectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UnityResearch/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UnityResearch/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UnityResearch/UserSettings/Search.settings" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/UserSettings/Search.settings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UnityResearch/obj/Debug/Assembly-CSharp-firstpass.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../UnityResearch/obj/Debug/Assembly-CSharp-firstpass.csproj.AssemblyReference.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,13 +35,16 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/MainGame/EventCollections.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/MainGame/Scripts/UI/PanelHome.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5A41D6B7-1898-42EC-A409-FD0B1C3E3DCF/92/3a20eca9/IConvertible.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/MainGame/Scripts/Basic/ICard.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/MainGame/Scripts/Model/GridModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5A41D6B7-1898-42EC-A409-FD0B1C3E3DCF/42/System.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/MainGame/Scripts/LifeCycle/LaunchManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/MainGame/Scripts/Extention/Extention.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/MainGame/Scripts/Basic/IBlock.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/CodeGenKit/Scripts/Components/Bind/AbstractBind.cs" />
       <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/SingletonKit/Scripts/ISingleton.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/Extention/GameSingletion.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/LifeCycle/LaunchManager.cs" />
@@ -87,18 +53,32 @@
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/CommonArchitecture.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/ViewController/PanelHome.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/UI.cs" />
-      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/LifeCycle/LaunchManager.cs" />
       <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Extention/Extention.cs" />
-      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/UI/PanelHome.cs" />
-      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/MainArchitecture.cs" />
-      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/GridModel.cs" />
-      <option value="$PROJECT_DIR$/Assets/MainGame/EventCollections.cs" />
       <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IMsg.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/EventKit/EnumEventSystem.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/EventKit/Example/EnumEventExample/EnumEventExample.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMgrBehaviour.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Extention/GameSingletion.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Extention/GameSingleton.cs" />
       <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/ActionKit/Scripts/DeprecateActionKit.cs" />
       <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMonoBehaviour.cs" />
-      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/IManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/ManagerOfManagers/QMgrBehaviour.cs" />
-      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/EventKit/EnumEventSystem.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/ViewController/Block.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/ViewController/BlockViewController.Designer.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/CodeGenKit/Scripts/Components/ViewController.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/_CoreKit/CodeGenKit/Scripts/Components/Bind/AbstractBind.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/LifeCycle/LaunchManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/QFramework/Toolkits/UIKit/Scripts/UIRoot.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Systems/GameGridSystem.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Basic/ICard.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/MainArchitecture.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/GridModel.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Basic/IPointerClick.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/UI/PanelHome.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/EventCollections.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Model/GameModel.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/ViewController/BlockViewController.cs" />
+      <option value="$PROJECT_DIR$/Assets/MainGame/Scripts/Basic/IBlock.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="2LAtkRaHvZomtKiW3qyjII1hnCe" />
@@ -108,6 +88,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3502432" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -124,10 +106,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="5931">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="5931" />
       <option name="selectedOptions">
         <list />
       </option>
@@ -150,6 +132,14 @@
       <workItem from="1676018030210" duration="6926000" />
       <workItem from="1676269317932" duration="2189000" />
       <workItem from="1676271686357" duration="8390000" />
+      <workItem from="1676426512096" duration="12933000" />
+      <workItem from="1677470119063" duration="4352000" />
+      <workItem from="1677480807954" duration="2264000" />
+      <workItem from="1677828397586" duration="2739000" />
+      <workItem from="1677899382038" duration="5185000" />
+      <workItem from="1677913625775" duration="5303000" />
+      <workItem from="1679626294164" duration="1000" />
+      <workItem from="1681283877410" duration="10641000" />
     </task>
     <servers />
   </component>

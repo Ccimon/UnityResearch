@@ -13,47 +13,12 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
-using GlobalModel.Data;
 
 
 public static class GameUtil
 {
     private static GameObject _toastObj;
-    
-    #region 调用函数
-    public static Color ConvertEnumToColor(BallColor color)
-    {
-        switch (color)
-        {
-            case BallColor.Black:return Color.black;
-            case BallColor.Blue: return Color.blue;
-            case BallColor.Green: return Color.green;
-            case BallColor.Orange: return new Color(0.8f,0.5f,0.0f);
-            case BallColor.Yellow: return Color.yellow;
-            case BallColor.Purple: return new Color(0.6f, 0.1f, 0.6f);
-            case BallColor.Red: return Color.red;
-            default: return Color.white;
-        }
-    }
-    
-    /// <summary>
-    /// 展示一个提示
-    /// </summary>
-    /// <param name="info">展示用的信息</param>
-    public static void ShowToast(string info,float duration = 0.5f,float fadeTime = 1.5f)
-    {
-        if (_toastObj == null)
-        {
-            var toastPrefab = Resources.Load<GameObject>("Prefab/ToastObj");
-            _toastObj = GameObject.Instantiate(toastPrefab,PanelGame.Instance.GameCoverLayout);
-        }
-        
 
-        var text = _toastObj.GetComponentInChildren<Text>();
-        text.text = info;
-        text.transform.parent.GetComponent<CanvasGroup>().DOFade(0,duration).SetDelay(fadeTime);
-    }
-    #endregion
 
 
     #region 拓展函数

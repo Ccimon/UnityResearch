@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_template
-  m_Shader: {fileID: 4800000, guid: f728ac265dff542d3820d6182b297eb7, type: 3}
+  m_Shader: {fileID: 4800000, guid: 67d1ea70495a34d998228adf02a0fa77, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -70,7 +70,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 1
+    - _Alpha: 0.43
     - _AmbientFactor: 1
     - _BackCoe: 0
     - _BumpScale: 1
@@ -87,7 +87,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutLine: 0.1
+    - _OutLine: 0.002
     - _Outline: 0.0022
     - _OutlineWidth: 1
     - _Parallax: 0.02
