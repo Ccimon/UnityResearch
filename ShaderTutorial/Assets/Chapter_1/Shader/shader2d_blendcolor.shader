@@ -1,10 +1,11 @@
-Shader "Tutorial2D/shader2d_fullwhite"
+Shader "Tutorial2D/shader2d_blendcolor"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
-        _MixColor("MixColor", Range(0,1)) = 0.5
-
+        // 主要颜色
+        _MainTex ("MainTexture",2D) = "White"{}
+        // 次要颜色
+        _SubColor ("SubColor",Color) = (0,1,0,0.5)
         
         // UnityMask所需参数
         [HideInInspector]
@@ -22,22 +23,10 @@ Shader "Tutorial2D/shader2d_fullwhite"
     }
     SubShader
     {
-        // Tag可以全部不设置，因为这些及时不设置，Unity也会配置默认值
-        // 这些都是一些有关于Unity引擎与Shader之间的配置
-        // RenderType 渲染类型，当我们指定该变量时，Unity引擎会准备好相关的渲染环境
-        // CanUseSpriteAtlas 是否使用引擎输入的Sprite，该变量为true时，Shader会接受渲染组件中的纹理为_MainTex进行渲染
-        Tags
-        {
-            "RenderType"="TransParent"
-            "CanUseSpriteAtlas"="True"
-        }
-
+        Tags { "RenderType"="TransParent" }
         Blend SrcAlpha OneMinusSrcAlpha
-
+        
         // UnityMask实现
-        // Unity的Mask是基于模版测试，Stencil实现的
-        // 模版测试是一个较为复杂的过程，Stencil有着相当丰富的参数供我们调整其中流程
-        // 虽然复杂，但是它负责的事情却不复杂，他负责当两个物体叠加的时候，两个颜色如何处理，里面大量的可配置参数都是对两个像素的比较以及结果处理
         Stencil
         {
             Ref [_Stencil]
@@ -47,7 +36,7 @@ Shader "Tutorial2D/shader2d_fullwhite"
             WriteMask [_StencilWriteMask]
         }
         ColorMask [_ColorMask]
-
+        
         Pass
         {
             CGPROGRAM
@@ -56,6 +45,9 @@ Shader "Tutorial2D/shader2d_fullwhite"
 
             #include "UnityCG.cginc"
 
+            sampler2D _MainTex;
+            float4 _SubColor;
+            
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -68,8 +60,6 @@ Shader "Tutorial2D/shader2d_fullwhite"
                 float4 vertex : SV_POSITION;
             };
 
-            sampler2D _MainTex;
-            float _MixColor;
 
             v2f vert (appdata v)
             {
@@ -81,11 +71,13 @@ Shader "Tutorial2D/shader2d_fullwhite"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // 在变灰的时候我们知道，一个图片变黑，然后色值趋向统一，两种变化同时实现就会呈现置灰效果
-                // 而一张纹理的亮度调整，就是整体泛白，也就对应着rgb值统一上升
-                // 让rgb值统一加上一个变量，纹理就会整体趋向于白色，也就会变得更亮
-                col.rgb += _MixColor;
+                float4 col = tex2D(_MainTex,i.uv);
+                // 主纹理颜色与副颜色根据alpha值进行混合
+                // Blend的混合逻辑与次相似
+                // 不过Blend混合含义，指的是当前像素颜色如何与已经渲染完成的背景色进行
+                // 这里的混合操作对应的是 Blend SrcAlpha OneMinusSrcAlpha 即源色值与目标色值以各自的透明度进行混合
+                col.rgb = _SubColor.rgb * _SubColor.a + col.rgb * (1 - _SubColor.a);
+                
                 return col;
             }
             ENDCG

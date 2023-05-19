@@ -4,33 +4,16 @@ Shader "Tutorial2D/shader2d_default"
     // Shader面向Inspector的可视化编辑属性
     Properties
     {
+        // Inspector面板可显示属性，在Inspector修改可以同步给Shader
         _Color("MainColor",Color) = (1,1,1,1)
 
-        // UnityMask所需参数
-         _StencilComp ("Stencil Comparison", Float)=8
-        _Stencil ("Stencil ID", Float)=0
-        _StencilOp ("Stencil Operation", Float)=0
-        _StencilWriteMask ("Stencil Write Mask", Float)=255
-        _StencilReadMask ("Stencil Read Mask", Float)=255
-        _ColorMask ("Color Mask", Float)=15
     }
     
     // 一个Shader脚本可以有多个Shader
     SubShader
     {
         // 每一个SubShader可以有很多的可配置选项，放在Pass之前
-        Tags { "RenderType"="Opaque" }
-
-        // UnityMask实现
-        Stencil
-        {
-            Ref [_Stencil]
-            Comp [_StencilComp]
-            Pass [_StencilOp]
-            ReadMask [_StencilReadMask]
-            WriteMask [_StencilWriteMask]
-        }
-        ColorMask [_ColorMask]
+        Tags { "RenderType"="TransParent" }
 
         Pass
         {
@@ -66,6 +49,11 @@ Shader "Tutorial2D/shader2d_default"
             v2f vert (appdata v)
             {
                 v2f o;
+                // 坐标的空间转换，顶点的坐标所处的空间最开始处在模型空间，可以直观的理解为模型的本地坐标系
+                // UnityObjectToClipPos，也就是Unity物体转换到裁剪空间位置
+                // 裁剪空间，顾名思义，渲染管线的裁剪流程，也就是在这里处理我们的物体遮盖，将不可见的部分裁去
+                // 裁剪空间之后，就是几何空间，也就是光栅化，将3D的模型转换为屏幕上的像素点
+                // 在此之后就要进入到我们的片面渲染函数，就是一个个像素进行处理
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 return o;
@@ -74,9 +62,7 @@ Shader "Tutorial2D/shader2d_default"
             // 片面渲染函数，对每个像素点执行该函数，比如手机屏幕是1920*1080，那就会对2073600个像素都执行这个函数
             fixed4 frag (v2f i) : SV_Target
             {
-                
                 fixed4 col = _Color;
-
                 // 在这里返回颜色，fixed其实是比float精度更低的浮点数
                 return col;
             }

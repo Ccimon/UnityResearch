@@ -1,10 +1,10 @@
-Shader "Tutorial2D/shader2d_fullwhite"
+Shader "Tutorial2D/shader2d_light"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _MixColor("MixColor", Range(0,1)) = 0.5
-
+        // 光照程度，低于0.5为削弱，高于0.5为增强
+        _Light ("Light",Range(0,1)) = 0.5
         
         // UnityMask所需参数
         [HideInInspector]
@@ -22,22 +22,10 @@ Shader "Tutorial2D/shader2d_fullwhite"
     }
     SubShader
     {
-        // Tag可以全部不设置，因为这些及时不设置，Unity也会配置默认值
-        // 这些都是一些有关于Unity引擎与Shader之间的配置
-        // RenderType 渲染类型，当我们指定该变量时，Unity引擎会准备好相关的渲染环境
-        // CanUseSpriteAtlas 是否使用引擎输入的Sprite，该变量为true时，Shader会接受渲染组件中的纹理为_MainTex进行渲染
-        Tags
-        {
-            "RenderType"="TransParent"
-            "CanUseSpriteAtlas"="True"
-        }
-
+        Tags { "RenderType"="TransParent" }
         Blend SrcAlpha OneMinusSrcAlpha
-
+        
         // UnityMask实现
-        // Unity的Mask是基于模版测试，Stencil实现的
-        // 模版测试是一个较为复杂的过程，Stencil有着相当丰富的参数供我们调整其中流程
-        // 虽然复杂，但是它负责的事情却不复杂，他负责当两个物体叠加的时候，两个颜色如何处理，里面大量的可配置参数都是对两个像素的比较以及结果处理
         Stencil
         {
             Ref [_Stencil]
@@ -47,7 +35,7 @@ Shader "Tutorial2D/shader2d_fullwhite"
             WriteMask [_StencilWriteMask]
         }
         ColorMask [_ColorMask]
-
+        
         Pass
         {
             CGPROGRAM
@@ -69,8 +57,8 @@ Shader "Tutorial2D/shader2d_fullwhite"
             };
 
             sampler2D _MainTex;
-            float _MixColor;
-
+            float _Light;
+            
             v2f vert (appdata v)
             {
                 v2f o;
@@ -82,10 +70,11 @@ Shader "Tutorial2D/shader2d_fullwhite"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                // 在变灰的时候我们知道，一个图片变黑，然后色值趋向统一，两种变化同时实现就会呈现置灰效果
-                // 而一张纹理的亮度调整，就是整体泛白，也就对应着rgb值统一上升
-                // 让rgb值统一加上一个变量，纹理就会整体趋向于白色，也就会变得更亮
-                col.rgb += _MixColor;
+                // 计算是削弱还是增强
+                float param = step(_Light,0.5);
+                // 处于削弱区间时，[0,0.5]，随着光照系数减少，削弱图片的rgb值，趋向于黑色
+                // 处于增强区间时，[0.5,1],随着光照系数增强，图片的rgb值趋近于1
+                col.rgb = col.rgb - param * col.rgb * (0.5 - _Light) * 2 + (1 - param) * float3(1,1,1) * (_Light - 0.5) * 2;
                 return col;
             }
             ENDCG
