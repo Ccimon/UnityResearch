@@ -7,12 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_shadow
-  m_Shader: {fileID: 4800000, guid: 5d9d6146d99e7409b9a934d82cb56007, type: 3}
+  m_Name: mat_outline
+  m_Shader: {fileID: 4800000, guid: bc864f1d5ac9349bc9437121c0900dae, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _MAINRENDER_ON
-  - _SHADOWRENDER_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -68,15 +66,13 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LightDirection: 28
-    - _MainRender: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OutlineBold: 1
+    - _OutlineFilter: 2.07
     - _Parallax: 0.02
-    - _ShadowDistance: 0.005
-    - _ShadowRender: 1
-    - _ShadowScale: 1.1
+    - _SampleLevel: 4
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -86,9 +82,12 @@ Material:
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     - _UVSec: 0
+    - _UseOutline: 0
     - _ZWrite: 1
+    - _lineWidth: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShadowColor: {r: 0, g: 0, b: 0, a: 0.83137256}
+    - _OutlineColor: {r: 1, g: 0.4575472, b: 0.4575472, a: 1}
+    - _lineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
