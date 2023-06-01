@@ -62,7 +62,7 @@ Shader "Tutorial2D/shader2d_default"
             // 片面渲染函数，对每个像素点执行该函数，比如手机屏幕是1920*1080，那就会对2073600个像素都执行这个函数
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = _Color;
+                fixed4 col = float4(0,0,1,1);
                 // 在这里返回颜色，fixed其实是比float精度更低的浮点数
                 return col;
             }

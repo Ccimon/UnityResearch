@@ -7,11 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_outline
-  m_Shader: {fileID: 4800000, guid: bc864f1d5ac9349bc9437121c0900dae, type: 3}
+  m_Name: mat_blur
+  m_Shader: {fileID: 4800000, guid: ce36c4bc3912f4a97a100e7bb2cbbf08, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _USEOUTLINE_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -59,6 +58,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BlurNumb: 10
+    - _BlurRadius: 5
+    - _BlurSize: 1
     - _BumpScale: 1
     - _ColorMask: 15
     - _Cutoff: 0.5
@@ -70,10 +72,10 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineBold: 1
-    - _OutlineFilter: 2.07
     - _Parallax: 0.02
-    - _SampleLevel: 4
+    - _SampleLevel: 1
+    - _SampleRadius: 1
+    - _SampleSize: 50
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -82,13 +84,10 @@ Material:
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
+    - _TextureSize: 640
     - _UVSec: 0
-    - _UseOutline: 1
     - _ZWrite: 1
-    - _lineWidth: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 1, g: 0.4575472, b: 0.4575472, a: 1}
-    - _lineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
