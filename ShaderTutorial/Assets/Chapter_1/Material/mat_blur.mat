@@ -73,7 +73,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _SampleLevel: 1
+    - _SampleLevel: 3
     - _SampleRadius: 1
     - _SampleSize: 50
     - _SmoothnessTextureChannel: 0

@@ -63,7 +63,7 @@ Shader "Tutorial2D/shader2d_blur"
             float _SampleLevel;
             float _SampleSize;
             float4 _MainTex_ST;
-            
+
             // 关于模糊其实实现的思路主要只有一种，就是使得一个像素其旁边的像素影响该像素，使像素之间的颜色趋近，就会变得模糊
             // 好比一张本来 600*600的图片 现在我们把它压缩到100*100 也就意味着原来 6*6 的像素区间描述的颜色，现在用 1*1 来描述
             // 本质上就是使一个像素与周围的像素趋同化
@@ -89,6 +89,36 @@ Shader "Tutorial2D/shader2d_blur"
                 col = col / pow(_SampleLevel * 2 + 1, 2.0f);
                 return col;
             }
+
+            // 输入值x为uv.x，y为uv.y，sigma为采样宽度
+            float GetGaussWeight(float x, float y, float sigma)
+            {
+
+                float sigma2 = pow(sigma, 2.0f); 
+                // left为高斯函数中a，影响峰值，其表达含义为，与采样的面积成反比
+                float left = 1 / (2 * sigma2 * 3.1415926f);
+                // （x*x+y*y）为x是函数的变量，2*sigma2为c参数，影响坡度，其含义表示，峰值两侧曲线坡度与采样宽度成反比
+                float right = exp(-(x*x+y*y)/(2*sigma2)); 
+                return left * right;
+                // 结果表示为随着sigma值越大，峰值越低并且函数坡度越平缓，受周围像素影响总体下降
+            }
+
+            fixed4 GaussBlur(float2 uv)
+            {
+                float sigma = (float)_SampleLevel / 3.0f;
+                float4 col = float4(0, 0, 0, 0);
+                for (int x = - _SampleLevel; x <= _SampleLevel; ++x)
+                {
+                    for (int y = - _SampleLevel; y <= _SampleLevel; ++y)
+                    {
+                        float4 color = tex2D(_MainTex, uv + float2(x / _SampleSize, y / _SampleSize));
+                        // 相较于SampleBlur做线性模糊，高斯模糊会计算每个像素点的权重值并累加
+                        float weight = GetGaussWeight(x, y, sigma);
+                        col += color * weight;
+                    }
+                }
+                return col;
+            }
             
             v2f vert (appdata v)
             {
@@ -101,7 +131,7 @@ Shader "Tutorial2D/shader2d_blur"
             fixed4 frag (v2f i) : SV_Target
             {
                 // 将颜色赋返回到片面函数
-                fixed4 col = SampleBlur(i.uv);
+                fixed4 col = GaussBlur(i.uv);
                 return col;
             }
             ENDCG

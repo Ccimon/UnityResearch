@@ -62,7 +62,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Blend: 0.0167
+    - _Blend: 1.002
     - _BumpScale: 1
     - _ColorMask: 15
     - _Cutoff: 0.5
