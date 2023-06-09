@@ -1,29 +1,45 @@
 using MainGame.Events;
 using QFramework;
+using QFramework.Scripts;
 using UnityEngine;
 
 namespace MainGame.Scripts
 {
-    public class GameModel : AbstractModel
+    public class GameModel : GameSingleton<GameModel>,IModel
     {
-        protected override void OnInit()
+        private Transform _content;
+
+        private GameData _curGameData;
+        #region 公有方法
+
+        public void Init()
+        {
+            _content = UIKit.GetPanel<PanelHome>().GameContent;
+            _curGameData = new GameData();
+        }
+
+        public void Start()
         {
             
         }
 
+        public void Quit()
+        {
+        }
+
+        public void Recycle()
+        {
+        }
+
+        #endregion
 
         #region 私有方法
 
-        private void InitController()
-        {
-            TypeEventSystem.Global.Register<Game_Event_Start_Complete>(InitGameBoard);
-        }
-
-        private void InitGameBoard(Game_Event_Start_Complete g)
+        private void InitBoard()
         {
             
         }
-
+        
         #endregion
     }
 }

@@ -47,8 +47,7 @@ namespace QFramework.Scripts
 
 		private void InitListener()
 		{
-			var playButton = TextGameStart.GetComponent<Button>();
-			playButton.onClick.AddListener(OnBtnPlayClick);
+			BtnGameStart.onClick.AddListener(OnBtnPlayClick);
 			// this.RegisterEvent<Game_Event_Board_Init>(GameBoardInit);
 		}
 		
@@ -59,7 +58,7 @@ namespace QFramework.Scripts
 		private void OnBtnPlayClick()
 		{
 			TypeEventSystem.Global.Send<Game_Event_Start>();
-			TextGameStart.Hide();
+			BtnGameStart.Hide();
 		}
 		
 		#endregion

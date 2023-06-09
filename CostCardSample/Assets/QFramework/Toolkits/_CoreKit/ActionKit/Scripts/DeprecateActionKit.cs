@@ -26,7 +26,7 @@ namespace QFramework
         public int ToInt32();
     }
 
-    public interface GameSingleton<T> where T : new()
+    public abstract class GameSingleton<T> where T : new()
     {
         private static T _instance;
 

@@ -19,7 +19,7 @@ namespace QFramework.Scripts
 		[SerializeField]
 		public RectTransform PanelContent;
 		[SerializeField]
-		public UnityEngine.UI.Text TextGameStart;
+		public UnityEngine.UI.Button BtnGameStart;
 		[SerializeField]
 		public RectTransform GameContent;
 		[SerializeField]
@@ -33,7 +33,7 @@ namespace QFramework.Scripts
 			ImgBg = null;
 			PanelTop = null;
 			PanelContent = null;
-			TextGameStart = null;
+			BtnGameStart = null;
 			GameContent = null;
 			PanelBottom = null;
 			

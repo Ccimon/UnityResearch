@@ -7,6 +7,7 @@
  ****************************************************************************/
 
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace QFramework
@@ -28,6 +29,7 @@ namespace QFramework
         /// </summary>
         public static UIPanelTable Table { get; } = new UIPanelTable();
 
+        private Stack<IPanel> PanelStack = null;
 
 #if UNITY_EDITOR
         [MethodAPI]
