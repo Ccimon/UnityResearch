@@ -55,7 +55,7 @@
 			{
 				v2f o;
 				o.vertex = UnityObjectToClipPos(i.vertex);
-				o.uv = i.uv;
+				o.uv = TRANSFORM_TEX(i.uv,_MainTex);
 				o.color = i.color * _Color;
 				o.mask_uv = TRANSFORM_TEX(i.uv,_MaskTex);
 				
@@ -67,7 +67,6 @@
 				fixed4 col = tex2D(_MainTex,i.uv);
 				fixed4 mask = tex2D(_MaskTex,i.mask_uv);
 				col.a = col.a - mask.a;
-				
 				return col;
 			}
 		ENDCG

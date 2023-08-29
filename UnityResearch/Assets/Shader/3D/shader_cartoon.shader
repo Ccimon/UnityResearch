@@ -4,21 +4,18 @@ Shader "shader3d/cartoon" {
 
 Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
-        _Outline("Outline",Range(0.1,0.001)) = 0.1
+        _MainTex("Texture", 2D) = "white" {}
+        _NormalTex("NormalMap", 2D) = "white" {}
+        _MetalicTex("MetalicTexture",2D) = "white"{}
+        _Outline("Outline",Range(0.001,0.1)) = 0.1
         _OutlineColor("OutlineColor",Color) = (0,0,0,1)
-        _Specluar("Specular",Range(1,32)) = 1
-        _Metallic("Metallic",float) = 0.5
-        _Glossiness("Glossiness",float) = 0.5
-        _FrontCoe("FrontCoefficient",float) = 1
-        _BackCoe("BackCoefficient",Range(0,1)) = 0.75
-        _AmbientFactor("AmbientFactor",Range(0,1)) = 0.5
-        _LightBorder("LightBorder",float) = 0.0
+        _SpecularColor("Specular",Color) = (1,1,1,1)
+        _LambertValue("LamberValue",Range(0,1)) = 0.5
+        _Glossiness("Gloss",Range(1,10)) = 2
     }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
-        LOD 100
         //描边阶段，法线外扩，渲染背面
         Pass
         {
@@ -38,7 +35,7 @@ Properties
             struct v2f
             {
                 float4 vertex : SV_POSITION;
-                UNITY_FOG_COORDS(1)
+                // UNITY_FOG_COORDS(1)
             };
             fixed _Outline;
             float4 _OutlineColor;
@@ -75,13 +72,7 @@ Properties
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
 
-            int _Specluar;
-            float _Metallic;
-            float _Glossiness;
-            float _LightBorder;
-            float _FrontCoe;
-            float _BackCoe;
-            float _AmbientFactor;
+
             
             struct appdata
             {
@@ -97,13 +88,20 @@ Properties
                 fixed3 normal:NORMAL;
                 float3 pos:TEXCOORD1;
             };
-            
-            sampler2D _MainTex;     
+            float _Metallic;
+            float _Glossiness;
+            float _LightBorder;
+            sampler2D _MainTex;
+            sampler2D _MetalicTex;
+            sampler2D _NormalTex;
+            float _LambertValue;
+            float4 _MainTex_ST;
+            float4 _SpecularColor;
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
+                o.uv = TRANSFORM_TEX(v.uv,_MainTex);
                 // 法线从模型空间转换到世界空间
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 // 坐标也从模型空间转到世界空间
@@ -114,41 +112,20 @@ Properties
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 color = tex2D(_MainTex,i.uv);
-                fixed3 nor = i.normal;
-                fixed3 light = normalize(_WorldSpaceLightPos0.xyz);
-                
-                // fixed3 cameraPos = _WorldSpaceCameraPos.xyz;
-                // fixed3 faceDir = normalize(cameraPos - i.pos);
-                // fixed3 hightLight = normalize(faceDir + light);
-                //
-                // float specular = max(0,dot(hightLight,nor));
-                // fixed3 specColor = saturate(pow(specular,_Specluar)) * fixed3(1,1,1);
-                //
-                // float diff = saturate(dot(nor,light));
-                // fixed3 ambient = _AmbientFactor * UNITY_LIGHTMODEL_AMBIENT.xyz * UNITY_LIGHTMODEL_AMBIENT.a;
-                // fixed3 origin = color.rgb;
-                // color.rgb = color.rgb * diff + specColor + ambient;
-                // color.a = 1 - (origin.r + origin.g + origin.b);
-                // return color;
+                fixed4 metalic = tex2D(_MetalicTex,i.uv);
+                float3 normal = tex2D(_NormalTex,i.uv);
+                float3 light = normalize(_WorldSpaceLightPos0);
+                float3 view = normalize(_WorldSpaceCameraPos.xyz - i.pos);
+                float highLight = saturate(dot(light,normal));
+                float3 diffuse = highLight * color.rgb * _LightColor0.rgb;
 
-                
-                // 漫反射实现
-                // diff是由顶点的法线世界向量与光照向量点乘获得
-                // 如果小于0，说明与光照的夹角大于180度，及该顶点面朝方向与光照相背，及该点为阴影处
-                // 相反则处于光照下
-                
-                float diff = dot(nor,light);
-                float para = diff > _LightBorder ? _FrontCoe : _BackCoe;
-                // 获取环境光
-                color.rgb += UNITY_LIGHTMODEL_AMBIENT.xyz * UNITY_LIGHTMODEL_AMBIENT.a;
-                // rgb值强制归一 
-                color.rgb = saturate(color.rgb);
-                // 乘以前后渲染的颜色系数，实现卡通渲染
-                color.rgb *= para;
-                return color;
+                float3 reflectDir = normalize(reflect(light,normal));
+                float3 specular = _LightColor0.rgb * _SpecularColor.rgb * pow(max(0,dot(reflectDir,view)),_Glossiness);
+                float3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
+                float4 result = float4(ambient + specular + diffuse,1) * color.rgba;
+                return result;
             }
             ENDCG
         }
     }
-    FallBack "Diffuse"  
 }
