@@ -1,0 +1,38 @@
+﻿<Properties StartupConfiguration="{12D94394-3FF6-BD98-054D-1FC69AB5E98C}|">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Shader/2D/shader_mask.shader">
+    <Files>
+      <File FileName="Assets/MainGame/Script/Shader_CSharp/AutoMask/AutoMask.cs" Line="1" Column="1" />
+      <File FileName="Assets/MainGame/Script/Shader_CSharp/AutoMask/shader2d_mask.shader" Line="1" Column="1" />
+      <File FileName="Assets/Shader/2D/shader_mask.shader" Line="41" Column="32" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="UnityResearch" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="MainGame" expanded="True">
+                <Node name="Script" expanded="True">
+                  <Node name="Shader_CSharp" expanded="True">
+                    <Node name="AutoMask" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="Shader" expanded="True">
+                <Node name="2D" expanded="True">
+                  <Node name="shader_mask.shader" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c375dce9-5fe7-4655-ad20-5206de0c3d0d" />
+  <MultiItemStartupConfigurations />
+</Properties>

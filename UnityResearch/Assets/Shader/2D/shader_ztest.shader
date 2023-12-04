@@ -9,7 +9,7 @@
  LOD 200
  
  //先判断Greater，因此此Pass必须放在第一个
- Pass
+    Pass
         {
             ZTest LEqual
             ZWrite Off

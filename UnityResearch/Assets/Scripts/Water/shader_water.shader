@@ -25,9 +25,11 @@ Shader "Application3D/shader_Water"
     SubShader
     {
         Tags { "RenderType"="Opaque" }
-
+      
         Pass
         {
+            ZWrite On
+//            ZTest Greater
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -58,6 +60,7 @@ Shader "Application3D/shader_Water"
             sampler2D _NoiseTex;
             //摄像机深度纹理
             sampler2D _CameraDepthTexture;
+            sampler2D _CameraDepthNormalsTexture;
             sampler2D _DistortTex;
             float _DepthMaxLen;
             fixed _NoiseCull;
@@ -90,7 +93,10 @@ Shader "Application3D/shader_Water"
                 float2 noiseUV = i.uv + _Time.y * _NoiseDirection.xy + disort.rg;
                 fixed4 col = tex2D(_NoiseTex,noiseUV);
                 //获取深度信息
-                float depthInfo = tex2Dproj(_CameraDepthTexture,UNITY_PROJ_COORD(i.screenPosition)).r;
+                float depthInfo = 1;
+                float3 normalInfo = 1;
+                depthInfo = tex2Dproj(_CameraDepthTexture,UNITY_PROJ_COORD(i.screenPosition)).r;
+                // DecodeDepthNormal(tex2D(_CameraDepthNormalsTexture,UNITY_PROJ_COORD(i.screenPosition.xy/i.screenPosition.w)),depthInfo,normalInfo);
                 //转换到视图空间下深度
                 float depthLinear = LinearEyeDepth(depthInfo);
                 //其次坐标空间下的3维坐标，w类似于深度
