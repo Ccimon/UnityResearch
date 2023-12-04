@@ -13,26 +13,25 @@ Shader "AfterEffect/AE_Test"
         Pass
         {
           	ZTest Always Cull Off ZWrite Off
-
             
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
             #include "UnityCG.cginc"
-
+			
 			sampler2D _MainTex;  
 			uniform half4 _MainTex_TexelSize;
 			sampler2D _CameraDepthNormalsTexture;
 			fixed _EdgeOnly;
 			fixed4 _EdgeColor;
 			fixed4 _BackgroundColor;
-            
 			struct appdata
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
             };
+			
+			struct v2f {
 
             struct v2f
             {
